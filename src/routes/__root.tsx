@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Tania's Cuisine" },
+      { name: "description", content: "Tania's Culinary Canvas is a website for a catering and dining company." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Tania's Cuisine" },
+      { property: "og:description", content: "Tania's Culinary Canvas is a website for a catering and dining company." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Tania's Cuisine" },
+      { name: "twitter:description", content: "Tania's Culinary Canvas is a website for a catering and dining company." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a08b8bd-8c39-4d37-b76d-35fd05f4b3ce/id-preview-1b52115e--a3289e06-0e1f-42bd-b4b5-78e1a7840414.lovable.app-1780134926457.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a08b8bd-8c39-4d37-b76d-35fd05f4b3ce/id-preview-1b52115e--a3289e06-0e1f-42bd-b4b5-78e1a7840414.lovable.app-1780134926457.png" },
     ],
     links: [
       {
