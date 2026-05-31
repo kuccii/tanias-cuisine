@@ -78,8 +78,11 @@ export function Nav() {
       {open && (
         <div className="fixed inset-0 z-[60] bg-background flex flex-col p-8 lg:hidden">
           <div className="flex items-center justify-between mb-16">
-            <Link to="/" onClick={() => setOpen(false)} className="font-display text-xl tracking-[0.18em] uppercase">
-              Tania's<span className="text-primary">.</span>
+            <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-3">
+              <img src={logo} alt="Tania's" className="h-11 w-11 rounded-full object-cover" />
+              <span className="font-display text-xl tracking-[0.18em] uppercase">
+                Tania's<span className="text-primary">.</span>
+              </span>
             </Link>
             <button onClick={() => setOpen(false)} aria-label="Close menu">
               <X size={26} />
