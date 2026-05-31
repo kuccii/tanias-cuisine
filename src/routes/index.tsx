@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
-import { dishes } from "@/data/menu";
+import { menuSections } from "@/data/menu";
+import grill from "@/assets/dish-grill.jpg";
+import curry from "@/assets/dish-curry.jpg";
+import platter from "@/assets/dish-platter.jpg";
 import hero from "@/assets/hero.jpg";
 import loungeImg from "@/assets/lounge-interior.jpg";
 import cateringImg from "@/assets/catering-event.jpg";
