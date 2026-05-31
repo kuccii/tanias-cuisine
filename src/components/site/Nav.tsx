@@ -30,8 +30,11 @@ export function Nav() {
         }`}
       >
         <div className="mx-auto max-w-[1500px] px-6 md:px-12 flex items-center justify-between">
-          <Link to="/" className="font-display text-xl md:text-2xl tracking-[0.18em] uppercase">
-            Tania's<span className="text-primary">.</span>
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Tania's Cuisine & Lounge" className="h-12 w-12 md:h-14 md:w-14 rounded-full object-cover" />
+            <span className="hidden sm:inline font-display text-xl md:text-2xl tracking-[0.18em] uppercase">
+              Tania's<span className="text-primary">.</span>
+            </span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-10">
