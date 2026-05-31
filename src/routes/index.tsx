@@ -22,7 +22,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const featured = dishes.slice(0, 3);
+  void menuSections;
+  const featured = [
+    { id: "beef-fillet", name: "Beef Fillet Steak", category: "From the Grill", description: "Mushroom, peppercorn, or garlic sauce — prime cuts grilled over open flame.", image: grill },
+    { id: "swahili-fish", name: "Swahili Fish", category: "Fresh Catch", description: "Tilapia bathed in fragrant coconut sauce, lake to plate.", image: curry },
+    { id: "bbq-platter", name: "BBQ Platter", category: "Begin Your Journey", description: "An abundant board of grilled meats, brochettes and sides — built for sharing.", image: platter },
+  ];
 
   return (
     <SiteLayout>
