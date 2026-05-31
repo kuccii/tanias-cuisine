@@ -30,11 +30,8 @@ export function Nav() {
         }`}
       >
         <div className="mx-auto max-w-[1500px] px-6 md:px-12 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Tania's Cuisine & Lounge" className="h-12 w-12 md:h-14 md:w-14 rounded-full object-cover" />
-            <span className="hidden sm:inline font-display text-xl md:text-2xl tracking-[0.18em] uppercase">
-              Tania's<span className="text-primary">.</span>
-            </span>
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="Tania's Cuisine & Lounge" className="h-14 w-14 md:h-16 md:w-16 rounded-full object-cover" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-10">
@@ -78,11 +75,8 @@ export function Nav() {
       {open && (
         <div className="fixed inset-0 z-[60] bg-background flex flex-col p-8 lg:hidden">
           <div className="flex items-center justify-between mb-16">
-            <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-3">
-              <img src={logo} alt="Tania's" className="h-11 w-11 rounded-full object-cover" />
-              <span className="font-display text-xl tracking-[0.18em] uppercase">
-                Tania's<span className="text-primary">.</span>
-              </span>
+            <Link to="/" onClick={() => setOpen(false)} className="flex items-center">
+              <img src={logo} alt="Tania's" className="h-12 w-12 rounded-full object-cover" />
             </Link>
             <button onClick={() => setOpen(false)} aria-label="Close menu">
               <X size={26} />
