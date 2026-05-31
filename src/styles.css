@@ -151,6 +151,24 @@
     border: 1px solid oklch(1 0 0 / 0.06);
   }
 
+  .input {
+    width: 100%;
+    background: oklch(1 0 0 / 0.02);
+    border: 1px solid var(--color-border);
+    padding: 0.75rem 0.9rem;
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+    transition: border-color 0.2s;
+  }
+  .input:focus { outline: none; border-color: var(--color-primary); }
+
+  .prose-aroma p { margin: 0 0 0.6em; }
+  .prose-aroma p:last-child { margin-bottom: 0; }
+  .prose-aroma ul, .prose-aroma ol { margin: 0.4em 0 0.8em; padding-left: 1.2em; }
+  .prose-aroma li { margin: 0.2em 0; }
+  .prose-aroma strong { color: var(--color-primary); font-weight: 600; }
+  .prose-aroma a { color: var(--color-primary); text-decoration: underline; }
+
   .reveal-up {
     opacity: 0;
     transform: translateY(28px);

@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
-import { Clock } from "lucide-react";
+import { resolveItemImage } from "@/data/menu-images";
+import { Clock, Star } from "lucide-react";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -40,7 +41,7 @@ function MenuPage() {
       </section>
 
       {/* SECTION FILTER */}
-      <section className="sticky top-[68px] z-30 glass border-y border-border/40">
+      <section className="sticky top-[88px] z-30 glass border-y border-border/40">
         <div className="mx-auto max-w-[1500px] px-6 md:px-12 py-4 flex gap-2 md:gap-3 overflow-x-auto">
           <FilterChip active={active === "all"} onClick={() => setActive("all")} label="All" />
           {menuSections.map((s) => (
@@ -85,63 +86,41 @@ function FilterChip({ active, onClick, label }: { active: boolean; onClick: () =
 }
 
 function Section({ section, index }: { section: MenuSection; index: number }) {
-  const reverse = index % 2 === 1;
   return (
-    <section id={section.id} className="scroll-mt-32 py-16 md:py-24 px-6 md:px-12 border-t border-border/30">
+    <section id={section.id} className="scroll-mt-44 py-20 md:py-28 px-6 md:px-12 border-t border-border/30">
       <div className="mx-auto max-w-[1500px]">
-        {/* Header */}
-        <div className={`grid lg:grid-cols-12 gap-10 mb-14 items-end ${reverse ? "lg:[direction:rtl]" : ""}`}>
-          <div className="lg:col-span-5 lg:[direction:ltr]">
-            <div className="relative aspect-[4/3] overflow-hidden bg-card">
-              <img
-                src={section.image}
-                alt={section.title}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover image-mood"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-background/40 to-transparent" />
-              <p className="absolute bottom-5 left-5 font-mono-display text-[10px] tracking-[0.3em] uppercase text-primary">
-                {section.category}
-              </p>
-            </div>
-          </div>
-          <div className="lg:col-span-7 lg:[direction:ltr]">
-            <p className="eyebrow mb-4">Chapter 0{index + 1}</p>
-            <h2 className="font-display text-4xl md:text-6xl text-balance mb-4">
-              {section.title}
-            </h2>
-            <p className="text-foreground/65 max-w-xl">{section.subtitle}</p>
-          </div>
+        {/* Chapter header */}
+        <div className="mb-14 max-w-3xl">
+          <p className="eyebrow mb-4">Chapter {String(index + 1).padStart(2, "0")} · {section.category}</p>
+          <h2 className="font-display text-4xl md:text-6xl text-balance mb-4">
+            {section.title}
+          </h2>
+          <p className="text-foreground/65">{section.subtitle}</p>
         </div>
 
         {/* Body */}
         {section.groups ? (
-          <div className={`grid gap-12 ${section.groups.length > 2 ? "md:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-2"}`}>
+          <div className="space-y-16">
             {section.groups.map((g) => (
               <div key={g.name}>
-                <h3 className="font-display text-2xl md:text-3xl mb-6 pb-3 border-b border-primary/30">
-                  <span className="italic text-primary">— </span>
-                  {g.name}
+                <h3 className="font-display text-2xl md:text-3xl mb-8 pb-3 border-b border-primary/30">
+                  <span className="italic text-primary">— </span>{g.name}
                 </h3>
-                <ItemList items={g.items} compact={section.compact} />
+                <ItemGrid items={g.items} sectionId={section.id} groupName={g.name} compact={section.compact} />
               </div>
             ))}
           </div>
         ) : (
-          <div className={section.compact ? "grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-1" : "grid md:grid-cols-2 gap-x-16 gap-y-2"}>
-            <ItemList items={section.items ?? []} compact={section.compact} flat />
-          </div>
+          <ItemGrid items={section.items ?? []} sectionId={section.id} compact={section.compact} />
         )}
 
         {/* Special box */}
         {section.special_box && (
-          <div className="mt-14 relative border border-primary/40 bg-primary/5 p-8 md:p-10">
-            <span className="absolute -top-3 left-8 bg-background px-3 font-mono-display text-[10px] tracking-[0.3em] uppercase text-primary">
-              ★ {section.special_box.title}
+          <div className="mt-16 relative border border-primary/40 bg-primary/[0.04] p-8 md:p-10">
+            <span className="absolute -top-3 left-8 bg-background px-3 font-mono-display text-[10px] tracking-[0.3em] uppercase text-primary inline-flex items-center gap-2">
+              <Star size={11} className="fill-primary" /> {section.special_box.title}
             </span>
-            <div className="grid md:grid-cols-2 gap-x-16">
-              <ItemList items={section.special_box.items} flat />
-            </div>
+            <ItemGrid items={section.special_box.items} sectionId={section.id} />
           </div>
         )}
       </div>
@@ -149,47 +128,67 @@ function Section({ section, index }: { section: MenuSection; index: number }) {
   );
 }
 
-function ItemList({ items, compact, flat }: { items: MenuItem[]; compact?: boolean; flat?: boolean }) {
-  if (flat) {
-    return (
-      <>
-        {items.map((it) => (
-          <ItemRow key={it.name} item={it} compact={compact} />
-        ))}
-      </>
-    );
-  }
+function ItemGrid({
+  items,
+  sectionId,
+  groupName,
+  compact,
+}: {
+  items: MenuItem[];
+  sectionId: string;
+  groupName?: string;
+  compact?: boolean;
+}) {
   return (
-    <ul className="space-y-1">
+    <div className={`grid gap-6 md:gap-8 ${compact ? "sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
       {items.map((it) => (
-        <ItemRow key={it.name} item={it} compact={compact} />
+        <ItemCard key={it.name} item={it} sectionId={sectionId} groupName={groupName} compact={compact} />
       ))}
-    </ul>
+    </div>
   );
 }
 
-function ItemRow({ item, compact }: { item: MenuItem; compact?: boolean }) {
+function ItemCard({
+  item,
+  sectionId,
+  groupName,
+  compact,
+}: {
+  item: MenuItem;
+  sectionId: string;
+  groupName?: string;
+  compact?: boolean;
+}) {
+  const image = resolveItemImage(item.name, sectionId, groupName);
   return (
-    <li className={`group flex items-baseline gap-3 ${compact ? "py-2" : "py-3"} border-b border-border/20`}>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-3">
-          <h4 className={`font-display ${compact ? "text-lg" : "text-xl"} text-foreground/95`}>
-            {item.name}
-          </h4>
-          <span className="flex-1 border-b border-dotted border-border/40 translate-y-[-4px]" />
-          <span className="font-mono-display text-[11px] tracking-[0.18em] text-primary whitespace-nowrap">
-            {item.price}
-          </span>
-        </div>
+    <article className="group bg-card/40 border border-border/40 hover:border-primary/50 transition-colors overflow-hidden flex flex-col">
+      <div className={`relative ${compact ? "aspect-[5/3]" : "aspect-[4/3]"} overflow-hidden`}>
+        <img
+          src={image}
+          alt={item.name}
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="absolute inset-0 w-full h-full object-cover image-mood transition-transform duration-[1500ms] group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent pointer-events-none" />
+        <span className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm font-mono-display text-[10px] tracking-[0.18em] text-primary px-2.5 py-1.5 border border-border/40">
+          {item.price}
+        </span>
+      </div>
+      <div className={`p-5 ${compact ? "pb-5" : "pb-6"} flex-1 flex flex-col`}>
+        <h4 className={`font-display ${compact ? "text-lg" : "text-xl"} leading-tight mb-2`}>
+          {item.name}
+        </h4>
         {item.description && (
-          <p className="text-sm text-foreground/55 italic mt-1">{item.description}</p>
+          <p className="text-xs text-foreground/60 italic leading-relaxed mb-3">{item.description}</p>
         )}
         {item.note && (
-          <p className="mt-1 inline-flex items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45">
+          <p className="mt-auto pt-2 inline-flex items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45">
             <Clock size={10} /> {item.note}
           </p>
         )}
       </div>
-    </li>
+    </article>
   );
 }
