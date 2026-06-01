@@ -26,10 +26,10 @@ export function Footer() {
           <div>
             <h5 className="eyebrow mb-5">Contact</h5>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>+250 788 000 000</li>
+              <li>+250 789 289 450</li>
               <li>hello@taniascuisine.rw</li>
-              <li>KG 9 Ave, Kigali</li>
-              <li>Daily · 11h — 23h</li>
+              <li>KG 8 Ave · M&amp;M Plaza, Remera, Kigali</li>
+              <li>Mon–Fri 10h–23h · Sat–Sun 13h–23h</li>
             </ul>
           </div>
         </div>
