@@ -2,12 +2,19 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Check, Users, Calendar } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Reservations & Contact — Tania's Cuisine & Lounge" },
-      { name: "description", content: "Reserve a table at Tania's in Kigali. Choose date, time and party size. WhatsApp confirmation within minutes." },
+      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, Remera Kigali. Choose date, time and party size — WhatsApp confirmation within minutes." },
       { property: "og:title", content: "Reserve a Table — Tania's Cuisine & Lounge" },
       { property: "og:description", content: "Book your table in seconds. Confirmation by WhatsApp." },
     ],
@@ -15,7 +22,9 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
-const WHATSAPP_NUMBER = "250788000000";
+// Real venue (KG 8 Ave, M&M Plaza, Remera, Kigali)
+const WHATSAPP_NUMBER = "250789289450";
+const PHONE_DISPLAY = "+250 789 289 450";
 
 function todayISO() {
   const d = new Date();
@@ -66,6 +75,8 @@ function ContactPage() {
     setWhatsappLink(link);
     setSent(true);
   }
+
+  const partySizes = [...Array.from({ length: 14 }, (_, i) => String(i + 1)), "15+"];
 
   return (
     <SiteLayout>
@@ -159,36 +170,33 @@ function ContactPage() {
                     />
                   </Field>
                   <Field label="Time" icon={Clock} required>
-                    <select
+                    <StyledSelect
                       value={form.time}
-                      onChange={(e) => update("time", e.target.value)}
-                      className="input"
-                    >
-                      {TIME_SLOTS.map((t) => <option key={t} value={t}>{t}</option>)}
-                    </select>
+                      onChange={(v) => update("time", v)}
+                      options={TIME_SLOTS.map((t) => ({ value: t, label: t }))}
+                      placeholder="Select time"
+                    />
                   </Field>
                   <Field label="Party" icon={Users} required>
-                    <select
+                    <StyledSelect
                       value={form.party}
-                      onChange={(e) => update("party", e.target.value)}
-                      className="input"
-                    >
-                      {Array.from({ length: 14 }, (_, i) => i + 1).map((n) => (
-                        <option key={n} value={String(n)}>{n} {n === 1 ? "guest" : "guests"}</option>
-                      ))}
-                      <option value="15+">15+ (large party)</option>
-                    </select>
+                      onChange={(v) => update("party", v)}
+                      options={partySizes.map((n) => ({
+                        value: n,
+                        label: n === "15+" ? "15+ guests" : `${n} ${n === "1" ? "guest" : "guests"}`,
+                      }))}
+                      placeholder="Party size"
+                    />
                   </Field>
                 </div>
 
                 <Field label="Occasion">
-                  <select
+                  <StyledSelect
                     value={form.occasion}
-                    onChange={(e) => update("occasion", e.target.value)}
-                    className="input"
-                  >
-                    {OCCASIONS.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </select>
+                    onChange={(v) => update("occasion", v)}
+                    options={OCCASIONS.map((o) => ({ value: o, label: o }))}
+                    placeholder="Select occasion"
+                  />
                 </Field>
 
                 <Field label="Special requests (optional)">
@@ -216,9 +224,9 @@ function ContactPage() {
 
           {/* Details */}
           <div className="lg:col-span-2 space-y-8">
-            <ContactCard icon={MapPin} title="Visit" lines={["KG 9 Avenue, Kimihurura", "Kigali, Rwanda"]} />
-            <ContactCard icon={Clock} title="Hours" lines={["Monday — Sunday", "11h00 — 23h00", "Buffet: 12h — 15h"]} />
-            <ContactCard icon={Phone} title="Call" lines={["+250 788 000 000"]} />
+            <ContactCard icon={MapPin} title="Visit" lines={["KG 8 Avenue · M&M Plaza", "Remera, Kigali · Rwanda"]} />
+            <ContactCard icon={Clock} title="Hours" lines={["Mon — Fri · 10h00 — 23h00", "Sat & Sun · 13h00 — 23h00"]} />
+            <ContactCard icon={Phone} title="Call" lines={[PHONE_DISPLAY]} />
             <ContactCard icon={Mail} title="Email" lines={["hello@taniascuisine.rw", "events@taniascuisine.rw"]} />
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -233,14 +241,45 @@ function ContactPage() {
       <section className="px-6 md:px-12 pb-24">
         <div className="mx-auto max-w-[1300px] aspect-[16/9] border border-border/50 overflow-hidden">
           <iframe
-            title="Tania's Cuisine & Lounge location"
-            src="https://www.google.com/maps?q=Kimihurura+Kigali&output=embed"
+            title="Tania's Cuisine & Lounge — KG 8 Ave, Remera, Kigali"
+            src="https://www.google.com/maps?q=Tania%27s+Cuisine+%26+Lounge+KG+8+Ave+Remera+Kigali&output=embed"
             className="w-full h-full grayscale-[40%] contrast-110"
             loading="lazy"
           />
         </div>
       </section>
     </SiteLayout>
+  );
+}
+
+function StyledSelect({
+  value,
+  onChange,
+  options,
+  placeholder,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string }[];
+  placeholder?: string;
+}) {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className="w-full bg-background/60 border-border/60 rounded-none h-auto px-4 py-3 text-sm focus:ring-primary focus:border-primary text-foreground">
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent className="bg-card border-border/60 rounded-none">
+        {options.map((o) => (
+          <SelectItem
+            key={o.value}
+            value={o.value}
+            className="font-sans text-sm focus:bg-primary/10 focus:text-primary"
+          >
+            {o.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
 
