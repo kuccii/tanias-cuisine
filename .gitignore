@@ -1,3 +1,6 @@
+# Local raw images (too large for git)
+images/
+
 # Logs
 logs
 *.log
