@@ -1,6 +1,9 @@
 # Local raw images (too large for git)
 images/
 
+# Standalone landing page (not part of the main app)
+website99.com/
+
 # Logs
 logs
 *.log
