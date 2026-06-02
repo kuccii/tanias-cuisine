@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import lounge from "@/assets/lounge-interior.jpg";
 import buffet from "@/assets/buffet.jpg";
-import drink from "@/assets/dish-drink.jpg";
-import grill from "@/assets/dish-grill.jpg";
+import loungeDrink from "@/assets/lounge-drink.jpg";
+import loungeFood from "@/assets/lounge-food.jpg";
 import { MapPin, Clock, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/lounge")({
@@ -38,10 +38,10 @@ function LoungePage() {
             <img src={lounge} alt="Lounge seating" loading="lazy" className="w-full h-full object-cover image-mood" />
           </div>
           <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
-            <img src={drink} alt="Lounge cocktail" loading="lazy" className="w-full h-full object-cover image-mood" />
+            <img src={loungeDrink} alt="Lounge cocktail" loading="lazy" className="w-full h-full object-cover image-mood" />
           </div>
           <div className="aspect-[16/10] overflow-hidden">
-            <img src={grill} alt="Grilled fish" loading="lazy" className="w-full h-full object-cover image-mood" />
+            <img src={loungeFood} alt="Grilled fish" loading="lazy" className="w-full h-full object-cover image-mood" />
           </div>
           <div className="md:col-span-2 aspect-[16/10] overflow-hidden">
             <img src={buffet} alt="Daily buffet" loading="lazy" className="w-full h-full object-cover image-mood" />

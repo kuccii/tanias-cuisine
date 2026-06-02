@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { menuSections } from "@/data/menu";
-import grill from "@/assets/dish-grill.jpg";
-import curry from "@/assets/dish-curry.jpg";
-import platter from "@/assets/dish-platter.jpg";
+import beefFillet from "@/assets/menu/beef-fillet.jpg";
+import swahiliFish from "@/assets/menu/swahili-fish.jpg";
+import bbqPlatter from "@/assets/menu/bbq-platter.jpg";
 import hero from "@/assets/hero.jpg";
 import loungeImg from "@/assets/lounge-interior.jpg";
 import cateringImg from "@/assets/catering-event.jpg";
@@ -24,9 +24,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   void menuSections;
   const featured = [
-    { id: "beef-fillet", name: "Beef Fillet Steak", category: "From the Grill", description: "Mushroom, peppercorn, or garlic sauce — prime cuts grilled over open flame.", image: grill },
-    { id: "swahili-fish", name: "Swahili Fish", category: "Fresh Catch", description: "Tilapia bathed in fragrant coconut sauce, lake to plate.", image: curry },
-    { id: "bbq-platter", name: "BBQ Platter", category: "Begin Your Journey", description: "An abundant board of grilled meats, brochettes and sides — built for sharing.", image: platter },
+    { id: "beef-fillet", name: "Beef Fillet Steak", category: "From the Grill", description: "Mushroom, peppercorn, or garlic sauce — prime cuts grilled over open flame.", image: beefFillet },
+    { id: "swahili-fish", name: "Swahili Fish", category: "Fresh Catch", description: "Tilapia bathed in fragrant coconut sauce, lake to plate.", image: swahiliFish },
+    { id: "bbq-platter", name: "BBQ Platter", category: "Begin Your Journey", description: "An abundant board of grilled meats, brochettes and sides — built for sharing.", image: bbqPlatter },
   ];
 
   return (
