@@ -4,7 +4,7 @@ import { menuSections } from "@/data/menu";
 import beefFillet from "@/assets/menu/beef-fillet.jpg";
 import swahiliFish from "@/assets/menu/swahili-fish.jpg";
 import bbqPlatter from "@/assets/menu/bbq-platter.jpg";
-import hero from "@/assets/hero.jpg";
+import heroVideo from "@/assets/herovideo.mp4";
 import loungeImg from "@/assets/lounge-interior.jpg";
 import cateringImg from "@/assets/catering-event.jpg";
 import { ArrowRight } from "lucide-react";
@@ -33,10 +33,13 @@ function Index() {
     <SiteLayout>
       {/* HERO */}
       <section className="relative h-screen min-h-[680px] flex items-end overflow-hidden">
-        <img
-          src={hero}
-          alt="Signature gourmet plate"
-          className="absolute inset-0 w-full h-full object-cover image-mood-deep"
+        <video
+          src={heroVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/10 to-background/40" />
