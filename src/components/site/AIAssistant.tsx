@@ -62,7 +62,7 @@ export function AIAssistant() {
             <div className="flex-1 min-w-0">
               <p className="font-display text-lg leading-none">Aroma</p>
               <p className="font-mono-display text-[9px] tracking-[0.25em] uppercase text-foreground/55 mt-1.5">
-                Menu concierge
+                AI menu concierge
               </p>
             </div>
             <button onClick={() => setOpen(false)} aria-label="Close" className="text-foreground/60 hover:text-foreground">
@@ -160,7 +160,7 @@ export function AIAssistant() {
             </button>
           </form>
           <p className="px-3 pb-3 -mt-1 text-[10px] text-foreground/40 text-center">
-            <MessageCircle size={9} className="inline" /> Knows our full menu · Ask me anything
+            <MessageCircle size={9} className="inline" /> Powered by Gemini · Knows our full menu
           </p>
         </div>
       )}
