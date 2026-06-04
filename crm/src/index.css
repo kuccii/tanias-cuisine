@@ -1,0 +1,38 @@
+:root {
+  --bg: #0d0d0d;
+  --surface: #1a1a1a;
+  --surface2: #222;
+  --border: #333;
+  --text: #e5e5e5;
+  --text2: #999;
+  --accent: #c4943d;
+  --accent2: #8b6b2e;
+  --green: #22c55e;
+  --blue: #3b82f6;
+  --amber: #c4943d;
+  --orange: #f59e0b;
+  --teal: #14b8a6;
+  --gray: #6b7280;
+  --red: #ef4444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.status-Idea { background: var(--gray); color: #fff; }
+.status-Draft { background: var(--blue); color: #fff; }
+.status-PendingReview { background: var(--amber); color: #111; }
+.status-EditsRequested { background: var(--orange); color: #111; }
+.status-Approved { background: var(--teal); color: #111; }
+.status-Scheduled { background: var(--amber); color: #111; }
+.status-Posted { background: var(--green); color: #111; }
+.status-Archived { background: var(--red); color: #fff; }
+
+.bg-\[\#0d0d0d\] { background-color: #0d0d0d; }
+.text-\[\#e5e5e5\] { color: #e5e5e5; }
