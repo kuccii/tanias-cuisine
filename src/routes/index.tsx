@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { menuSections } from "@/data/menu";
 import beefFillet from "@/assets/menu/beef-fillet.jpg";
-import swahiliFish from "@/assets/menu/swahili-fish.jpg";
+import wholeTilapia from "@/assets/menu/whole-tilapia.jpg";
 import bbqPlatter from "@/assets/menu/bbq-platter.jpg";
 import heroVideo from "@/assets/herovideo.mp4";
 import loungeImg from "@/assets/lounge-interior.jpg";
@@ -25,7 +25,7 @@ function Index() {
   void menuSections;
   const featured = [
     { id: "beef-fillet", name: "Beef Fillet Steak", category: "From the Grill", description: "Mushroom, peppercorn, or garlic sauce — prime cuts grilled over open flame.", image: beefFillet },
-    { id: "swahili-fish", name: "Swahili Fish", category: "Fresh Catch", description: "Tilapia bathed in fragrant coconut sauce, lake to plate.", image: swahiliFish },
+    { id: "whole-tilapia", name: "Whole Tilapia Fish", category: "Fresh Catch", description: "Whole tilapia, grilled to perfection — crisp skin, tender flesh, lake to plate.", image: wholeTilapia },
     { id: "bbq-platter", name: "BBQ Platter", category: "Begin Your Journey", description: "An abundant board of grilled meats, brochettes and sides — built for sharing.", image: bbqPlatter },
   ];
 
