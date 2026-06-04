@@ -10,7 +10,8 @@ export function Footer() {
               Tania's<span className="text-primary"> Cuisine & Lounge</span>
             </h4>
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
-              Kigali's finest dining destination since 2018. Catering excellence,
+              Part of Tany's Ltd (est. 2018). Kigali's finest dining
+              destination since February 2020. Catering excellence,
               atmospheric lounge, unforgettable evenings.
             </p>
           </div>
@@ -20,22 +21,24 @@ export function Footer() {
               <li><Link to="/menu" className="text-muted-foreground hover:text-primary">Menu</Link></li>
               <li><Link to="/lounge" className="text-muted-foreground hover:text-primary">The Lounge</Link></li>
               <li><Link to="/catering" className="text-muted-foreground hover:text-primary">Catering</Link></li>
+              <li><Link to="/gallery" className="text-muted-foreground hover:text-primary">Gallery</Link></li>
               <li><Link to="/about" className="text-muted-foreground hover:text-primary">About</Link></li>
             </ul>
           </div>
           <div>
             <h5 className="eyebrow mb-5">Contact</h5>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>+250 789 289 450</li>
+              <li>+250 788 500 635</li>
               <li>hello@taniascuisine.rw</li>
-              <li>KG 8 Ave · M&amp;M Plaza, Remera, Kigali</li>
+              <li>info@taniascuisine.rw</li>
+              <li>M&amp;M Plaza, Gishushu, Kigali</li>
               <li>Mon–Fri 10h–23h · Sat–Sun 13h–23h</li>
             </ul>
           </div>
         </div>
         <div className="border-t border-border/30 pt-8 flex flex-col md:flex-row justify-between gap-4 font-mono-display text-[10px] tracking-[0.2em] uppercase text-muted-foreground/70">
           <span>© {new Date().getFullYear()} Tania's Cuisine & Lounge</span>
-          <span>Kigali · Rwanda · Since 2018</span>
+          <span>Gishushu, Kigali · Since Feb 2020 · Tany's Ltd</span>
         </div>
       </div>
     </footer>

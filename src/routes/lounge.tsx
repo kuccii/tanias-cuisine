@@ -81,9 +81,9 @@ function LoungePage() {
       <section className="py-24 px-6 md:px-12">
         <div className="mx-auto max-w-[1500px] grid md:grid-cols-3 gap-10">
           {[
-            { icon: MapPin, title: "Location", lines: ["KG 9 Avenue", "Kimihurura, Kigali"] },
+            { icon: MapPin, title: "Location", lines: ["M&M Plaza, Gishushu", "Kigali, Rwanda"] },
             { icon: Clock, title: "Hours", lines: ["Mon — Sun", "11h00 — 23h00"] },
-            { icon: Phone, title: "Reserve", lines: ["+250 788 000 000", "WhatsApp welcome"] },
+            { icon: Phone, title: "Reserve", lines: ["+250 788 500 635", "WhatsApp welcome"] },
           ].map((c) => (
             <div key={c.title} className="border-t border-primary/40 pt-8">
               <c.icon className="text-primary mb-6" size={24} />

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as LoungeRouteImport } from './routes/lounge'
+import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CateringRouteImport } from './routes/catering'
 import { Route as AboutRouteImport } from './routes/about'
@@ -25,6 +26,11 @@ const MenuRoute = MenuRouteImport.update({
 const LoungeRoute = LoungeRouteImport.update({
   id: '/lounge',
   path: '/lounge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/catering': typeof CateringRoute
   '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
   '/lounge': typeof LoungeRoute
   '/menu': typeof MenuRoute
   '/api/chat': typeof ApiChatRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/catering': typeof CateringRoute
   '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
   '/lounge': typeof LoungeRoute
   '/menu': typeof MenuRoute
   '/api/chat': typeof ApiChatRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/catering': typeof CateringRoute
   '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
   '/lounge': typeof LoungeRoute
   '/menu': typeof MenuRoute
   '/api/chat': typeof ApiChatRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/catering'
     | '/contact'
+    | '/gallery'
     | '/lounge'
     | '/menu'
     | '/api/chat'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/catering'
     | '/contact'
+    | '/gallery'
     | '/lounge'
     | '/menu'
     | '/api/chat'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/catering'
     | '/contact'
+    | '/gallery'
     | '/lounge'
     | '/menu'
     | '/api/chat'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CateringRoute: typeof CateringRoute
   ContactRoute: typeof ContactRoute
+  GalleryRoute: typeof GalleryRoute
   LoungeRoute: typeof LoungeRoute
   MenuRoute: typeof MenuRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/lounge'
       fullPath: '/lounge'
       preLoaderRoute: typeof LoungeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CateringRoute: CateringRoute,
   ContactRoute: ContactRoute,
+  GalleryRoute: GalleryRoute,
   LoungeRoute: LoungeRoute,
   MenuRoute: MenuRoute,
   ApiChatRoute: ApiChatRoute,

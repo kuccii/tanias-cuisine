@@ -1,24 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import lounge from "@/assets/lounge-interior.jpg";
-import grill from "@/assets/dish-grill.jpg";
+import catering from "@/assets/catering-event.jpg";
+import buffet from "@/assets/buffet.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Tania's Cuisine & Lounge Kigali" },
-      { name: "description", content: "Since 2018, Tania's has set a standard for atmospheric dining and reliable catering in Kigali." },
-      { property: "og:title", content: "About Tania's Cuisine & Lounge" },
-      { property: "og:description", content: "Kigali's atmospheric dining destination since 2018." },
+      { title: "About — Tania's Cuisine & Lounge | Tany's Ltd" },
+      { name: "description", content: "Tania's Cuisine & Lounge — part of Tany's Ltd. Kigali's premier dining, lounge and catering destination since February 2020." },
+      { property: "og:title", content: "About — Tania's Cuisine & Lounge | Tany's Ltd" },
+      { property: "og:description", content: "Part of Tany's Ltd. Kigali's premier dining destination since Feb 2020." },
     ],
   }),
   component: AboutPage,
 });
 
+const clients = [
+  "Access Bank", "The New Times", "SONARWA", "GIZ",
+  "Vivo Energy / Engen Rwanda", "Oxfam", "Horizon Group", "Bank of Kigali",
+];
+
 const values = [
   { t: "Commitment to Excellence", d: "Every plate, every event — held to the same standard, no exceptions." },
   { t: "Modern Hospitality", d: "Warm service done with precision. Always present, never intrusive." },
-  { t: "Reliability at Scale", d: "From a table for two to a wedding for five hundred, we deliver." },
+  { t: "Reliability at Scale", d: "From a table for two to a gala for a thousand, we deliver." },
   { t: "Culinary Expertise", d: "A team of chefs blending East African flavours with global technique." },
 ];
 
@@ -27,7 +33,7 @@ export default function AboutPage() {
     <SiteLayout>
       <section className="pt-40 pb-20 px-6 md:px-12">
         <div className="mx-auto max-w-[1300px]">
-          <p className="eyebrow mb-6">Since 2018</p>
+          <p className="eyebrow mb-6">Tany's Ltd · Since 2018</p>
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl max-w-5xl text-balance leading-[0.95]">
             Kigali's quiet <span className="italic text-primary">standard.</span>
           </h1>
@@ -41,19 +47,22 @@ export default function AboutPage() {
           </div>
           <div className="space-y-6 text-foreground/75 leading-relaxed">
             <p className="text-lg">
-              Tania's Cuisine & Lounge opened its doors in 2018 with a simple
-              belief: that Kigali deserved a place where dining was both an
-              event and an everyday pleasure.
+              Tania's Cuisine & Lounge is a property of <strong>Tany's Ltd</strong>, a
+              Rwandan hospitality company established in 2018. Tania's opened its
+              doors in February 2020 at M&M Plaza, Gishushu, Kigali — and despite
+              launching in a pandemic year, quickly became a staple of the city's
+              dining scene.
             </p>
             <p>
-              What started as a single intimate room has grown into a full
-              culinary practice — a destination lounge, a daily buffet that
-              regulars treat like a family table, and a catering operation
-              trusted by embassies, weddings and corporates alike.
+              What began as a single intimate venue has grown into a full
+              culinary practice: a destination lounge with a daily chef's buffet,
+              a catering operation trusted by Rwanda's leading institutions, and
+              a venue capable of hosting up to 1,000 guests per event.
             </p>
             <p>
-              We source carefully. We cook seriously. We serve with warmth.
-              That's the whole philosophy.
+              Our vision is to set the standard for modern African hospitality —
+              where meticulous service, exceptional food, and atmospheric design
+              come together as one experience.
             </p>
           </div>
         </div>
@@ -78,6 +87,33 @@ export default function AboutPage() {
       <section className="py-24 px-6 md:px-12">
         <div className="mx-auto max-w-[1300px] grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1 space-y-6">
+            <p className="eyebrow">Trusted By</p>
+            <h2 className="font-display text-4xl md:text-5xl text-balance">Partners we're <span className="italic text-primary">proud to serve.</span></h2>
+            <p className="text-foreground/70 leading-relaxed mb-8">
+              From corporate headquarters to international organisations, our
+              catering and event services are relied upon by some of Rwanda's
+              most respected institutions.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {clients.map((c) => (
+                <div key={c} className="border border-border/40 px-4 py-3">
+                  <p className="font-mono-display text-[10px] tracking-[0.15em] uppercase text-foreground/80">{c}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="order-1 lg:order-2 aspect-[4/3] overflow-hidden">
+            <img src={catering} alt="Catered corporate event" loading="lazy" className="w-full h-full object-cover image-mood" />
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-6 md:px-12 bg-card/30">
+        <div className="mx-auto max-w-[1300px] grid lg:grid-cols-2 gap-12 items-center">
+          <div className="aspect-[4/3] overflow-hidden">
+            <img src={buffet} alt="Daily buffet spread" loading="lazy" className="w-full h-full object-cover image-mood" />
+          </div>
+          <div className="space-y-6">
             <p className="eyebrow">The Team</p>
             <h2 className="font-display text-4xl md:text-5xl text-balance">A kitchen of <span className="italic text-primary">quiet veterans.</span></h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -85,9 +121,6 @@ export default function AboutPage() {
               Mumbai — anchored by a service team that's been with us since the
               beginning.
             </p>
-          </div>
-          <div className="order-1 lg:order-2 aspect-[4/3] overflow-hidden">
-            <img src={grill} alt="The kitchen" loading="lazy" className="w-full h-full object-cover image-mood" />
           </div>
         </div>
       </section>

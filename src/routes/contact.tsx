@@ -14,7 +14,7 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Reservations & Contact — Tania's Cuisine & Lounge" },
-      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, Remera Kigali. Choose date, time and party size — WhatsApp confirmation within minutes." },
+      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, Gishushu Kigali. Choose date, time and party size — WhatsApp confirmation within minutes." },
       { property: "og:title", content: "Reserve a Table — Tania's Cuisine & Lounge" },
       { property: "og:description", content: "Book your table in seconds. Confirmation by WhatsApp." },
     ],
@@ -23,8 +23,8 @@ export const Route = createFileRoute("/contact")({
 });
 
 // Real venue (KG 8 Ave, M&M Plaza, Remera, Kigali)
-const WHATSAPP_NUMBER = "250789289450";
-const PHONE_DISPLAY = "+250 789 289 450";
+const WHATSAPP_NUMBER = "250788500635";
+const PHONE_DISPLAY = "+250 788 500 635";
 
 function todayISO() {
   const d = new Date();
@@ -224,10 +224,10 @@ function ContactPage() {
 
           {/* Details */}
           <div className="lg:col-span-2 space-y-8">
-            <ContactCard icon={MapPin} title="Visit" lines={["KG 8 Avenue · M&M Plaza", "Remera, Kigali · Rwanda"]} />
+            <ContactCard icon={MapPin} title="Visit" lines={["M&M Plaza, Gishushu", "Kigali, Rwanda"]} />
             <ContactCard icon={Clock} title="Hours" lines={["Mon — Fri · 10h00 — 23h00", "Sat & Sun · 13h00 — 23h00"]} />
             <ContactCard icon={Phone} title="Call" lines={[PHONE_DISPLAY]} />
-            <ContactCard icon={Mail} title="Email" lines={["hello@taniascuisine.rw", "events@taniascuisine.rw"]} />
+            <ContactCard icon={Mail} title="Email" lines={["hello@taniascuisine.rw", "info@taniascuisine.rw", "events@taniascuisine.rw"]} />
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               className="inline-flex items-center gap-3 border border-border/60 px-6 py-3 font-mono-display text-[10px] tracking-[0.28em] uppercase hover:border-primary hover:text-primary transition-colors"
@@ -241,8 +241,8 @@ function ContactPage() {
       <section className="px-6 md:px-12 pb-24">
         <div className="mx-auto max-w-[1300px] aspect-[16/9] border border-border/50 overflow-hidden">
           <iframe
-            title="Tania's Cuisine & Lounge — KG 8 Ave, Remera, Kigali"
-            src="https://www.google.com/maps?q=Tania%27s+Cuisine+%26+Lounge+KG+8+Ave+Remera+Kigali&output=embed"
+            title="Tania's Cuisine & Lounge — M&M Plaza, Gishushu, Kigali"
+            src="https://www.google.com/maps?q=Tania%27s+Cuisine+%26+Lounge+Gishushu+Kigali&output=embed"
             className="w-full h-full grayscale-[40%] contrast-110"
             loading="lazy"
           />

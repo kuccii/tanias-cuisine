@@ -9,10 +9,10 @@ import { Check } from "lucide-react";
 export const Route = createFileRoute("/catering")({
   head: () => ({
     meta: [
-      { title: "Catering & Events — Tania's Cuisine Kigali" },
-      { name: "description", content: "Chef-led catering for corporate events, weddings and private parties. Serving 50 — 500+ guests across Rwanda since 2018." },
-      { property: "og:title", content: "Catering & Events — Tania's Cuisine" },
-      { property: "og:description", content: "Service that scales. From 50 to 500+ guests." },
+      { title: "Catering & Events — Tania's Cuisine Kigali | Tany's Ltd" },
+      { name: "description", content: "Chef-led catering for corporate events, weddings and private parties. Serving 50 — 1,000 guests across Rwanda since 2020." },
+      { property: "og:title", content: "Catering & Events — Tania's Cuisine | Tany's Ltd" },
+      { property: "og:description", content: "Service that scales. From 50 to 1,000 guests." },
     ],
   }),
   component: CateringPage,
@@ -25,8 +25,8 @@ const packages = [
     items: ["Boxed and buffet formats", "Dietary segmentation", "On-site service team"],
   },
   {
-    title: "Weddings",
-    desc: "Full-day catering for the celebrations of a lifetime. 100 – 500+ guests.",
+    title: "Weddings & Galas",
+    desc: "Full-day catering for celebrations of a lifetime. 100 – 1,000 guests.",
     items: ["Tasting session included", "Custom menu design", "Bar & beverage program"],
   },
   {
@@ -60,7 +60,7 @@ function CateringPage() {
             Service that <span className="italic text-primary">scales.</span>
           </h1>
           <p className="mt-6 font-mono-display text-[11px] tracking-[0.25em] uppercase text-foreground/60">
-            Serving 50 — 500+ guests across Rwanda
+            Serving 50 — 1,000 guests across Rwanda · Part of Tany's Ltd
           </p>
         </div>
       </section>

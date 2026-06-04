@@ -184,16 +184,16 @@ function Index() {
               Service that <span className="italic text-primary">scales.</span>
             </h2>
             <p className="text-foreground/70 leading-relaxed mb-10">
-              From 50-guest corporate lunches to 500-person weddings, our team
+              From 50-guest corporate lunches to 1,000-person galas, our team
               delivers chef-led catering with hotel-grade execution. Tailored
               menus, dietary care, and seamless logistics.
             </p>
             <div className="grid grid-cols-2 gap-6 mb-12">
               {[
-                { n: "500+", l: "Guest capacity" },
-                { n: "2018", l: "Serving Kigali" },
+                { n: "1,000", l: "Guest capacity" },
+                { n: "2020", l: "Launched Feb 2020" },
                 { n: "200+", l: "Events catered yearly" },
-                { n: "30", l: "Curated menu items" },
+                { n: "8+", l: "Key institutional clients" },
               ].map((s) => (
                 <div key={s.l}>
                   <div className="font-display text-3xl md:text-4xl text-primary">{s.n}</div>
