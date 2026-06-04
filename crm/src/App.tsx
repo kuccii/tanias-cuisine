@@ -1,14 +1,23 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/Layout";
+
+function DashboardPage() { return <div>Dashboard</div>; }
+function PlannerPage() { return <div>Planner</div>; }
+function AssetsPage() { return <div>Assets</div>; }
+function ReviewPage() { return <div>Review</div>; }
+function CalendarPage() { return <div>Calendar</div>; }
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<div style={{padding: 40, textAlign: 'center'}}><h1>Dashboard</h1><p style={{color: '#666', marginTop: 8}}>Posting System loaded successfully.</p></div>} />
-      <Route path="/planner" element={<div style={{padding: 40, textAlign: 'center'}}><h1>Planner</h1></div>} />
-      <Route path="/assets" element={<div style={{padding: 40, textAlign: 'center'}}><h1>Assets</h1></div>} />
-      <Route path="/review" element={<div style={{padding: 40, textAlign: 'center'}}><h1>Review</h1></div>} />
-      <Route path="/calendar" element={<div style={{padding: 40, textAlign: 'center'}}><h1>Calendar</h1></div>} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/planner" element={<PlannerPage />} />
+        <Route path="/assets" element={<AssetsPage />} />
+        <Route path="/review" element={<ReviewPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Layout>
   );
 }
