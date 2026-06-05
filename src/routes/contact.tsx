@@ -13,11 +13,15 @@ import {
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Reservations & Contact — Tania's Cuisine & Lounge" },
-      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, Gishushu Kigali. Choose date, time and party size — WhatsApp confirmation within minutes." },
-      { property: "og:title", content: "Reserve a Table — Tania's Cuisine & Lounge" },
-      { property: "og:description", content: "Book your table in seconds. Confirmation by WhatsApp." },
+      { title: "Reservations & Contact — Tania's Cuisine & Lounge | Gishushu, Kigali" },
+      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, M&M Plaza, Gishushu, Kigali. Choose date, time and party size — WhatsApp confirmation within minutes. Call +250 788 500 635." },
+      { property: "og:title", content: "Reserve a Table — Tania's Cuisine & Lounge | Gishushu, Kigali" },
+      { property: "og:description", content: "Book your table at M&M Plaza, Gishushu. Choose date, time and party size. WhatsApp confirmation within minutes." },
+      { property: "og:url", content: "https://taniascuisine.rw/contact" },
+      { name: "twitter:title", content: "Reserve a Table — Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Book your table at M&M Plaza, Gishushu. WhatsApp confirmation within minutes." },
     ],
+    links: [{ rel: "canonical", href: "https://taniascuisine.rw/contact" }],
   }),
   component: ContactPage,
 });

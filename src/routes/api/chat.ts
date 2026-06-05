@@ -82,16 +82,19 @@ export const Route = createFileRoute("/api/chat")({
           const text = last.parts?.map((p) => (p.type === "text" ? p.text : "")).join("") || "";
           const response = generateResponse(text);
 
+          const id = crypto.randomUUID();
           const encoder = new TextEncoder();
           const stream = new ReadableStream({
             start(controller) {
-              controller.enqueue(encoder.encode(response));
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "text-start", id })}\n\n`));
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "text-delta", id, delta: response })}\n\n`));
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: "text-end", id })}\n\n`));
               controller.close();
             },
           });
 
           return new Response(stream, {
-            headers: { "Content-Type": "text/plain; charset=utf-8" },
+            headers: { "Content-Type": "text/event-stream" },
           });
         } catch (err) {
           const message = err instanceof Error ? err.message : "unknown error";

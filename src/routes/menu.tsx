@@ -8,11 +8,15 @@ import { Clock, Star } from "lucide-react";
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
-      { title: "The Menu — Tania's Cuisine & Lounge" },
-      { name: "description", content: "Snacks, grills, goat & chicken specialties, fresh fish, coffee bar, juices and more. Tania's full menu in Kigali." },
-      { property: "og:title", content: "The Menu — Tania's Cuisine & Lounge" },
-      { property: "og:description", content: "A culinary journey of African flavors — grills, curries, coffee and more." },
+      { title: "Menu — Tania's Cuisine & Lounge | African Flavours in Kigali" },
+      { name: "description", content: "Browse the full menu at Tania's Cuisine & Lounge, Kigali. African grills, Swahili fish, peri-peri chicken, beef fillet steak, daily buffet (12,000 RWF), coffee bar, fresh juices and more. Prices in FRW." },
+      { property: "og:title", content: "Menu — Tania's Cuisine & Lounge | African Flavours in Kigali" },
+      { property: "og:description", content: "Browse the full menu: African grills, Swahili fish, peri-peri chicken, daily buffet, coffee bar and more. All prices in FRW." },
+      { property: "og:url", content: "https://taniascuisine.rw/menu" },
+      { name: "twitter:title", content: "Menu — Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "African grills, Swahili fish, daily buffet, coffee bar and more in Kigali." },
     ],
+    links: [{ rel: "canonical", href: "https://taniascuisine.rw/menu" }],
   }),
   component: MenuPage,
 });

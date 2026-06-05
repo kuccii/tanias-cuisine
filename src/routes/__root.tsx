@@ -72,29 +72,39 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const SITE_URL = "https://taniascuisine.rw";
+const SITE_NAME = "Tania's Cuisine & Lounge — Kigali";
+const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Tania's Cuisine" },
-      { name: "description", content: "Tania's Culinary Canvas is a website for a catering and dining company." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Tania's Cuisine" },
-      { property: "og:description", content: "Tania's Culinary Canvas is a website for a catering and dining company." },
+      { title: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
+      { name: "description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, daily buffet, coffee bar. Reserve your table or book an event for up to 1,000 guests." },
+      { name: "author", content: "Tania's Cuisine & Lounge" },
+      { name: "theme-color", content: "#0c0b0a" },
+      { name: "robots", content: "index, follow" },
+      { name: "googlebot", content: "index, follow" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:title", content: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
+      { property: "og:description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, daily buffet, coffee bar. Reserve your table or book an event for up to 1,000 guests." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Tania's Cuisine" },
-      { name: "twitter:description", content: "Tania's Culinary Canvas is a website for a catering and dining company." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a08b8bd-8c39-4d37-b76d-35fd05f4b3ce/id-preview-1b52115e--a3289e06-0e1f-42bd-b4b5-78e1a7840414.lovable.app-1780134926457.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a08b8bd-8c39-4d37-b76d-35fd05f4b3ce/id-preview-1b52115e--a3289e06-0e1f-42bd-b4b5-78e1a7840414.lovable.app-1780134926457.png" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:locale", content: "en_RW" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@LoungeTania" },
+      { name: "twitter:title", content: "Tania's Cuisine & Lounge — Kigali" },
+      { name: "twitter:description", content: "Atmospheric dining, lounge & catering in Kigali. African grills, daily buffet, coffee bar." },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "canonical", href: SITE_URL },
+      { rel: "stylesheet", href: appCss },
     ],
   }),
   shellComponent: RootShell,
@@ -103,11 +113,48 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  name: "Tania's Cuisine & Lounge",
+  alternateName: "Tania's",
+  description: "Kigali's atmospheric dining destination. African grills, curries, daily buffet, coffee bar and catering for up to 1,000 guests.",
+  url: "https://taniascuisine.rw",
+  telephone: "+250788500635",
+  email: "hello@taniascuisine.rw",
+  servesCuisine: ["African", "East African", "Grill", "International"],
+  priceRange: "$$",
+  foundingDate: "2020-02",
+  parentOrganization: {
+    "@type": "Organization",
+    name: "Tany's Ltd",
+    foundingDate: "2018",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "M&M Plaza, Gishushu",
+    addressLocality: "Kigali",
+    addressCountry: "RW",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: -1.9441, longitude: 30.0619 },
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "11:00", closes: "23:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday", "Sunday"], opens: "11:00", closes: "23:00" },
+  ],
+  image: "https://taniascuisine.rw/og-image.jpg",
+  sameAs: [
+    "https://www.instagram.com/taniacuisineandlounge",
+    "https://twitter.com/LoungeTania",
+  ],
+  aggregateRating: { "@type": "AggregateRating", ratingValue: "4.5", bestRating: "5", ratingCount: "120" },
+};
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
       </head>
       <body>
         {children}

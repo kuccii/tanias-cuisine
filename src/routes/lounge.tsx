@@ -1,19 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
-import lounge from "@/assets/lounge-interior.jpg";
-import buffet from "@/assets/buffet.jpg";
-import loungeDrink from "@/assets/lounge-drink.jpg";
-import loungeFood from "@/assets/lounge-food.jpg";
+import lounge from "@/assets/area/area-01.jpeg";
+import buffet from "@/assets/area/area-04.jpeg";
+import loungeDrink from "@/assets/area/area-05.jpeg";
+import loungeFood from "@/assets/area/area-06.jpeg";
 import { MapPin, Clock, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/lounge")({
   head: () => ({
     meta: [
-      { title: "The Lounge — Tania's Cuisine & Lounge Kigali" },
-      { name: "description", content: "Velvet booths, copper light, daily buffet. Reserve your table at Tania's atmospheric lounge in Kigali." },
-      { property: "og:title", content: "The Lounge — Tania's Cuisine & Lounge" },
-      { property: "og:description", content: "Atmospheric Kigali dining lounge with daily buffet." },
+      { title: "The Lounge — Tania's Cuisine & Lounge | Gishushu, Kigali" },
+      { name: "description", content: "Tania's atmospheric lounge at M&M Plaza, Gishushu, Kigali. Velvet booths, copper pendants, daily chef's buffet (12,000 RWF, 12:00–15:00). Open Mon–Sun 11:00–23:00. Reserve your table." },
+      { property: "og:title", content: "The Lounge — Tania's Cuisine & Lounge | Gishushu, Kigali" },
+      { property: "og:description", content: "Atmospheric lounge at M&M Plaza, Gishushu, Kigali. Daily buffet, velvet booths, copper light. Reserve your table." },
+      { property: "og:url", content: "https://taniascuisine.rw/lounge" },
+      { name: "twitter:title", content: "The Lounge — Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Atmospheric Kigali dining lounge with daily buffet at M&M Plaza, Gishushu." },
     ],
+    links: [{ rel: "canonical", href: "https://taniascuisine.rw/lounge" }],
   }),
   component: LoungePage,
 });

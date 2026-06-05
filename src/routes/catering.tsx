@@ -1,19 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { SiteLayout } from "@/components/site/Layout";
-import catering from "@/assets/catering-event.jpg";
+import catering from "@/assets/area/area-07.jpeg";
 import platter from "@/assets/dish-platter.jpg";
-import buffet from "@/assets/buffet.jpg";
+import buffet from "@/assets/area/area-04.jpeg";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/catering")({
   head: () => ({
     meta: [
-      { title: "Catering & Events — Tania's Cuisine Kigali | Tany's Ltd" },
-      { name: "description", content: "Chef-led catering for corporate events, weddings and private parties. Serving 50 — 1,000 guests across Rwanda since 2020." },
-      { property: "og:title", content: "Catering & Events — Tania's Cuisine | Tany's Ltd" },
-      { property: "og:description", content: "Service that scales. From 50 to 1,000 guests." },
+      { title: "Catering & Events — Tania's Cuisine & Lounge | Kigali, Rwanda" },
+      { name: "description", content: "Chef-led catering in Kigali. Corporate catering, weddings, galas, private events and daily office buffet delivery. Serving 50–1,000 guests. Trusted by Access Bank, Bank of Kigali, GIZ, Oxfam and more. Part of Tany's Ltd." },
+      { property: "og:title", content: "Catering & Events — Tania's Cuisine & Lounge | Kigali" },
+      { property: "og:description", content: "Chef-led catering for 50–1,000 guests. Corporate, weddings, private events. Trusted by Access Bank, Bank of Kigali, GIZ." },
+      { property: "og:url", content: "https://taniascuisine.rw/catering" },
+      { name: "twitter:title", content: "Catering & Events — Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Chef-led catering for 50–1,000 guests in Kigali. Corporate, weddings, private events." },
     ],
+    links: [{ rel: "canonical", href: "https://taniascuisine.rw/catering" }],
   }),
   component: CateringPage,
 });

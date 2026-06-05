@@ -6,11 +6,15 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Tania's Cuisine & Lounge" },
-      { name: "description", content: "Browse the Tania's Cuisine & Lounge gallery — atmosphere, events, and everyday moments at M&M Plaza, Gishushu, Kigali." },
-      { property: "og:title", content: "Gallery — Tania's Cuisine & Lounge" },
-      { property: "og:description", content: "Moments captured at Tania's." },
+      { title: "Gallery — Tania's Cuisine & Lounge | M&M Plaza, Gishushu, Kigali" },
+      { name: "description", content: "Browse the Tania's Cuisine & Lounge photo gallery — the lounge, the table, the light, and everyday moments at M&M Plaza, Gishushu, Kigali." },
+      { property: "og:title", content: "Gallery — Tania's Cuisine & Lounge | Gishushu, Kigali" },
+      { property: "og:description", content: "Browse our gallery — the lounge, atmosphere and everyday moments at Tania's in Gishushu, Kigali." },
+      { property: "og:url", content: "https://taniascuisine.rw/gallery" },
+      { name: "twitter:title", content: "Gallery — Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Browse the gallery — atmosphere, events and moments at M&M Plaza, Gishushu." },
     ],
+    links: [{ rel: "canonical", href: "https://taniascuisine.rw/gallery" }],
   }),
   component: GalleryPage,
 });

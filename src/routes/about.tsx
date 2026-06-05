@@ -1,17 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
-import lounge from "@/assets/lounge-interior.jpg";
-import catering from "@/assets/catering-event.jpg";
-import buffet from "@/assets/buffet.jpg";
+import lounge from "@/assets/area/area-01.jpeg";
+import catering from "@/assets/area/area-02.jpeg";
+import buffet from "@/assets/area/area-03.jpeg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Tania's Cuisine & Lounge | Tany's Ltd" },
-      { name: "description", content: "Tania's Cuisine & Lounge — part of Tany's Ltd. Kigali's premier dining, lounge and catering destination since February 2020." },
-      { property: "og:title", content: "About — Tania's Cuisine & Lounge | Tany's Ltd" },
-      { property: "og:description", content: "Part of Tany's Ltd. Kigali's premier dining destination since Feb 2020." },
+      { title: "About — Tania's Cuisine & Lounge | Part of Tany's Ltd, Kigali" },
+      { name: "description", content: "Part of Tany's Ltd (est. 2018). Tania's Cuisine & Lounge opened February 2020 at M&M Plaza, Gishushu, Kigali. Kigali's premier dining, lounge and catering destination. Up to 1,000 guests per event." },
+      { property: "og:title", content: "About — Tania's Cuisine & Lounge | Part of Tany's Ltd" },
+      { property: "og:description", content: "Kigali's premier dining destination since Feb 2020. Part of Tany's Ltd. African hospitality, global standards." },
+      { property: "og:url", content: "https://taniascuisine.rw/about" },
+      { name: "twitter:title", content: "About — Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Part of Tany's Ltd. Kigali's premier dining destination since Feb 2020." },
     ],
+    links: [{ rel: "canonical", href: "https://taniascuisine.rw/about" }],
   }),
   component: AboutPage,
 });

@@ -5,18 +5,21 @@ import beefFillet from "@/assets/menu/beef-fillet.jpg";
 import wholeTilapia from "@/assets/menu/whole-tilapia.jpg";
 import bbqPlatter from "@/assets/menu/bbq-platter.jpg";
 import heroVideo from "@/assets/herovideo.mp4";
-import loungeImg from "@/assets/lounge-interior.jpg";
-import cateringImg from "@/assets/catering-event.jpg";
+import loungeImg from "@/assets/area/area-01.jpeg";
+import cateringImg from "@/assets/area/area-07.jpeg";
 import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
-      { name: "description", content: "Atmospheric dining, catering at scale, and an unforgettable lounge in Kigali. Reserve a table or book your event." },
-      { property: "og:title", content: "Tania's Cuisine & Lounge" },
-      { property: "og:description", content: "Kigali's finest dining since 2018." },
+      { name: "description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, curries, daily buffet, coffee bar. Reserve a table or book catering for up to 1,000 guests." },
+      { property: "og:title", content: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
+      { property: "og:description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, daily buffet, coffee bar. Reserve your table." },
+      { property: "og:url", content: "https://taniascuisine.rw" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://taniascuisine.rw" }],
   }),
   component: Index,
 });
