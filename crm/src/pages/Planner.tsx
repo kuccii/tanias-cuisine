@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { upsertPost, upsertWeeklyPlan } from "../data/store";
-import type { Post, WeeklyMenuPlan } from "../data/types";
+import type { Post, WeeklyMenuPlan, DayMenu, MenuDuJour } from "../data/types";
 import { THEMES, TYPES } from "../data/types";
 
 function genId() {
@@ -8,18 +8,42 @@ function genId() {
 }
 
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const MDJ_DAYS: (keyof MenuDuJour)[] = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+
+const FIELDS: { key: keyof DayMenu; label: string }[] = [
+  { key: "starter", label: "Starter" },
+  { key: "main", label: "Main" },
+  { key: "accompaniment", label: "Accompaniment" },
+  { key: "dessert", label: "Dessert" },
+];
+
+function emptyDay(): DayMenu {
+  return { starter: "", main: "", accompaniment: "", dessert: "" };
+}
 
 export default function Planner() {
   const [weekLabel, setWeekLabel] = useState("");
-  const [menuName, setMenuName] = useState("");
   const [menuItemsStr, setMenuItemsStr] = useState("");
   const [generatedPosts, setGeneratedPosts] = useState<Post[]>([]);
   const [saved, setSaved] = useState(false);
+  const [menuDuJour, setMenuDuJour] = useState<MenuDuJour>(() => ({
+    monday: { starter: "Caesar salad", main: "Fish kebab", accompaniment: "Ginger yellow rice, Spicy French fries, Peas vegetable", dessert: "Crepes" },
+    tuesday: { starter: "Vinaigrette Avocado salad", main: "Special Tania's Beef émincé", accompaniment: "Jolof rice, Minted potatoes, Mixed vegetables", dessert: "Fruit salad" },
+    wednesday: { starter: "Mushroom soup", main: "Open chicken wings", accompaniment: "Steamed rice, French fries, Season vegetables", dessert: "Lemon cake" },
+    thursday: { starter: "Vegetable soup", main: "Beef stew", accompaniment: "Steamed rice, Potatoes croquettes, Lengalenga (Greens)", dessert: "Season fruits" },
+    friday: { starter: "Pumpkin soup", main: "Chicken stew", accompaniment: "Vegetable rice, Fried banana, Mixed vegetable", dessert: "Mousse au chocolat" },
+  }));
+
+  const updateDay = (day: keyof MenuDuJour, field: keyof DayMenu, value: string) => {
+    setMenuDuJour(prev => ({
+      ...prev,
+      [day]: { ...prev[day], [field]: value },
+    }));
+  };
 
   const handleGenerate = () => {
     const items = menuItemsStr.split(",").map(s => s.trim()).filter(Boolean);
     if (!weekLabel || items.length === 0) return;
-
     const planId = genId();
     const posts: Post[] = DAYS.map((day, i) => {
       const menuItem = items[i % items.length];
@@ -63,7 +87,6 @@ export default function Planner() {
 
   const handleSaveAll = () => {
     if (generatedPosts.length === 0) return;
-
     const plan: WeeklyMenuPlan = {
       id: generatedPosts[0].weekPlanId,
       weekLabel,
@@ -71,6 +94,7 @@ export default function Planner() {
       specialMenuItems: menuItemsStr.split(",").map(s => s.trim()).filter(Boolean),
       status: "draft",
       createdAt: new Date().toISOString(),
+      menuDuJour,
     };
     upsertWeeklyPlan(plan);
     generatedPosts.forEach(p => upsertPost(p));
@@ -81,18 +105,13 @@ export default function Planner() {
     <div>
       <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 24 }}>Weekly Planner</h1>
 
+      {/* Week posts generator */}
       <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 10, padding: 20, marginBottom: 24 }}>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 12 }}>
           <input
             placeholder="Week label (e.g. Week 3)"
             value={weekLabel}
             onChange={e => setWeekLabel(e.target.value)}
-            style={{ flex: 1, minWidth: 150, padding: "10px 14px", borderRadius: 8, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--text)", fontSize: 14 }}
-          />
-          <input
-            placeholder="Menu name"
-            value={menuName}
-            onChange={e => setMenuName(e.target.value)}
             style={{ flex: 1, minWidth: 150, padding: "10px 14px", borderRadius: 8, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--text)", fontSize: 14 }}
           />
         </div>
@@ -110,6 +129,33 @@ export default function Planner() {
         </button>
       </div>
 
+      {/* Menu du Jour */}
+      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 10, padding: 20, marginBottom: 24 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Menu du Jour</h2>
+        <p style={{ fontSize: 13, color: "var(--text2)", marginBottom: 16 }}>
+          Fill in the daily rotating menu for Monday – Friday.
+        </p>
+        {MDJ_DAYS.map(day => (
+          <div key={day} style={{ marginBottom: 20, padding: 16, background: "var(--bg)", borderRadius: 8, border: "1px solid var(--border)" }}>
+            <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 10, textTransform: "capitalize" }}>{day}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {FIELDS.map(field => (
+                <label key={field.key} style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <span style={{ fontSize: 11, color: "var(--text2)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{field.label}</span>
+                  <input
+                    value={menuDuJour[day][field.key]}
+                    onChange={e => updateDay(day, field.key, e.target.value)}
+                    placeholder={field.label}
+                    style={{ padding: "8px 10px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--surface)", color: "var(--text)", fontSize: 13 }}
+                  />
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Generated posts */}
       {generatedPosts.length > 0 && (
         <>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 24 }}>

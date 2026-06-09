@@ -68,6 +68,21 @@ export interface Post {
   activityLog: ActivityEntry[];
 }
 
+export interface DayMenu {
+  starter: string;
+  main: string;
+  accompaniment: string;
+  dessert: string;
+}
+
+export interface MenuDuJour {
+  monday: DayMenu;
+  tuesday: DayMenu;
+  wednesday: DayMenu;
+  thursday: DayMenu;
+  friday: DayMenu;
+}
+
 export interface WeeklyMenuPlan {
   id: string;
   weekLabel: string;
@@ -75,6 +90,7 @@ export interface WeeklyMenuPlan {
   specialMenuItems: string[];
   status: WeekStatus;
   createdAt: string;
+  menuDuJour?: MenuDuJour;
 }
 
 export interface VisualAsset {

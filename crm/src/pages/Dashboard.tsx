@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { getPosts, getActivity } from "../data/store";
-import type { PostStatus } from "../data/types";
+import { getPosts, getActivity, getWeeklyPlans } from "../data/store";
+import type { PostStatus, MenuDuJour } from "../data/types";
 import StatsCard from "../components/StatsCard";
 import StatusBadge from "../components/StatusBadge";
 
@@ -20,9 +20,24 @@ function fmtDate(d: Date) {
 
 const progressStatuses: PostStatus[] = ["Idea", "Draft", "PendingReview", "Approved", "Scheduled", "Posted"];
 
+const DAY_LABELS: Record<keyof MenuDuJour, string> = {
+  monday: "Mon", tuesday: "Tue", wednesday: "Wed", thursday: "Thu", friday: "Fri",
+};
+
+const MDJ_DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday"] as const;
+
+function getTodayKey(): keyof MenuDuJour | null {
+  const day = new Date().getDay();
+  const map: Record<number, keyof MenuDuJour> = { 1: "monday", 2: "tuesday", 3: "wednesday", 4: "thursday", 5: "friday" };
+  return map[day] || null;
+}
+
 export default function Dashboard() {
   const posts = getPosts();
   const activity = getActivity();
+  const plans = getWeeklyPlans();
+
+  const todayKey = getTodayKey();
 
   const weekStart = getWeekStart();
   const weekEnd = new Date(weekStart);
@@ -39,10 +54,19 @@ export default function Dashboard() {
 
   const recentActivity = activity.slice(0, 10);
 
+  // Find current week's plan
+  const currentPlan = plans.find(p => {
+    if (!p.mondayDate) return false;
+    return p.mondayDate >= ws && p.mondayDate < we;
+  }) || plans[plans.length - 1];
+
+  const showMenu = currentPlan?.menuDuJour;
+
   return (
     <div>
       <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 24 }}>Dashboard</h1>
 
+      {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 16, marginBottom: 32 }}>
         <StatsCard label="Total Posts" value={total} color="var(--accent)" />
         <StatsCard label="Pending Review" value={pendingReview} color="var(--orange)" />
@@ -57,6 +81,45 @@ export default function Dashboard() {
           <Link to="/review" style={{ color: "var(--accent)", textDecoration: "none", fontSize: 14 }}>
             {pendingReview} post{pendingReview > 1 ? "s" : ""} pending review — click to review →
           </Link>
+        </div>
+      )}
+
+      {/* Menu du Jour */}
+      {showMenu && (
+        <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 10, padding: 20, marginBottom: 24 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <h2 style={{ fontSize: 16, fontWeight: 600 }}>Menu du Jour — {currentPlan.weekLabel}</h2>
+            <Link to="/planner" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none" }}>Edit →</Link>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8 }}>
+            {MDJ_DAYS.map(day => {
+              const d = currentPlan.menuDuJour![day];
+              const isToday = day === todayKey;
+              return (
+                <div
+                  key={day}
+                  style={{
+                    padding: 12,
+                    borderRadius: 8,
+                    background: isToday ? "var(--accent)" : "var(--bg)",
+                    color: isToday ? "#111" : "var(--text)",
+                    border: isToday ? "none" : "1px solid var(--border)",
+                  }}
+                >
+                  <div style={{ fontWeight: 700, fontSize: 12, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    {DAY_LABELS[day]}
+                    {isToday && <span style={{ marginLeft: 4, fontSize: 10, opacity: 0.7 }}>● TODAY</span>}
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 12 }}>
+                    <span><span style={{ opacity: 0.6 }}>S:</span> {d.starter}</span>
+                    <span><span style={{ opacity: 0.6 }}>M:</span> {d.main}</span>
+                    <span><span style={{ opacity: 0.6 }}>A:</span> {d.accompaniment}</span>
+                    <span><span style={{ opacity: 0.6 }}>D:</span> {d.dessert}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
