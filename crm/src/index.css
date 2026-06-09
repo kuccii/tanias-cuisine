@@ -36,3 +36,33 @@ body {
 
 .bg-\[\#0d0d0d\] { background-color: #0d0d0d; }
 .text-\[\#e5e5e5\] { color: #e5e5e5; }
+
+.card-hover { transition: border-color 0.15s, box-shadow 0.15s; cursor: pointer; }
+.card-hover:hover { border-color: var(--accent) !important; box-shadow: 0 0 0 1px rgba(196,148,61,0.15); }
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px rgba(196,148,61,0.2);
+}
+
+button:not(:disabled) {
+  transition: opacity 0.15s, transform 0.1s;
+}
+button:not(:disabled):hover { opacity: 0.9; }
+button:not(:disabled):active { transform: scale(0.97); }
+
+@media (min-width: 769px) {
+  .nav-mobile { display: none !important; }
+}
+@media (max-width: 768px) {
+  .nav-desktop { display: none !important; }
+  .grid-stats { grid-template-columns: repeat(2, 1fr) !important; }
+  .grid-mdj { grid-template-columns: 1fr 1fr !important; }
+  .grid-bottom { grid-template-columns: 1fr !important; }
+  .grid-mdj-days { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 480px) {
+  .grid-stats { grid-template-columns: 1fr !important; }
+  .grid-mdj { grid-template-columns: 1fr !important; }
+}

@@ -67,7 +67,7 @@ export default function Dashboard() {
       <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 24 }}>Dashboard</h1>
 
       {/* Stats */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 16, marginBottom: 32 }}>
+      <div className="grid-stats" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 16, marginBottom: 32 }}>
         <StatsCard label="Total Posts" value={total} color="var(--accent)" />
         <StatsCard label="Pending Review" value={pendingReview} color="var(--orange)" />
         <StatsCard label="This Week" value={thisWeek} color="var(--blue)" />
@@ -91,7 +91,7 @@ export default function Dashboard() {
             <h2 style={{ fontSize: 16, fontWeight: 600 }}>Menu du Jour — {currentPlan.weekLabel}</h2>
             <Link to="/planner" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none" }}>Edit →</Link>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8 }}>
+          <div className="grid-mdj" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8 }}>
             {MDJ_DAYS.map(day => {
               const d = currentPlan.menuDuJour![day];
               const isToday = day === todayKey;
@@ -123,7 +123,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+      <div className="grid-bottom" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
         <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 10, padding: 20 }}>
           <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Weekly Progress</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

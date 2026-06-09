@@ -13,6 +13,7 @@ export default function Assets() {
   const [tags, setTags] = useState("");
   const [fileData, setFileData] = useState("");
   const [fileType, setFileType] = useState<"photo" | "video">("photo");
+  const [toast, setToast] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const allTags = [...new Set(assets.flatMap(a => a.tags))];
@@ -47,9 +48,12 @@ export default function Assets() {
     setTags("");
     setFileData("");
     if (fileRef.current) fileRef.current.value = "";
+    setToast("Asset uploaded");
+    setTimeout(() => setToast(""), 2500);
   };
 
   const handleDelete = (id: string) => {
+    if (!window.confirm("Delete this asset?")) return;
     deleteAsset(id);
     setAssets(getAssets());
     if (previewAsset?.id === id) setPreviewAsset(null);
@@ -84,6 +88,12 @@ export default function Assets() {
           + Upload
         </button>
       </div>
+
+      {toast && (
+        <div style={{ marginBottom: 16, padding: "10px 16px", borderRadius: 8, background: "var(--green)", color: "#111", fontWeight: 600, fontSize: 14, display: "inline-block" }}>
+          {toast}
+        </div>
+      )}
 
       {allTags.length > 0 && (
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
@@ -147,7 +157,7 @@ export default function Assets() {
         </div>
       )}
 
-      <style>{`.asset-delete { opacity: 0; transition: opacity 0.15s; } .asset-delete:hover { opacity: 1; } div:hover > .asset-delete { opacity: 1; }`}</style>
+      <style>{`.asset-delete { opacity: 0.5; transition: opacity 0.15s; } .asset-delete:hover, .asset-delete:focus { opacity: 1; } div:hover > .asset-delete { opacity: 1; } @media (hover: none) { .asset-delete { opacity: 0.8; } }`}</style>
 
       <Modal open={uploadOpen} onClose={() => setUploadOpen(false)} title="Upload Asset">
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

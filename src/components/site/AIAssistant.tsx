@@ -160,7 +160,7 @@ export function AIAssistant() {
             </button>
           </form>
           <p className="px-3 pb-3 -mt-1 text-[10px] text-foreground/40 text-center">
-            <MessageCircle size={9} className="inline" /> Powered by Gemini · Knows our full menu
+            <MessageCircle size={9} className="inline" /> Powered by NVIDIA Nim · Knows our full menu
           </p>
         </div>
       )}

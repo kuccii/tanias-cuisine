@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { menuSections, restaurantInfo } from "@/data/menu";
 import { generateResponse } from "@/lib/menu-bot.server";
@@ -66,12 +66,16 @@ export const Route = createFileRoute("/api/chat")({
             return new Response("messages required", { status: 400 });
           }
 
-          const key = process.env.GOOGLE_API_KEY;
+          const key = process.env.NVIDIA_API_KEY;
 
           if (key) {
-            const google = createGoogleGenerativeAI({ apiKey: key });
+            const nvidia = createOpenAICompatible({
+              name: "nvidia",
+              baseURL: "https://integrate.api.nvidia.com/v1",
+              apiKey: key,
+            });
             const result = streamText({
-              model: google("gemini-2.0-flash"),
+              model: nvidia("meta/llama-3.1-70b-instruct"),
               system: SYSTEM_PROMPT,
               messages: await convertToModelMessages(messages),
             });

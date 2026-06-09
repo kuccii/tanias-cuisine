@@ -183,11 +183,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <header style={headerStyle}>
         <div style={headerInnerStyle}>
-          <div style={brandStyle}>🍽 Tania's Posting System</div>
-          <NavLinks />
+          <div style={brandStyle}>Tania's Cuisine CRM</div>
+          <div className="nav-desktop"><NavLinks /></div>
           <TeamDropdown member={member} members={members} onSelect={handleTeamSwitch} />
         </div>
-        <NavLinks vertical />
+        <div className="nav-mobile" style={{ borderBottom: "1px solid var(--border)" }}><NavLinks vertical /></div>
       </header>
       <main style={mainStyle}>{children}</main>
     </div>

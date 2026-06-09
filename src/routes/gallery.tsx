@@ -19,12 +19,12 @@ export const Route = createFileRoute("/gallery")({
   component: GalleryPage,
 });
 
-const IMAGE_COUNT = 20;
-const START_INDEX = 299;
-
-const galleryImages = Array.from({ length: IMAGE_COUNT }, (_, i) =>
-  `/gallery/DSC${(START_INDEX + i).toString().padStart(5, "0")}.JPG`
-);
+const galleryImages = Object.values(
+  import.meta.glob<{ default: string }>(
+    "/src/assets/Gallery/*.{jpeg,jpg,png,PNG,JPEG,JPG}",
+    { eager: true, query: "?url" }
+  )
+).map((m) => m.default);
 
 function GalleryPage() {
   const [selected, setSelected] = useState<number | null>(null);

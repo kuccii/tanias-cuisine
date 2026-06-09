@@ -17,15 +17,12 @@ const FIELDS: { key: keyof DayMenu; label: string }[] = [
   { key: "dessert", label: "Dessert" },
 ];
 
-function emptyDay(): DayMenu {
-  return { starter: "", main: "", accompaniment: "", dessert: "" };
-}
-
 export default function Planner() {
   const [weekLabel, setWeekLabel] = useState("");
   const [menuItemsStr, setMenuItemsStr] = useState("");
   const [generatedPosts, setGeneratedPosts] = useState<Post[]>([]);
   const [saved, setSaved] = useState(false);
+  const [genError, setGenError] = useState("");
   const [menuDuJour, setMenuDuJour] = useState<MenuDuJour>(() => ({
     monday: { starter: "Caesar salad", main: "Fish kebab", accompaniment: "Ginger yellow rice, Spicy French fries, Peas vegetable", dessert: "Crepes" },
     tuesday: { starter: "Vinaigrette Avocado salad", main: "Special Tania's Beef émincé", accompaniment: "Jolof rice, Minted potatoes, Mixed vegetables", dessert: "Fruit salad" },
@@ -43,7 +40,11 @@ export default function Planner() {
 
   const handleGenerate = () => {
     const items = menuItemsStr.split(",").map(s => s.trim()).filter(Boolean);
-    if (!weekLabel || items.length === 0) return;
+    if (!weekLabel || items.length === 0) {
+      setGenError("Please enter a week label and at least one menu item");
+      return;
+    }
+    setGenError("");
     const planId = genId();
     const posts: Post[] = DAYS.map((day, i) => {
       const menuItem = items[i % items.length];
@@ -99,6 +100,7 @@ export default function Planner() {
     upsertWeeklyPlan(plan);
     generatedPosts.forEach(p => upsertPost(p));
     setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
   };
 
   return (
@@ -121,6 +123,9 @@ export default function Planner() {
           onChange={e => setMenuItemsStr(e.target.value)}
           style={{ width: "100%", padding: "10px 14px", borderRadius: 8, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--text)", fontSize: 14, marginBottom: 12 }}
         />
+        {genError && (
+          <div style={{ color: "var(--red)", fontSize: 13, marginTop: 8 }}>{genError}</div>
+        )}
         <button
           onClick={handleGenerate}
           style={{ padding: "10px 20px", borderRadius: 8, border: "none", background: "var(--accent)", color: "#111", fontWeight: 600, cursor: "pointer", fontSize: 14 }}
@@ -135,24 +140,26 @@ export default function Planner() {
         <p style={{ fontSize: 13, color: "var(--text2)", marginBottom: 16 }}>
           Fill in the daily rotating menu for Monday – Friday.
         </p>
-        {MDJ_DAYS.map(day => (
-          <div key={day} style={{ marginBottom: 20, padding: 16, background: "var(--bg)", borderRadius: 8, border: "1px solid var(--border)" }}>
-            <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 10, textTransform: "capitalize" }}>{day}</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-              {FIELDS.map(field => (
-                <label key={field.key} style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  <span style={{ fontSize: 11, color: "var(--text2)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{field.label}</span>
-                  <input
-                    value={menuDuJour[day][field.key]}
-                    onChange={e => updateDay(day, field.key, e.target.value)}
-                    placeholder={field.label}
-                    style={{ padding: "8px 10px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--surface)", color: "var(--text)", fontSize: 13 }}
-                  />
-                </label>
-              ))}
+        <div className="grid-mdj-days" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
+          {MDJ_DAYS.map(day => (
+            <div key={day} style={{ padding: 16, background: "var(--bg)", borderRadius: 8, border: "1px solid var(--border)" }}>
+              <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 10, textTransform: "capitalize", color: "var(--accent)" }}>{day}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {FIELDS.map(field => (
+                  <label key={field.key} style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                    <span style={{ fontSize: 11, color: "var(--text2)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{field.label}</span>
+                    <input
+                      value={menuDuJour[day][field.key]}
+                      onChange={e => updateDay(day, field.key, e.target.value)}
+                      placeholder={field.label}
+                      style={{ padding: "8px 10px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--surface)", color: "var(--text)", fontSize: 13 }}
+                    />
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Generated posts */}

@@ -26,7 +26,7 @@
 - `src/data/menu.ts` — Menu items, sections, restaurantInfo object
 - `src/data/menu-images.ts` — Image resolution for menu items
 - `src/lib/menu-bot.server.ts` — Rule-based chat fallback bot
-- Images: `src/assets/menu/` for dishes, `src/assets/area/` for venue, `public/gallery/` for gallery
+- Images: `src/assets/menu/` for dishes, `src/assets/area/` for venue, `src/assets/Gallery/` for gallery (loaded via `import.meta.glob` at build time)
 
 ## SEO Guidelines
 - Every route has a `head()` export with title, description, og:title, og:description
@@ -47,8 +47,10 @@
 ## AI Chat
 - Uses `@ai-sdk/react` `useChat` hook + `DefaultChatTransport`
 - Server route: `src/routes/api/chat.ts`
-- AI model: Google Gemini `gemini-2.0-flash` (via `@ai-sdk/google`)
-- Fallback: rule-based bot (`src/lib/menu-bot.server.ts`) when no `GOOGLE_API_KEY`
+- AI model: NVIDIA Nim via OpenAI-compatible API (`@ai-sdk/openai-compatible`), model `meta/llama-3.1-70b-instruct`
+- Endpoint: `https://integrate.api.nvidia.com/v1`
+- Env var: `NVIDIA_API_KEY` (prefix: `nvapi-`)
+- Fallback: rule-based bot (`src/lib/menu-bot.server.ts`) when no `NVIDIA_API_KEY`
 - Response format: SSE JSON events (`text-start`/`text-delta`/`text-end`)
 
 ## Build Notes

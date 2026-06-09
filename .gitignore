@@ -39,3 +39,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Environment variables (API keys, secrets)
+.env
+.env.local
+.env.*.local

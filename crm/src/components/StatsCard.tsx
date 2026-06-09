@@ -5,7 +5,7 @@ interface StatsCardProps {
 }
 
 const cardStyle: React.CSSProperties = {
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   borderRadius: 10,
   padding: "20px 24px",
   textAlign: "center",
@@ -21,7 +21,7 @@ const valueStyle = (color: string): React.CSSProperties => ({
 
 const labelStyle: React.CSSProperties = {
   fontSize: 13,
-  color: "#999",
+  color: "var(--text2)",
   marginTop: 6,
   textTransform: "uppercase",
   letterSpacing: "0.5px",

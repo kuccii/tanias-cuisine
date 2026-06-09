@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getPosts, upsertPost, deletePost } from "../data/store";
+import { getPosts, deletePost } from "../data/store";
 import KanbanBoard from "../components/KanbanBoard";
 import StatusBadge from "../components/StatusBadge";
 import Modal from "../components/Modal";
@@ -79,6 +79,7 @@ export default function Calendar() {
   };
 
   const handleDelete = (id: string) => {
+    if (!window.confirm("Delete this post?")) return;
     deletePost(id);
     refresh();
     if (detailPost?.id === id) setDetailPost(null);

@@ -25,7 +25,7 @@ export default function Review() {
   const handleConfirm = (post: Post) => {
     const updated: Post = {
       ...post,
-      status: "Scheduled",
+      status: "Approved",
       approvedBy: member.id,
       approvedAt: new Date().toISOString(),
       activityLog: [
@@ -168,13 +168,13 @@ export default function Review() {
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                   <button
                     onClick={() => handleConfirm(post)}
-                    style={{ padding: "8px 16px", borderRadius: 6, border: "none", background: "#22c55e", color: "#111", fontWeight: 600, cursor: "pointer", fontSize: 13 }}
+                    style={{ padding: "8px 16px", borderRadius: 6, border: "none", background: "var(--green)", color: "#111", fontWeight: 600, cursor: "pointer", fontSize: 13 }}
                   >
                     Confirm
                   </button>
                   <button
                     onClick={() => { setEditModal(post); setEditValue(""); setEditReason(""); }}
-                    style={{ padding: "8px 16px", borderRadius: 6, border: "none", background: "#f59e0b", color: "#111", fontWeight: 600, cursor: "pointer", fontSize: 13 }}
+                    style={{ padding: "8px 16px", borderRadius: 6, border: "none", background: "var(--orange)", color: "#111", fontWeight: 600, cursor: "pointer", fontSize: 13 }}
                   >
                     Suggest Edits
                   </button>
