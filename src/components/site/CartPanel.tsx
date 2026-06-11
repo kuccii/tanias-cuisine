@@ -19,10 +19,10 @@ export function CartPanel({ open, onClose }: CartPanelProps) {
   return (
     <>
       {open && (
-        <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
+        <div className="fixed inset-0 bg-black/50 z-[60]" onClick={onClose} />
       )}
       <div
-        className={`fixed top-0 right-0 h-full w-[380px] max-w-[90vw] bg-background border-l border-border/40 z-50 shadow-2xl transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-[380px] max-w-[90vw] bg-background border-l border-border/40 z-[61] shadow-2xl transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
