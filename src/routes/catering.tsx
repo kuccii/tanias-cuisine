@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { SiteLayout } from "@/components/site/Layout";
-import catering from "@/assets/area/area-13.jpeg";
+import catering from "@/assets/area/area-14.jpeg";
 import platter from "@/assets/dish-platter.jpg";
-import buffet from "@/assets/area/area-04.jpeg";
+import buffet from "@/assets/area/area-08.jpeg";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/catering")({

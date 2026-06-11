@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
-import lounge from "@/assets/area/area-11.jpeg";
+import lounge from "@/assets/area/area-17.jpeg";
 import buffet from "@/assets/area/area-04.jpeg";
-import loungeDrink from "@/assets/area/area-05.jpeg";
-import loungeFood from "@/assets/area/area-06.jpeg";
+import loungeDrink from "@/assets/area/area-10.jpeg";
+import loungeFood from "@/assets/area/area-12.jpeg";
 import { MapPin, Clock, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/lounge")({
