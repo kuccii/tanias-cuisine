@@ -14,7 +14,7 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Reservations & Contact — Tania's Cuisine & Lounge | Gishushu, Kigali" },
-      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, M&M Plaza, Gishushu, Kigali. Choose date, time and party size — WhatsApp confirmation within minutes. Call +250 788 500 635." },
+      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, M&M Plaza, Gishushu, Kigali. Choose date, time and party size — WhatsApp confirmation within minutes. Call +250 789 289 450." },
       { property: "og:title", content: "Reserve a Table — Tania's Cuisine & Lounge | Gishushu, Kigali" },
       { property: "og:description", content: "Book your table at M&M Plaza, Gishushu. Choose date, time and party size. WhatsApp confirmation within minutes." },
       { property: "og:url", content: "https://taniascuisine.rw/contact" },
@@ -27,8 +27,8 @@ export const Route = createFileRoute("/contact")({
 });
 
 // Real venue (KG 8 Ave, M&M Plaza, Remera, Kigali)
-const WHATSAPP_NUMBER = "250788500635";
-const PHONE_DISPLAY = "+250 788 500 635";
+const WHATSAPP_NUMBER = "250789289450";
+const PHONE_DISPLAY = "+250 789 289 450";
 
 function todayISO() {
   const d = new Date();

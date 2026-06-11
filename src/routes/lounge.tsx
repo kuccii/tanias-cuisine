@@ -87,7 +87,7 @@ function LoungePage() {
           {[
             { icon: MapPin, title: "Location", lines: ["M&M Plaza, Gishushu", "Kigali, Rwanda"] },
             { icon: Clock, title: "Hours", lines: ["Mon — Sun", "11h00 — 23h00"] },
-            { icon: Phone, title: "Reserve", lines: ["+250 788 500 635", "WhatsApp welcome"] },
+            { icon: Phone, title: "Reserve", lines: ["+250 789 289 450", "WhatsApp welcome"] },
           ].map((c) => (
             <div key={c.title} className="border-t border-primary/40 pt-8">
               <c.icon className="text-primary mb-6" size={24} />

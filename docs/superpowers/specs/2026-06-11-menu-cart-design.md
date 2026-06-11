@@ -20,7 +20,7 @@ Add a multi-item cart to the menu page so users can select several dishes and or
 - Lists each cart item with: name, price, qty (+/- buttons), line total
 - "Remove" (X) button per item
 - Subtotal at bottom
-- "Order via WhatsApp" button — builds single message with all items and opens `wa.me/250788500635?text=...`
+- "Order via WhatsApp" button — builds single message with all items and opens `wa.me/250789289450?text=...`
 - Close button (X) in top-right
 
 ### Menu page updates (`src/routes/menu.tsx`)

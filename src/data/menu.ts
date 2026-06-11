@@ -41,14 +41,14 @@ export const restaurantInfo = {
   tagline: "A Culinary Journey of African Flavors",
   est: "2026",
   address: "M&M Plaza, Gishushu, Kigali",
-  phone: "+250 788 500 635",
+  phone: "+250 789 289 450",
   currency: "FRW",
   currency_note:
     "All prices are in Rwandan Francs (FRW) and inclusive of applicable taxes",
 };
 
 const W = "wa.me";
-const P = "250788500635";
+const P = "250789289450";
 
 export function waOrderUrl(name: string) {
   return `https://${W}/${P}?text=I'd%20like%20to%20order%3A%20${encodeURIComponent(name)}`;

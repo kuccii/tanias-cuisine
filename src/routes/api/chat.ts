@@ -40,7 +40,7 @@ RESTAURANT FACTS:
 - Launched: February 2020
 - Location: M&M Plaza, Gishushu, Kigali, Rwanda
 - Hours: Mon–Sun, 11:00 – 23:00. Daily buffet 12:00 – 15:00.
-- Phone / WhatsApp: +250 788 500 635
+- Phone / WhatsApp: +250 789 289 450
 - Email: hello@taniascuisine.rw (general) · info@taniascuisine.rw · events@taniascuisine.rw (catering)
 - All prices in Rwandan Francs (FRW), taxes included.
 - Guest capacity: up to 1,000 guests per event

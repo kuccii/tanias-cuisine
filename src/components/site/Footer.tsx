@@ -28,7 +28,7 @@ export function Footer() {
           <div>
             <h5 className="eyebrow mb-5">Contact</h5>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>+250 788 500 635</li>
+              <li>+250 789 289 450</li>
               <li>hello@taniascuisine.rw</li>
               <li>info@taniascuisine.rw</li>
               <li>M&amp;M Plaza, Gishushu, Kigali</li>

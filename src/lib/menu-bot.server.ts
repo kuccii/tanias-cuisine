@@ -30,7 +30,7 @@ const FACTS = [
   `**${restaurantInfo.name} ${restaurantInfo.subtitle}** — part of Tany's Ltd (est. 2018), serving Kigali since February 2020.`,
   `📍 M&M Plaza, Gishushu, Kigali, Rwanda`,
   `🕐 Mon–Sun · 11:00 – 23:00  (Daily buffet 12:00 – 15:00)`,
-  `📞 +250 788 500 635 (Phone / WhatsApp)`,
+  `📞 +250 789 289 450 (Phone / WhatsApp)`,
   `✉️ hello@taniascuisine.rw · info@taniascuisine.rw · events@taniascuisine.rw`,
   `👥 Capacity: up to 1,000 guests per event`,
   `🏢 Trusted by: Access Bank, The New Times, SONARWA, GIZ, Vivo Energy/Engen Rwanda, Oxfam, Horizon Group, Bank of Kigali`,
@@ -56,11 +56,11 @@ export function generateResponse(input: string): string {
   }
 
   if (q.includes("address") || q.includes("location") || q.includes("where") || q.includes("find") || q.includes("map") || q.includes("gishushu") || q.includes("come")) {
-    return `We're located at **M&M Plaza, Gishushu, Kigali, Rwanda**.\n\n🕐 Mon–Sun, 11:00 – 23:00\n📞 +250 788 500 635\n\nYou can find us on Google Maps — just search "Tania's Cuisine & Lounge Gishushu".`;
+    return `We're located at **M&M Plaza, Gishushu, Kigali, Rwanda**.\n\n🕐 Mon–Sun, 11:00 – 23:00\n📞 +250 789 289 450\n\nYou can find us on Google Maps — just search "Tania's Cuisine & Lounge Gishushu".`;
   }
 
   if (q.includes("phone") || q.includes("call") || q.includes("whatsapp") || q.includes("contact") || q.includes("number") || q.includes("reach")) {
-    return `You can reach us at:\n\n📞 **+250 788 500 635** (Phone / WhatsApp)\n✉️ hello@taniascuisine.rw (general)\n✉️ info@taniascuisine.rw\n✉️ events@taniascuisine.rw (catering)`;
+    return `You can reach us at:\n\n📞 **+250 789 289 450** (Phone / WhatsApp)\n✉️ hello@taniascuisine.rw (general)\n✉️ info@taniascuisine.rw\n✉️ events@taniascuisine.rw (catering)`;
   }
 
   if (q.includes("email") || q.includes("mail")) {
@@ -68,7 +68,7 @@ export function generateResponse(input: string): string {
   }
 
   if (q.includes("reserve") || q.includes("book") || q.includes("table") || q.includes("reservation")) {
-    return `To book a table, visit our **Reservation page** at /contact. Choose your date, time, and party size — we'll confirm by WhatsApp within minutes.\n\nOr simply WhatsApp us at **+250 788 500 635** and we'll help you right away!`;
+    return `To book a table, visit our **Reservation page** at /contact. Choose your date, time, and party size — we'll confirm by WhatsApp within minutes.\n\nOr simply WhatsApp us at **+250 789 289 450** and we'll help you right away!`;
   }
 
   if (q.includes("cater") || q.includes("event") || q.includes("party") || q.includes("wedding") || q.includes("corporate") || q.includes("gala") || q.includes("buffet")) {

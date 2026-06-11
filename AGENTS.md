@@ -39,7 +39,7 @@
 - Tania's launched: February 2020
 - Location: M&M Plaza, Gishushu, Kigali, Rwanda
 - Hours: Mon–Sun, 11:00–23:00. Daily buffet 12:00–15:00 (12,000 RWF)
-- Phone: +250 788 500 635
+- Phone: +250 789 289 450
 - Email: hello@taniascuisine.rw, info@taniascuisine.rw, events@taniascuisine.rw
 - Capacity: up to 1,000 guests/event
 - Social: @LoungeTania (Twitter/X), @taniacuisineandlounge (Instagram)

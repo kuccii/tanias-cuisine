@@ -120,7 +120,7 @@ const SCHEMA = {
   alternateName: "Tania's",
   description: "Kigali's atmospheric dining destination. African grills, curries, daily buffet, coffee bar and catering for up to 1,000 guests.",
   url: "https://taniascuisine.rw",
-  telephone: "+250788500635",
+  telephone: "+250789289450",
   email: "hello@taniascuisine.rw",
   servesCuisine: ["African", "East African", "Grill", "International"],
   priceRange: "$$",
