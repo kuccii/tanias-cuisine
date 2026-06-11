@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { SiteLayout } from "@/components/site/Layout";
-import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
+import { menuSections, restaurantInfo, waOrderUrl, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
-import { Clock, Star } from "lucide-react";
+import { Clock, Star, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -188,10 +188,18 @@ function ItemCard({
           <p className="text-xs text-foreground/60 italic leading-relaxed mb-3">{item.description}</p>
         )}
         {item.note && (
-          <p className="mt-auto pt-2 inline-flex items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45">
+          <p className="pt-2 inline-flex items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45">
             <Clock size={10} /> {item.note}
           </p>
         )}
+        <a
+          href={waOrderUrl(item.name)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-auto pt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-green-500 hover:text-green-400 transition-colors"
+        >
+          <MessageCircle size={14} /> Order via WhatsApp
+        </a>
       </div>
     </article>
   );
