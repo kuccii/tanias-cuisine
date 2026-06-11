@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { menuSections } from "@/data/menu";
-import beefFillet from "@/assets/menu/beef-fillet.jpg";
+import beefTwatundi from "@/assets/menu/beef-twatundi.jpg";
 import wholeTilapia from "@/assets/menu/whole-tilapia.jpg";
-import bbqPlatter from "@/assets/menu/bbq-platter.jpg";
+import sombeImg from "@/assets/menu/sombe.jpg";
 import heroVideo from "@/assets/herovideo.mp4";
 import loungeImg from "@/assets/area/area-01.jpeg";
 import cateringImg from "@/assets/area/area-07.jpeg";
@@ -13,9 +13,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
-      { name: "description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, curries, daily buffet, coffee bar. Reserve a table or book catering for up to 1,000 guests." },
+      { name: "description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, curries, daily buffet, coffee bar. Reserve a table or book catering for up to 800 guests." },
       { property: "og:title", content: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
-      { property: "og:description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, daily buffet, coffee bar. Reserve your table." },
+      { property: "og:description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, daily buffet, coffee bar. Reserve your table or book catering for up to 800 guests." },
       { property: "og:url", content: "https://taniascuisine.rw" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -27,9 +27,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   void menuSections;
   const featured = [
-    { id: "beef-fillet", name: "Beef Fillet Steak", category: "From the Grill", description: "Mushroom, peppercorn, or garlic sauce — prime cuts grilled over open flame.", image: beefFillet },
+    { id: "beef-twatundi", name: "Twatundi Beef", category: "From the Grill", description: "Slow-grilled Rwandan-style beef — bold, smoky, and deeply flavourful.", image: beefTwatundi },
     { id: "whole-tilapia", name: "Whole Tilapia Fish", category: "Fresh Catch", description: "Whole tilapia, grilled to perfection — crisp skin, tender flesh, lake to plate.", image: wholeTilapia },
-    { id: "bbq-platter", name: "BBQ Platter", category: "Begin Your Journey", description: "An abundant board of grilled meats, brochettes and sides — built for sharing.", image: bbqPlatter },
+    { id: "sombe", name: "Sombe", category: "Sides & Greens", description: "Cassava leaves simmered in rich coconut cream — a Rwandan classic.", image: sombeImg },
   ];
 
   return (
