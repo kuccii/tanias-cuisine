@@ -12,9 +12,8 @@ export function CartPanel({ open, onClose }: CartPanelProps) {
 
   function buildWaMessage() {
     const lines = items.map((i) => `${i.quantity}x ${i.name} (${i.price})`);
-    const header = "I'd like to order:";
     const total = `\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nTotal: ${totalPrice.toLocaleString()} FRW`;
-    return `${header}\n${lines.join("\n")}${total}`;
+    return `${lines.join("\n")}${total}`;
   }
 
   return (
