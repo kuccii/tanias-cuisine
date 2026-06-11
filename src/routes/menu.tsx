@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { SiteLayout } from "@/components/site/Layout";
-import { menuSections, restaurantInfo, waOrderUrl, type MenuItem, type MenuSection } from "@/data/menu";
+import { CartProvider, useCart } from "@/components/site/CartContext";
+import { CartPanel } from "@/components/site/CartPanel";
+import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
-import { Clock, Star, MessageCircle } from "lucide-react";
+import { Clock, Star, ShoppingBag } from "lucide-react";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -30,47 +32,50 @@ function MenuPage() {
   );
 
   return (
-    <SiteLayout>
-      {/* HERO */}
-      <section className="pt-40 pb-16 px-6 md:px-12">
-        <div className="mx-auto max-w-[1500px]">
-          <p className="eyebrow mb-6">The Living Menu · Est. {restaurantInfo.est}</p>
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl max-w-4xl text-balance">
-            A culinary journey of <span className="italic text-primary">African flavors.</span>
-          </h1>
-          <p className="mt-8 max-w-xl text-foreground/70">
-            {restaurantInfo.currency_note}. Most dishes plated to order — preparation times noted where applicable.
-          </p>
-        </div>
-      </section>
+    <CartProvider>
+      <SiteLayout>
+        {/* HERO */}
+        <section className="pt-40 pb-16 px-6 md:px-12">
+          <div className="mx-auto max-w-[1500px]">
+            <p className="eyebrow mb-6">The Living Menu · Est. {restaurantInfo.est}</p>
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl max-w-4xl text-balance">
+              A culinary journey of <span className="italic text-primary">African flavors.</span>
+            </h1>
+            <p className="mt-8 max-w-xl text-foreground/70">
+              {restaurantInfo.currency_note}. Most dishes plated to order — preparation times noted where applicable.
+            </p>
+          </div>
+        </section>
 
-      {/* SECTION FILTER */}
-      <section className="sticky top-[88px] z-30 glass border-y border-border/40">
-        <div className="mx-auto max-w-[1500px] px-6 md:px-12 py-4 flex gap-2 md:gap-3 overflow-x-auto">
-          <FilterChip active={active === "all"} onClick={() => setActive("all")} label="All" />
-          {menuSections.map((s) => (
-            <FilterChip
-              key={s.id}
-              active={active === s.id}
-              onClick={() => {
-                setActive(s.id);
-                requestAnimationFrame(() => {
-                  document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                });
-              }}
-              label={s.title}
-            />
+        {/* SECTION FILTER */}
+        <section className="sticky top-[88px] z-30 glass border-y border-border/40">
+          <div className="mx-auto max-w-[1500px] px-6 md:px-12 py-4 flex gap-2 md:gap-3 overflow-x-auto">
+            <FilterChip active={active === "all"} onClick={() => setActive("all")} label="All" />
+            {menuSections.map((s) => (
+              <FilterChip
+                key={s.id}
+                active={active === s.id}
+                onClick={() => {
+                  setActive(s.id);
+                  requestAnimationFrame(() => {
+                    document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  });
+                }}
+                label={s.title}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* SECTIONS */}
+        <div className="pb-24">
+          {visible.map((section, idx) => (
+            <Section key={section.id} section={section} index={idx} />
           ))}
         </div>
-      </section>
-
-      {/* SECTIONS */}
-      <div className="pb-24">
-        {visible.map((section, idx) => (
-          <Section key={section.id} section={section} index={idx} />
-        ))}
-      </div>
-    </SiteLayout>
+      </SiteLayout>
+      <CartFab />
+    </CartProvider>
   );
 }
 
@@ -164,6 +169,7 @@ function ItemCard({
   compact?: boolean;
 }) {
   const image = resolveItemImage(item.name, sectionId, groupName);
+  const { addItem } = useCart();
   return (
     <article className="group bg-card/40 border border-border/40 hover:border-primary/50 transition-colors overflow-hidden flex flex-col">
       <div className={`relative ${compact ? "aspect-[5/3]" : "aspect-[4/3]"} overflow-hidden`}>
@@ -192,15 +198,34 @@ function ItemCard({
             <Clock size={10} /> {item.note}
           </p>
         )}
-        <a
-          href={waOrderUrl(item.name)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-auto pt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-green-500 hover:text-green-400 transition-colors"
+        <button
+          onClick={() => addItem(item.name, item.price)}
+          className="mt-auto pt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-primary hover:text-primary/80 transition-colors cursor-pointer"
         >
-          <MessageCircle size={14} /> Order via WhatsApp
-        </a>
+          <ShoppingBag size={14} /> Add to Cart
+        </button>
       </div>
     </article>
+  );
+}
+
+function CartFab() {
+  const [open, setOpen] = useState(false);
+  const { totalItems } = useCart();
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="fixed bottom-6 right-6 z-30 flex items-center justify-center w-14 h-14 rounded-full bg-green-600 hover:bg-green-500 text-white shadow-lg transition-colors"
+      >
+        <ShoppingBag size={22} />
+        {totalItems > 0 && (
+          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-[10px] font-bold flex items-center justify-center text-background">
+            {totalItems}
+          </span>
+        )}
+      </button>
+      <CartPanel open={open} onClose={() => setOpen(false)} />
+    </>
   );
 }
