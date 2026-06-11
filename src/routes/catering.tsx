@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import catering from "@/assets/area/area-14.jpeg";
-import platter from "@/assets/dish-platter.jpg";
-import buffet from "@/assets/area/area-08.jpeg";
+import gallery1 from "@/assets/area/area-02.jpeg";
+import gallery2 from "@/assets/area/area-09.jpeg";
+import gallery3 from "@/assets/area/area-15.jpeg";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/catering")({
@@ -99,7 +100,7 @@ function CateringPage() {
 
       {/* Gallery strip */}
       <section className="grid md:grid-cols-3 gap-2">
-        {[catering, platter, buffet].map((src, i) => (
+        {[gallery1, gallery2, gallery3].map((src, i) => (
           <div key={i} className="aspect-[4/3] overflow-hidden">
             <img src={src} alt="Past event" loading="lazy" className="w-full h-full object-cover image-mood hover:scale-105 transition-transform duration-[1500ms]" />
           </div>
