@@ -37,11 +37,9 @@ export interface MenuSection {
 
 export const restaurantInfo = {
   name: "TANIA'S",
-  subtitle: "Cuisine & Lounge",
+  subtitle: "Food & Coffee",
   tagline: "A Culinary Journey of African Flavors",
-  est: "2018",
-  parent: { name: "Tany's Ltd", est: "2018" },
-  launched: "February 2020",
+  est: "2026",
   address: "M&M Plaza, Gishushu, Kigali",
   phone: "+250 788 500 635",
   currency: "FRW",
