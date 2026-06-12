@@ -8,7 +8,7 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About — Tania's Cuisine & Lounge | Part of Tany's Ltd, Kigali" },
-      { name: "description", content: "Part of Tany's Ltd (est. 2018). Tania's Cuisine & Lounge opened February 2020 at M&M Plaza, Gishushu, Kigali. Kigali's premier dining, lounge and catering destination. Up to 1,000 guests per event." },
+      { name: "description", content: "Part of Tany's Ltd (est. 2018). Tania's Cuisine & Lounge opened February 2020 at M&M Plaza, Gishushu, Kigali. Kigali's premier dining, lounge and catering destination. Up to 800 guests per event." },
       { property: "og:title", content: "About — Tania's Cuisine & Lounge | Part of Tany's Ltd" },
       { property: "og:description", content: "Kigali's premier dining destination since Feb 2020. Part of Tany's Ltd. African hospitality, global standards." },
       { property: "og:url", content: "https://taniascuisine.rw/about" },
@@ -61,7 +61,7 @@ export default function AboutPage() {
               What began as a single intimate venue has grown into a full
               culinary practice: a destination lounge with a daily chef's buffet,
               a catering operation trusted by Rwanda's leading institutions, and
-              a venue capable of hosting up to 1,000 guests per event.
+              a venue capable of hosting up to 800 guests per event.
             </p>
             <p>
               Our vision is to set the standard for modern African hospitality —

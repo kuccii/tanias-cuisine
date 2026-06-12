@@ -31,7 +31,7 @@ const packages = [
   },
   {
     title: "Weddings & Galas",
-    desc: "Full-day catering for celebrations of a lifetime. 100 – 1,000 guests.",
+    desc: "Full-day catering for celebrations of a lifetime. 100 – 800 guests.",
     items: ["Tasting session included", "Custom menu design", "Bar & beverage program"],
   },
   {

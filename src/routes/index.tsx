@@ -187,13 +187,13 @@ function Index() {
               Service that <span className="italic text-primary">scales.</span>
             </h2>
             <p className="text-foreground/70 leading-relaxed mb-10">
-              From 50-guest corporate lunches to 1,000-person galas, our team
+              From 50-guest corporate lunches to 800-person galas, our team
               delivers chef-led catering with hotel-grade execution. Tailored
               menus, dietary care, and seamless logistics.
             </p>
             <div className="grid grid-cols-2 gap-6 mb-12">
               {[
-                { n: "1,000", l: "Guest capacity" },
+                { n: "800", l: "Guest capacity" },
                 { n: "2020", l: "Launched Feb 2020" },
                 { n: "200+", l: "Events catered yearly" },
                 { n: "8+", l: "Key institutional clients" },
