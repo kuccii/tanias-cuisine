@@ -6,7 +6,7 @@ import wholeTilapia from "@/assets/menu/whole-tilapia.jpg";
 import sombeImg from "@/assets/menu/sombe.jpg";
 import heroVideo from "@/assets/herovideo.mp4";
 import loungeImg from "@/assets/area/area-01.jpeg";
-import cateringImg from "@/assets/area/area-07.jpeg";
+import cateringImg from "@/assets/area/area-14.jpeg";
 import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
