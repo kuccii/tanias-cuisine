@@ -114,21 +114,6 @@ export function Nav() {
         </div>
       )}
 
-      {/* Mobile sticky CTAs */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 glass grid grid-cols-2 gap-2 p-3">
-        <Link
-          to="/contact"
-          className="text-center font-mono-display text-[10px] tracking-[0.22em] uppercase border border-border py-3"
-        >
-          Reserve
-        </Link>
-        <Link
-          to="/catering"
-          className="text-center font-mono-display text-[10px] tracking-[0.22em] uppercase bg-primary text-primary-foreground py-3"
-        >
-          Catering
-        </Link>
-      </div>
     </>
   );
 }

@@ -44,7 +44,7 @@ export function AIAssistant() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close menu assistant" : "Open menu assistant"}
-        className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-[55] flex items-center gap-2 bg-primary text-primary-foreground rounded-full pl-4 pr-5 py-3 shadow-glow hover:scale-[1.03] transition-transform"
+        className="fixed bottom-28 lg:bottom-6 right-4 lg:right-6 z-[55] flex items-center gap-2 bg-primary text-primary-foreground rounded-full pl-4 pr-5 py-3 shadow-glow hover:scale-[1.03] transition-transform"
       >
         {open ? <X size={18} /> : <Sparkles size={18} />}
         <span className="font-mono-display text-[10px] tracking-[0.22em] uppercase">
@@ -53,7 +53,7 @@ export function AIAssistant() {
       </button>
 
       {open && (
-        <div className="fixed inset-x-3 bottom-32 lg:inset-x-auto lg:right-6 lg:bottom-24 lg:w-[420px] z-[54] bg-card border border-border shadow-2xl flex flex-col max-h-[78vh] lg:max-h-[640px] animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="fixed inset-x-3 bottom-40 lg:inset-x-auto lg:right-6 lg:bottom-24 lg:w-[420px] z-[54] bg-card border border-border shadow-2xl flex flex-col max-h-[68vh] lg:max-h-[640px] animate-in fade-in slide-in-from-bottom-4 duration-300">
           {/* Header */}
           <div className="border-b border-border/60 p-4 flex items-start gap-3">
             <div className="w-10 h-10 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center shrink-0">
