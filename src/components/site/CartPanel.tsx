@@ -19,10 +19,10 @@ export function CartPanel({ open, onClose }: CartPanelProps) {
   return (
     <>
       {open && (
-        <div className="fixed inset-0 bg-black/50 z-[60]" onClick={onClose} />
+        <div className="fixed inset-0 bg-black/50 z-[72]" onClick={onClose} />
       )}
       <div
-        className={`fixed top-0 right-0 h-full w-[380px] max-w-[90vw] bg-background border-l border-border/40 z-[61] shadow-2xl transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-[380px] max-w-[90vw] bg-background border-l border-border/40 z-[73] shadow-2xl transition-transform duration-300 flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -35,7 +35,7 @@ export function CartPanel({ open, onClose }: CartPanelProps) {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5 space-y-4" style={{ height: "calc(100% - 140px)" }}>
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 min-h-0">
           {items.length === 0 ? (
             <p className="text-foreground/50 text-sm text-center pt-10">Your cart is empty</p>
           ) : (
@@ -72,7 +72,7 @@ export function CartPanel({ open, onClose }: CartPanelProps) {
         </div>
 
         {items.length > 0 && (
-          <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-border/40 bg-background">
+          <div className="p-5 border-t border-border/40 bg-background">
             <div className="flex justify-between items-center mb-4 text-sm">
               <span className="text-foreground/60">Subtotal</span>
               <span className="font-semibold">{totalPrice.toLocaleString()} FRW</span>

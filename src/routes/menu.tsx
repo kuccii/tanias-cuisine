@@ -216,7 +216,7 @@ function CartFab() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-36 lg:bottom-32 right-4 lg:right-6 z-[62] flex items-center justify-center w-14 h-14 rounded-full bg-green-600 hover:bg-green-500 text-white shadow-lg transition-colors"
+        className="fixed bottom-36 lg:bottom-32 right-4 lg:right-6 z-[74] flex items-center justify-center w-14 h-14 rounded-full bg-green-600 hover:bg-green-500 text-white shadow-lg transition-colors"
       >
         <ShoppingBag size={22} />
         {totalItems > 0 && (
