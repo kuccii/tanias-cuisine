@@ -168,7 +168,7 @@ function ItemCard({
   const { addItem } = useCart();
 
   return (
-    <article className="group sm:bg-card/40 sm:border sm:border-border/40 sm:hover:border-primary/50 sm:transition-colors flex sm:flex-col overflow-hidden gap-3 sm:gap-0">
+    <article className="group relative sm:bg-card/40 sm:border sm:border-border/40 sm:hover:border-primary/50 sm:transition-colors flex sm:flex-col overflow-hidden gap-3 sm:gap-0">
       <div className="w-20 h-20 sm:w-full sm:aspect-[4/3] relative shrink-0 overflow-hidden rounded-lg sm:rounded-none">
         <img
           src={image}
