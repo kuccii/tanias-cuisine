@@ -168,43 +168,46 @@ function ItemCard({
   const { addItem } = useCart();
 
   return (
-    <article className="group relative sm:bg-card/40 sm:border sm:border-border/40 sm:hover:border-primary/50 sm:transition-colors flex sm:flex-col overflow-hidden gap-3 sm:gap-0">
-      <div className="w-20 h-20 sm:w-full sm:aspect-[3/2] relative shrink-0 overflow-hidden rounded-lg sm:rounded-none">
+    <article className="group bg-card/40 border border-border/40 hover:border-primary/50 transition-colors overflow-hidden flex flex-col relative max-sm:flex-row max-sm:bg-transparent max-sm:border-0 max-sm:gap-3 max-sm:hover:border-0">
+      <div className="relative aspect-[4/3] overflow-hidden max-sm:w-20 max-sm:h-20 max-sm:rounded-lg max-sm:shrink-0">
         <img
           src={image}
           alt={item.name}
           loading="lazy"
-          width={160}
-          height={160}
-          className="absolute inset-0 w-full h-full object-cover image-mood sm:transition-transform sm:duration-[1500ms] sm:group-hover:scale-105"
+          width={1024}
+          height={1024}
+          className="absolute inset-0 w-full h-full object-cover image-mood transition-transform duration-[1500ms] group-hover:scale-105 max-sm:w-[160px] max-sm:h-[160px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent pointer-events-none sm:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent pointer-events-none" />
+        <span className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm font-mono-display text-[10px] tracking-[0.18em] text-primary px-2.5 py-1.5 border border-border/40 max-sm:hidden">
+          {item.price}
+        </span>
       </div>
-      <div className="flex-1 min-w-0 flex flex-col justify-center pr-14 sm:pr-0 sm:p-5">
-        <div className="flex items-start justify-between gap-2">
-          <h4 className="font-display text-base sm:text-xl leading-tight truncate">{item.name}</h4>
-          <span className="shrink-0 font-mono-display text-[11px] sm:text-[10px] tracking-[0.15em] text-primary sm:absolute sm:top-3 sm:right-3 sm:bg-background/80 sm:backdrop-blur-sm sm:px-2.5 sm:py-1.5 sm:border sm:border-border/40">
-            {item.price}
-          </span>
-        </div>
+      <div className="p-5 pb-6 flex-1 flex flex-col max-sm:p-0 max-sm:pb-0 max-sm:justify-center max-sm:pr-14">
+        <h4 className="font-display text-xl leading-tight mb-2 max-sm:text-base max-sm:mb-0 max-sm:truncate">
+          {item.name}
+        </h4>
+        <span className="hidden max-sm:inline shrink-0 font-mono-display text-[11px] tracking-[0.15em] text-primary">
+          {item.price}
+        </span>
         {item.description && (
-          <p className="text-xs text-foreground/60 italic leading-relaxed mt-0.5 line-clamp-2 sm:line-clamp-none sm:mt-2 sm:mb-3 sm:text-xs">{item.description}</p>
+          <p className="text-xs text-foreground/60 italic leading-relaxed mb-3 max-sm:mt-0.5 max-sm:line-clamp-2 max-sm:mb-0">{item.description}</p>
         )}
         {item.note && (
-          <p className="hidden sm:inline-flex pt-2 items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45">
+          <p className="pt-2 inline-flex items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45 max-sm:hidden">
             <Clock size={10} /> {item.note}
           </p>
         )}
+        <button
+          onClick={() => addItem(item.name, item.price)}
+          className="mt-auto pt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-primary hover:text-primary/80 transition-colors cursor-pointer max-sm:absolute max-sm:right-4 max-sm:top-1/2 max-sm:-translate-y-1/2 max-sm:w-10 max-sm:h-10 max-sm:rounded-full max-sm:bg-primary/10 max-sm:border max-sm:border-primary/40 max-sm:hover:bg-primary max-sm:hover:text-primary-foreground max-sm:justify-center max-sm:p-0 max-sm:mt-0 max-sm:pt-0"
+          aria-label={`Add ${item.name} to cart`}
+        >
+          <ShoppingBag size={14} className="max-sm:hidden" />
+          <Plus size={18} className="hidden max-sm:inline" />
+          <span>Add to Cart</span>
+        </button>
       </div>
-      <button
-        onClick={() => addItem(item.name, item.price)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 sm:relative sm:translate-y-0 sm:right-auto sm:top-auto w-10 h-10 rounded-full bg-primary/10 border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center sm:mt-auto sm:mx-5 sm:mb-5 sm:w-auto sm:h-auto sm:rounded-none sm:bg-transparent sm:border-none sm:text-[11px] sm:font-semibold sm:hover:bg-transparent sm:hover:text-primary/80 sm:pt-3 sm:inline-flex sm:gap-1.5 sm:cursor-pointer"
-        aria-label={`Add ${item.name} to cart`}
-      >
-        <Plus size={18} className="sm:hidden" />
-        <ShoppingBag size={14} className="hidden sm:inline" />
-        <span className="hidden sm:inline">Add to Cart</span>
-      </button>
     </article>
   );
 }
