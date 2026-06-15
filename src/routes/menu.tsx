@@ -205,7 +205,7 @@ function ItemCard({
         >
           <ShoppingBag size={14} className="max-sm:hidden" />
           <Plus size={18} className="hidden max-sm:inline" />
-          <span>Add to Cart</span>
+          <span className="max-sm:hidden">Add to Cart</span>
         </button>
       </div>
     </article>
