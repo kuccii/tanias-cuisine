@@ -18,6 +18,7 @@ import beefBrochette from "@/assets/menu/beef-brochette.jpg";
 import beefStew from "@/assets/menu/beef-stew.jpg";
 import beefFillet from "@/assets/menu/beef-fillet.jpg";
 import beefTwatundi from "@/assets/menu/beef-twatundi.jpg";
+import sizzlingBeef from "@/assets/menu/sizzling-beef.jpg";
 import chickentwatundi from "@/assets/menu/chickentwatundi.png";
 import fishtwatundi from "@/assets/menu/fishtwatundi.png";
 import porkChops from "@/assets/menu/pork-chops.jpg";
@@ -116,7 +117,7 @@ const explicit: Record<string, string> = {
   // Beef & Pork
   "beef-pork::Twatundi Beef": beefTwatundi,
   "beef-pork::Beef Brochettes": beefBrochette,
-  "beef-pork::Sizzling Twatundi Beef": beefTwatundi,
+  "beef-pork::Sizzling Twatundi Beef": sizzlingBeef,
   "beef-pork::Beef Stew": beefStew,
   "beef-pork::Beef Fillet Steak": beefFillet,
   "beef-pork::Twatundi Pork": beefTwatundi,
@@ -127,7 +128,7 @@ const explicit: Record<string, string> = {
 
   // Goat Specialties
   "goat-specialties::Twatundi Goat": beefTwatundi,
-  "goat-specialties::Sizzling Twatundi Goat": beefTwatundi,
+  "goat-specialties::Sizzling Twatundi Goat": sizzlingBeef,
   "goat-specialties::Chèvre de Mr Seguin": goatStew,
   "goat-specialties::Ragoût de Chèvre": goatStew,
   "goat-specialties::Chèvre Grillé": goatGrilled,
