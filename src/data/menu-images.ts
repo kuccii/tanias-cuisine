@@ -18,6 +18,8 @@ import beefBrochette from "@/assets/menu/beef-brochette.jpg";
 import beefStew from "@/assets/menu/beef-stew.jpg";
 import beefFillet from "@/assets/menu/beef-fillet.jpg";
 import beefTwatundi from "@/assets/menu/beef-twatundi.jpg";
+import chickentwatundi from "@/assets/menu/chickentwatundi.png";
+import fishtwatundi from "@/assets/menu/fishtwatundi.png";
 import porkChops from "@/assets/menu/pork-chops.jpg";
 import porkRibs from "@/assets/menu/pork-ribs.jpg";
 import porkSausages from "@/assets/menu/pork-sausages.jpg";
@@ -124,8 +126,8 @@ const explicit: Record<string, string> = {
   "beef-pork::Pork Ribs": porkRibs,
 
   // Goat Specialties
-  "goat-specialties::Twatundi Goat": goatGrilled,
-  "goat-specialties::Sizzling Twatundi Goat": goatGrilled,
+  "goat-specialties::Twatundi Goat": beefTwatundi,
+  "goat-specialties::Sizzling Twatundi Goat": beefTwatundi,
   "goat-specialties::Chèvre de Mr Seguin": goatStew,
   "goat-specialties::Ragoût de Chèvre": goatStew,
   "goat-specialties::Chèvre Grillé": goatGrilled,
@@ -134,7 +136,7 @@ const explicit: Record<string, string> = {
   "goat-specialties::Poulet Maffé": pouletMaffe,
 
   // Chicken
-  "chicken::Twatundi Chicken": chickenBrochette,
+  "chicken::Twatundi Chicken": chickentwatundi,
   "chicken::Chicken Brochette": chickenBrochette,
   "chicken::1/4 Grilled Chicken": grilledChicken,
   "chicken::1/2 Grilled Chicken": grilledChicken,
@@ -149,7 +151,7 @@ const explicit: Record<string, string> = {
   // Fish
   "fish::Fish Brochette": fishBrochette,
   "fish::Fish Fillet": fishFilletImg,
-  "fish::Twatundi Fish": fishBrochette,
+  "fish::Twatundi Fish": fishtwatundi,
   "fish::Tilapia Fillet": tilapiaFillet,
   "fish::Swahili Fish": swahiliFish,
   "fish::Whole Tilapia Fish": wholeTilapia,
