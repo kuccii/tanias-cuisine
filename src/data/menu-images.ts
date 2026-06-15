@@ -19,6 +19,8 @@ import beefStew from "@/assets/menu/beef-stew.jpg";
 import beefFillet from "@/assets/menu/beef-fillet.jpg";
 import beefTwatundi from "@/assets/menu/beef-twatundi.jpg";
 import sizzlingBeef from "@/assets/menu/sizzling-beef.jpg";
+import freshSausageBrochette from "@/assets/menu/freshsausagebrochette.jpeg";
+import saucissePiliBrochette from "@/assets/menu/SaucissePiliBrochette.jpeg";
 import chickentwatundi from "@/assets/menu/chickentwatundi.png";
 import fishtwatundi from "@/assets/menu/fishtwatundi.png";
 import porkChops from "@/assets/menu/pork-chops.jpg";
@@ -121,8 +123,8 @@ const explicit: Record<string, string> = {
   "beef-pork::Beef Stew": beefStew,
   "beef-pork::Beef Fillet Steak": beefFillet,
   "beef-pork::Twatundi Pork": beefTwatundi,
-  "beef-pork::Fresh Sausage Brochette": porkSausages,
-  "beef-pork::Saucisse Pili Brochette": porkSausages,
+  "beef-pork::Fresh Sausage Brochette": freshSausageBrochette,
+  "beef-pork::Saucisse Pili Brochette": saucissePiliBrochette,
   "beef-pork::Pork Chops": porkChops,
   "beef-pork::Pork Ribs": porkRibs,
 
