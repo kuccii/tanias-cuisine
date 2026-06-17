@@ -5,7 +5,7 @@ import { CartProvider, useCart } from "@/components/site/CartContext";
 import { CartPanel } from "@/components/site/CartPanel";
 import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
-import { Clock, Star, ShoppingBag, Plus } from "lucide-react";
+import { Clock, Star, ShoppingBag, Plus, X } from "lucide-react";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -166,10 +166,12 @@ function ItemCard({
 }) {
   const image = resolveItemImage(item.name, sectionId, groupName);
   const { addItem } = useCart();
+  const [lightbox, setLightbox] = useState(false);
 
   return (
     <article className="group bg-card/40 border border-border/40 hover:border-primary/50 transition-colors overflow-hidden flex flex-col relative max-sm:flex-row max-sm:bg-transparent max-sm:border-0 max-sm:gap-3 max-sm:hover:border-0">
       <div className="relative aspect-[4/3] overflow-hidden max-sm:w-20 max-sm:h-20 max-sm:rounded-lg max-sm:shrink-0">
+        <button onClick={() => setLightbox(true)} className="hidden max-sm:block absolute inset-0 w-full h-full z-10 cursor-pointer" aria-label={`View ${item.name}`} />
         <img
           src={image}
           alt={item.name}
@@ -183,6 +185,15 @@ function ItemCard({
           {item.price}
         </span>
       </div>
+
+      {lightbox && (
+        <div className="fixed inset-0 z-[100] bg-background/95 flex items-center justify-center p-4 md:p-8 lg:hidden" onClick={() => setLightbox(false)}>
+          <button onClick={() => setLightbox(false)} className="absolute top-6 right-6 text-foreground/70 hover:text-primary z-10" aria-label="Close">
+            <X size={28} />
+          </button>
+          <img src={image} alt={item.name} className="max-w-full max-h-full object-contain" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
       <div className="p-5 pb-6 flex-1 flex flex-col max-sm:p-0 max-sm:pb-0 max-sm:justify-center max-sm:pr-14">
         <h4 className="font-display text-xl leading-tight mb-2 max-sm:text-base max-sm:mb-0 max-sm:truncate">
           {item.name}
