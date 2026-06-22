@@ -1,0 +1,33 @@
+{
+  "name": "remotion-video-creation",
+  "version": "1.0.0",
+  "description": "Agent skill for creating video content using Remotion with NIM integration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts"
+  },
+  "keywords": [
+    "remotion",
+    "video",
+    "agent",
+    "skill",
+    "nim"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  },
+  "dependencies": {
+    "@remotion/cli": "latest",
+    "@remotion/react": "latest",
+    "@remotion/renderer": "latest",
+    "@remotion/player": "latest",
+    "@remotion/bundler": "latest",
+    "axios": "^1.6.0"
+  }
+}
