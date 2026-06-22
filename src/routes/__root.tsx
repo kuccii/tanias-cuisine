@@ -88,6 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#0c0b0a" },
       { name: "robots", content: "index, follow" },
       { name: "googlebot", content: "index, follow" },
+      { name: "google-site-verification", content: "VERIFY_WITH_GSC" },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:title", content: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
       { property: "og:description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, daily buffet, coffee bar. Reserve your table or book an event for up to 800 guests." },
@@ -156,6 +157,13 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=G-LNZ2MWYDPE`} />
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-LNZ2MWYDPE');
+        `}} />
       </head>
       <body>
         {children}
