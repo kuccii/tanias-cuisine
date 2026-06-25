@@ -95,6 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:alt", content: "Tania's Cuisine & Lounge — atmospheric dining and lounge in Kigali, Rwanda" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:locale", content: "en_RW" },
@@ -117,7 +118,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 const SCHEMA = {
   "@context": "https://schema.org",
-  "@type": "Restaurant",
+  "@type": ["Restaurant", "LocalBusiness"],
   name: "Tania's Cuisine & Lounge",
   alternateName: "Tania's",
   description: "Kigali's atmospheric dining destination. African grills, curries, daily buffet, coffee bar and catering for up to 800 guests.",
@@ -126,6 +127,9 @@ const SCHEMA = {
   email: "hello@taniascuisine.rw",
   servesCuisine: ["African", "East African", "Grill", "International"],
   priceRange: "$$",
+  menu: "https://taniascuisine.rw/menu",
+  acceptsReservations: true,
+  currenciesAccepted: "RWF",
   foundingDate: "2020-02",
   parentOrganization: {
     "@type": "Organization",
@@ -143,6 +147,11 @@ const SCHEMA = {
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "11:00", closes: "23:00" },
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday", "Sunday"], opens: "11:00", closes: "23:00" },
   ],
+  areaServed: { "@type": "City", name: "Kigali", containedInPlace: { "@type": "Country", name: "Rwanda" } },
+  hasMap: "https://www.google.com/maps/search/?api=1&query=M%26M%20Plaza%2C%20Gishushu%2C%20Kigali%2C%20Rwanda",
+  isAccessibleForFree: true,
+  paymentAccepted: ["Cash", "Mobile Money", "Credit Card"],
+  containedInPlace: { "@type": "ShoppingCenter", name: "M&M Plaza" },
   image: "https://taniascuisine.rw/og-image.jpg",
   sameAs: [
     "https://www.instagram.com/taniacuisineandlounge",
@@ -151,12 +160,25 @@ const SCHEMA = {
   aggregateRating: { "@type": "AggregateRating", ratingValue: "4.5", bestRating: "5", ratingCount: "120" },
 };
 
+const WEBSITE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Tania's Cuisine & Lounge",
+  url: "https://taniascuisine.rw",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://taniascuisine.rw/menu?search={search_term}",
+    "query-input": "required name=search_term",
+  },
+};
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }} />
         <script async src={`https://www.googletagmanager.com/gtag/js?id=G-LNZ2MWYDPE`} />
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
