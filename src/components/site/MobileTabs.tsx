@@ -11,6 +11,7 @@ const tabs = [
 
 const moreLinks = [
   { to: "/catering", label: "Catering" },
+  { to: "/blog", label: "Blog" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
