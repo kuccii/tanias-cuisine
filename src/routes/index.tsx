@@ -39,7 +39,7 @@ function Index() {
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative h-screen min-h-[680px] flex items-end overflow-hidden">
+      <section className="relative min-h-[100dvh] flex items-end overflow-hidden">
         <video
           src={heroVideo}
           autoPlay

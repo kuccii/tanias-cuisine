@@ -10,7 +10,7 @@ tags:
   - Kigali dining
   - evening dining
   - M&M Plaza
-image: /blog/gishushu-restaurant.jpg
+image: /og-image.jpg
 readingTime: 4
 published: true
 ---

@@ -10,7 +10,7 @@ tags:
   - Kigali events
   - event planning
   - buffet delivery
-image: /blog/corporate-catering-kigali.jpg
+image: /og-image.jpg
 readingTime: 6
 published: true
 ---

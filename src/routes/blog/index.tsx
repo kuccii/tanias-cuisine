@@ -54,8 +54,20 @@ function BlogIndexPage() {
                     params={{ slug: post.slug }}
                     className="group block bg-card border border-border/40 hover:border-primary/50 transition-all"
                   >
-                    <div className="aspect-[16/9] bg-background/40 flex items-center justify-center overflow-hidden">
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-primary/10 group-hover:scale-105 transition-transform duration-700">
+                    <div className="aspect-[16/9] overflow-hidden">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.style.display = "none";
+                          const fallback = target.nextElementSibling as HTMLElement;
+                          if (fallback) fallback.style.display = "flex";
+                        }}
+                      />
+                      <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-primary/5 to-primary/10">
                         <span className="font-display text-6xl text-primary/20">{post.title[0]}</span>
                       </div>
                     </div>

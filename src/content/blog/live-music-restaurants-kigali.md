@@ -10,7 +10,7 @@ tags:
   - Kigali nightlife
   - restaurants with music
   - weekend dining
-image: /blog/live-music-kigali.jpg
+image: /og-image.jpg
 readingTime: 5
 published: true
 ---

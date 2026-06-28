@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import { CartProvider, useCart } from "@/components/site/CartContext";
 import { CartPanel } from "@/components/site/CartPanel";
 import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
-import { Clock, Star, ShoppingBag, Plus, X } from "lucide-react";
+import { Clock, Star, ShoppingBag, Plus, X, ArrowRight } from "lucide-react";
+import menuHero from "@/assets/area/area-08.jpeg";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -36,10 +37,12 @@ function MenuPage() {
   return (
     <CartProvider>
       <SiteLayout>
-        <section className="pt-24 pb-4 px-6 md:pt-40 md:pb-16 md:px-12">
-          <div className="mx-auto max-w-[1500px]">
+        <section className="relative min-h-[60vh] flex items-end overflow-hidden">
+          <img src={menuHero} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/10" />
+          <div className="relative z-10 mx-auto max-w-[1500px] w-full px-6 md:px-12 pb-16 md:pb-20">
             <p className="eyebrow mb-4 md:mb-6">The Living Menu · Est. {restaurantInfo.est}</p>
-            <h1 className="font-display text-3xl md:text-7xl lg:text-8xl max-w-4xl text-balance">
+            <h1 className="font-display text-4xl md:text-7xl lg:text-8xl max-w-4xl text-balance">
               A culinary journey of <span className="italic text-primary">African flavors.</span>
             </h1>
             <p className="mt-4 md:mt-8 max-w-xl text-foreground/70 text-sm md:text-base">
@@ -95,21 +98,21 @@ function FilterChip({ active, onClick, label }: { active: boolean; onClick: () =
 
 function Section({ section, index }: { section: MenuSection; index: number }) {
   return (
-    <section id={section.id} className="scroll-mt-32 lg:scroll-mt-44 py-12 md:py-28 px-4 md:px-12 border-t border-border/30">
+    <section id={section.id} className="scroll-mt-32 lg:scroll-mt-44 py-12 md:py-28 px-4 md:px-12">
       <div className="mx-auto max-w-[1500px]">
-        <div className="mb-8 md:mb-14 max-w-3xl">
-          <p className="eyebrow mb-2 md:mb-4">Chapter {String(index + 1).padStart(2, "0")} · {section.category}</p>
-          <h2 className="font-display text-2xl md:text-6xl text-balance mb-2 md:mb-4">
+        <div className="mb-10 md:mb-16 border-b border-primary/20 pb-6 md:pb-10">
+          <p className="eyebrow mb-2 md:mb-4">{String(index + 1).padStart(2, "0")} · {section.category}</p>
+          <h2 className="font-display text-3xl md:text-6xl text-balance mb-2 md:mb-4">
             {section.title}
           </h2>
-          <p className="text-foreground/65 text-sm md:text-base">{section.subtitle}</p>
+          <p className="text-foreground/65 text-sm md:text-base max-w-2xl">{section.subtitle}</p>
         </div>
 
         {section.groups ? (
-          <div className="space-y-10 md:space-y-16">
+          <div className="space-y-8 md:space-y-16">
             {section.groups.map((g) => (
               <div key={g.name}>
-                <h3 className="font-display text-lg md:text-3xl mb-4 md:mb-8 pb-2 md:pb-3 border-b border-primary/30 sticky top-[120px] lg:top-[148px] bg-background/90 backdrop-blur-sm z-20 py-2 md:py-0 md:bg-transparent md:backdrop-blur-none md:sticky md:top-[148px]">
+                <h3 className="font-display text-xl md:text-3xl mb-4 md:mb-8 pb-2 md:pb-3 border-b border-primary/20 sticky top-[120px] lg:top-[148px] bg-background z-20 py-2">
                   <span className="italic text-primary">— </span>{g.name}
                 </h3>
                 <ItemGrid items={g.items} sectionId={section.id} groupName={g.name} compact={section.compact} />
@@ -171,7 +174,7 @@ function ItemCard({
   const [lightbox, setLightbox] = useState(false);
 
   return (
-    <article className="group bg-card/40 border border-border/40 hover:border-primary/50 transition-colors overflow-hidden flex flex-col relative max-sm:flex-row max-sm:bg-transparent max-sm:border-0 max-sm:gap-3 max-sm:hover:border-0">
+    <article className="group bg-card border border-border/30 hover:border-primary/40 transition-all overflow-hidden flex flex-col relative max-sm:flex-row max-sm:bg-transparent max-sm:border-0 max-sm:gap-3 max-sm:hover:border-0">
       <div className="relative aspect-[4/3] overflow-hidden max-sm:w-20 max-sm:h-20 max-sm:rounded-lg max-sm:shrink-0">
         <button onClick={() => setLightbox(true)} className="hidden max-sm:block absolute inset-0 w-full h-full z-10 cursor-pointer" aria-label={`View ${item.name}`} />
         <img
@@ -180,44 +183,42 @@ function ItemCard({
           loading="lazy"
           width={1024}
           height={1024}
-          className="absolute inset-0 w-full h-full object-cover image-mood transition-transform duration-[1500ms] group-hover:scale-105 max-sm:w-[160px] max-sm:h-[160px]"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105 max-sm:w-[160px] max-sm:h-[160px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent pointer-events-none" />
-        <span className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm font-mono-display text-[10px] tracking-[0.18em] text-primary px-2.5 py-1.5 border border-border/40 max-sm:hidden">
-          {item.price}
-        </span>
+        <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent pointer-events-none" />
       </div>
 
       {lightbox && (
-        <div className="fixed inset-0 z-[100] bg-background/95 flex items-center justify-center p-4 md:p-8 lg:hidden" onClick={() => setLightbox(false)}>
+        <div className="fixed inset-0 z-[100] bg-background/95 flex items-center justify-center p-4 md:p-8" onClick={() => setLightbox(false)}>
           <button onClick={() => setLightbox(false)} className="absolute top-6 right-6 text-foreground/70 hover:text-primary z-10" aria-label="Close">
             <X size={28} />
           </button>
           <img src={image} alt={item.name} className="max-w-full max-h-full object-contain" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
-      <div className="p-5 pb-6 flex-1 flex flex-col max-sm:p-0 max-sm:pb-0 max-sm:justify-center max-sm:pr-14">
-        <h4 className="font-display text-xl leading-tight mb-2 max-sm:text-base max-sm:mb-0 max-sm:truncate">
-          {item.name}
-        </h4>
-        <span className="hidden max-sm:inline shrink-0 font-mono-display text-[11px] tracking-[0.15em] text-primary">
-          {item.price}
-        </span>
+      <div className="p-5 flex-1 flex flex-col max-sm:p-0 max-sm:justify-center max-sm:pr-14">
+        <div className="flex items-start justify-between gap-3 mb-1.5">
+          <h4 className="font-display text-lg leading-tight max-sm:text-sm max-sm:truncate">
+            {item.name}
+          </h4>
+          <span className="shrink-0 font-display text-lg text-primary max-sm:text-sm max-sm:font-mono-display max-sm:tracking-[0.15em]">
+            {item.price}
+          </span>
+        </div>
         {item.description && (
-          <p className="text-xs text-foreground/60 italic leading-relaxed mb-3 max-sm:mt-0.5 max-sm:line-clamp-2 max-sm:mb-0">{item.description}</p>
+          <p className="text-xs text-foreground/60 italic leading-relaxed max-sm:mt-0.5 max-sm:line-clamp-2">{item.description}</p>
         )}
         {item.note && (
-          <p className="pt-2 inline-flex items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45 max-sm:hidden">
+          <p className="mt-2 inline-flex items-center gap-1.5 font-mono-display text-[9px] tracking-[0.22em] uppercase text-foreground/45 max-sm:hidden">
             <Clock size={10} /> {item.note}
           </p>
         )}
         <button
           onClick={() => addItem(item.name, item.price)}
-          className="mt-auto pt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-primary hover:text-primary/80 transition-colors cursor-pointer max-sm:absolute max-sm:right-4 max-sm:top-1/2 max-sm:-translate-y-1/2 max-sm:w-10 max-sm:h-10 max-sm:rounded-full max-sm:bg-primary/10 max-sm:border max-sm:border-primary/40 max-sm:hover:bg-primary max-sm:hover:text-primary-foreground max-sm:justify-center max-sm:p-0 max-sm:mt-0 max-sm:pt-0"
+          className="mt-3 inline-flex items-center justify-center gap-1.5 w-full py-2.5 font-mono-display text-[10px] tracking-[0.2em] uppercase border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer max-sm:absolute max-sm:right-4 max-sm:top-1/2 max-sm:-translate-y-1/2 max-sm:w-9 max-sm:h-9 max-sm:rounded-full max-sm:bg-primary/10 max-sm:border max-sm:border-primary/40 max-sm:hover:bg-primary max-sm:hover:text-primary-foreground max-sm:p-0 max-sm:mt-0"
           aria-label={`Add ${item.name} to cart`}
         >
-          <ShoppingBag size={14} className="max-sm:hidden" />
-          <Plus size={18} className="hidden max-sm:inline" />
+          <Plus size={16} className="hidden max-sm:inline" />
           <span className="max-sm:hidden">Add to Cart</span>
         </button>
       </div>

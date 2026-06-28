@@ -10,7 +10,7 @@ tags:
   - Rwandan cuisine
   - Kigali food
   - signature dishes
-image: /blog/twatundi-beef.jpg
+image: /og-image.jpg
 readingTime: 3
 published: true
 ---

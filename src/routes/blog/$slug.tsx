@@ -74,8 +74,19 @@ function BlogPostPage() {
           { name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
         ]}
       />
-      <article className="pt-32 pb-24 px-6 md:px-12">
-        <div className="mx-auto max-w-[800px]">
+      <article>
+        <div className="relative aspect-[2/1] overflow-hidden">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        </div>
+        <div className="mx-auto max-w-[800px] px-6 md:px-12 -mt-32 relative z-10">
           <Link to="/blog" className="font-mono-display text-[10px] tracking-[0.25em] uppercase text-primary hover:text-primary/80 transition-colors">
             &larr; Back to Blog
           </Link>
