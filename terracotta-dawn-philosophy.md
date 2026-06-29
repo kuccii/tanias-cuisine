@@ -1,0 +1,19 @@
+# Terracotta Dawn
+
+*A design philosophy of monumental warmth and restrained emergence.*
+
+---
+
+**Terracotta Dawn** is a visual philosophy rooted in the tension between ancient earth and first light. It draws from the material honesty of fired clay, the gravity of standing stones, and the quiet radiance of a sun lifting over a continent's horizon. This is not a style of decoration — it is a language of form and space that treats every composition as an artifact: something excavated from the earth, touched by light, and handled with the reverence of a museum object.
+
+**Space and Form** operate as protagonists. Forms are monolithic — broad rectangles, standing columns, circular apertures — arranged with the deliberate weight of memorial architecture. Negative space is not emptiness but presence: vast atmospheric fields that allow the eye to rest and the mind to interpret. Forms emerge slowly from their backgrounds, never demanding attention, only inviting contemplation. The relationship between figure and ground is one of mutual respect — neither dominates; both breathe.
+
+**Color and Material** speak of two sources: the kiln and the sky. A restrained palette of terracotta, ochre, deep indigo, and ivory anchors every piece. Warm earth tones provide gravity and memory; cool blues and golds introduce the transient — dawn light, the moment between night and day. Colors are never applied as mere background but as atmospheric phenomena: gradients that shift gradually, densities that accumulate toward horizon lines. The materiality is that of polished stone, fired ceramic, aged paper — surfaces that feel handled, marked by time, crafted by hands that have done this for decades.
+
+**Scale and Rhythm** operate through repetition with variation — a grid of vertical markers, a sequence of radiating lines, a cadence of circular forms that echo one another across the canvas. This is not mathematical precision but the rhythm of a master potter's hand: each repetition acknowledges the one before while asserting its own slight difference. Scale moves between the monumental (a single form that commands two-thirds of the canvas) and the intimate (a thin line, a small cluster of text, a subtle marking that rewards close looking). This oscillation between grand gesture and quiet detail is the signature of expert spatial orchestration.
+
+**Composition and Visual Hierarchy** are built on the principle of delayed reveal. The eye enters through a large, calm field and discovers details progressively — a date set in thin type near a margin, a geometric motif embedded within a larger form, a subtle shift in opacity that separates foreground from depth. Hierarchy is established not through size alone but through density: more marks in one area create gravitational pull; vast empty fields create balance. Every placement has been tested and refined, each margin measured against the next, until the composition achieves the stillness of something that has always been exactly as it is.
+
+**Expression Through Restraint** is the final and most critical tenet. Information lives in the visual — in the weight of a form, the temperature of a color, the space between elements — never in explanatory text. Words appear sparingly, selected with editorial ruthlessness, set in typefaces chosen for their sculptural quality rather than their readability. A single date, a short word, a minimal mark — these are not meant to inform but to anchor, to provide scale, to remind the viewer that what they are seeing was made by someone who could have done anything and chose exactly this. The work must appear as though it took not hours but days — the product of patient layering, countless refinements, the quiet confidence of a maker at the absolute summit of their craft.
+
+*Every composition in this philosophy is an object of contemplation. It asks nothing of the viewer except that they look, and look again.*
