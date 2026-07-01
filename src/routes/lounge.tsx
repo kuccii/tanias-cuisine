@@ -17,6 +17,7 @@ export const Route = createFileRoute("/lounge")({
       { property: "og:url", content: "https://taniascuisine.rw/lounge" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
       { name: "twitter:title", content: "The Lounge — Best Restaurant in Gishushu | Tania's" },
+      { name: "twitter:description", content: "Kigali's best restaurant lounge at M&M Plaza, Gishushu. Daily chef's buffet, velvet booths, copper pendants. Reserve your table." },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/lounge" }],
