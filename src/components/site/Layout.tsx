@@ -13,7 +13,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <Nav />
       <main
         key={location.pathname}
-        className="pb-24 lg:pb-0 animate-in fade-in duration-500"
+        className="pb-24 lg:pb-0"
       >
         {children}
       </main>
