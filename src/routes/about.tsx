@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import lounge from "@/assets/area/area-01.jpeg";
 import catering from "@/assets/area/area-02.jpeg";
 import buffet from "@/assets/area/area-03.jpeg";
@@ -7,14 +8,14 @@ import buffet from "@/assets/area/area-03.jpeg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Tania's Cuisine & Lounge | Part of Tany's Ltd, Kigali" },
-      { name: "description", content: "Part of Tany's Ltd (est. 2018). Tania's Cuisine & Lounge opened February 2020 at M&M Plaza, Gishushu, Kigali. Kigali's premier dining, lounge and catering destination. Up to 800 guests per event." },
-      { property: "og:title", content: "About — Tania's Cuisine & Lounge | Part of Tany's Ltd" },
-      { property: "og:description", content: "Kigali's premier dining destination since Feb 2020. Part of Tany's Ltd. African hospitality, global standards." },
+      { title: "About — Tania's Cuisine & Lounge | Best Restaurant in Gishushu, Kigali | Tany's Ltd" },
+      { name: "description", content: "Kigali's best restaurant at M&M Plaza, Gishushu since Feb 2020. Part of Tany's Ltd (est. 2018). Kigali's premier African dining, lounge and catering destination. Up to 800 guests per event." },
+      { property: "og:title", content: "About — Best Restaurant in Gishushu, Kigali | Tania's Cuisine & Lounge" },
+      { property: "og:description", content: "Kigali's best restaurant at M&M Plaza, Gishushu since Feb 2020. African dining, lounge & catering." },
       { property: "og:url", content: "https://taniascuisine.rw/about" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
-      { name: "twitter:title", content: "About — Tania's Cuisine & Lounge" },
-      { name: "twitter:description", content: "Part of Tany's Ltd. Kigali's premier dining destination since Feb 2020." },
+      { name: "twitter:title", content: "About — Best Restaurant in Gishushu | Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Kigali's best restaurant at M&M Plaza, Gishushu since Feb 2020. African dining, lounge, catering." },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/about" }],
@@ -37,6 +38,10 @@ const values = [
 export default function AboutPage() {
   return (
     <SiteLayout>
+      <BreadcrumbSchema items={[
+        { name: "Home", item: "https://taniascuisine.rw" },
+        { name: "About", item: "https://taniascuisine.rw/about" },
+      ]} />
       <section className="pt-40 pb-20 px-6 md:px-12">
         <div className="mx-auto max-w-[1300px]">
           <p className="eyebrow mb-6">Tany's Ltd · Since 2018</p>

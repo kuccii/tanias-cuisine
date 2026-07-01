@@ -1,19 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site/Layout";
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Tania's Cuisine & Lounge | M&M Plaza, Gishushu, Kigali" },
-      { name: "description", content: "Browse the Tania's Cuisine & Lounge photo gallery — the lounge, the table, the light, and everyday moments at M&M Plaza, Gishushu, Kigali." },
-      { property: "og:title", content: "Gallery — Tania's Cuisine & Lounge | Gishushu, Kigali" },
-      { property: "og:description", content: "Browse our gallery — the lounge, atmosphere and everyday moments at Tania's in Gishushu, Kigali." },
+      { title: "Gallery — Tania's Cuisine & Lounge | Best Restaurant in Gishushu, Kigali" },
+      { name: "description", content: "Browse the photo gallery of Kigali's best restaurant at M&M Plaza, Gishushu. Lounge, atmosphere, dishes, and everyday moments at Tania's Cuisine & Lounge." },
+      { property: "og:title", content: "Gallery — Best Restaurant in Gishushu, Kigali | Tania's Cuisine & Lounge" },
+      { property: "og:description", content: "Browse the gallery of Kigali's best restaurant — lounge, atmosphere, dishes at M&M Plaza, Gishushu." },
       { property: "og:url", content: "https://taniascuisine.rw/gallery" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
-      { name: "twitter:title", content: "Gallery — Tania's Cuisine & Lounge" },
-      { name: "twitter:description", content: "Browse the gallery — atmosphere, events and moments at M&M Plaza, Gishushu." },
+      { name: "twitter:title", content: "Gallery — Best Restaurant in Gishushu | Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Photo gallery of Kigali's best restaurant at M&M Plaza, Gishushu." },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/gallery" }],
@@ -41,6 +42,10 @@ function GalleryPage() {
 
   return (
     <SiteLayout>
+      <BreadcrumbSchema items={[
+        { name: "Home", item: "https://taniascuisine.rw" },
+        { name: "Gallery", item: "https://taniascuisine.rw/gallery" },
+      ]} />
       <section className="pt-40 pb-16 px-6 md:px-12">
         <div className="mx-auto max-w-[1500px]">
           <p className="eyebrow mb-6">Gallery</p>

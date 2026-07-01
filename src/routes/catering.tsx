@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { SiteLayout } from "@/components/site/Layout";
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import catering from "@/assets/area/area-14.jpeg";
 import gallery1 from "@/assets/area/area-02.jpeg";
 import gallery2 from "@/assets/area/area-09.jpeg";
@@ -10,14 +11,14 @@ import { Check } from "lucide-react";
 export const Route = createFileRoute("/catering")({
   head: () => ({
     meta: [
-      { title: "Catering & Events — Tania's Cuisine & Lounge | Kigali, Rwanda" },
-      { name: "description", content: "Chef-led catering in Kigali. Corporate catering, weddings, galas, private events and daily office buffet delivery. Serving 50–800 guests. Trusted by Access Bank, Bank of Kigali, GIZ, Oxfam and more. Part of Tany's Ltd." },
-      { property: "og:title", content: "Catering & Events — Tania's Cuisine & Lounge | Kigali" },
-      { property: "og:description", content: "Chef-led catering for 50–800 guests. Corporate, weddings, private events. Trusted by Access Bank, Bank of Kigali, GIZ." },
+      { title: "Catering & Events — Tania's Cuisine & Lounge | Best Catering in Kigali" },
+      { name: "description", content: "Best catering in Kigali from Kigali's best restaurant. Corporate catering, weddings, galas, private events for 50–800 guests. Trusted by Access Bank, Bank of Kigali, GIZ. Part of Tany's Ltd." },
+      { property: "og:title", content: "Catering & Events — Best Catering in Kigali | Tania's Cuisine & Lounge" },
+      { property: "og:description", content: "Best catering in Kigali for 50–800 guests. Corporate, weddings, private events. Trusted by Access Bank, Bank of Kigali." },
       { property: "og:url", content: "https://taniascuisine.rw/catering" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
-      { name: "twitter:title", content: "Catering & Events — Tania's Cuisine & Lounge" },
-      { name: "twitter:description", content: "Chef-led catering for 50–800 guests in Kigali. Corporate, weddings, private events." },
+      { name: "twitter:title", content: "Best Catering in Kigali | Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Best catering in Kigali for 50–800 guests. Corporate, weddings, private events. Trusted by top brands." },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/catering" }],
@@ -58,6 +59,10 @@ function CateringPage() {
 
   return (
     <SiteLayout>
+      <BreadcrumbSchema items={[
+        { name: "Home", item: "https://taniascuisine.rw" },
+        { name: "Catering", item: "https://taniascuisine.rw/catering" },
+      ]} />
       <section className="relative h-[80vh] min-h-[560px] flex items-end overflow-hidden">
         <img src={catering} alt="Catered event" className="absolute inset-0 w-full h-full object-cover image-mood-deep" />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />

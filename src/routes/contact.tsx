@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { SiteLayout } from "@/components/site/Layout";
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Check, Instagram, Twitter, ArrowRight } from "lucide-react";
 import {
   Select,
@@ -15,14 +16,14 @@ import interiorImg from "@/assets/area/area-08.jpeg";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Reservations & Contact — Tania's Cuisine & Lounge | Gishushu, Kigali" },
-      { name: "description", content: "Reserve a table at Tania's Cuisine & Lounge, M&M Plaza, Gishushu, Kigali. Choose date, time and party size — WhatsApp confirmation within minutes. Call +250 789 289 450." },
-      { property: "og:title", content: "Reserve a Table — Tania's Cuisine & Lounge | Gishushu, Kigali" },
-      { property: "og:description", content: "Book your table at M&M Plaza, Gishushu. Choose date, time and party size. WhatsApp confirmation within minutes." },
+      { title: "Contact — Tania's Cuisine & Lounge | Best Restaurant in Gishushu, Kigali" },
+      { name: "description", content: "Contact Kigali's best restaurant at M&M Plaza, Gishushu. Reserve a table, inquire about catering, or book the lounge. WhatsApp +250 789 289 450 | Mon–Sun 11:00–23:00." },
+      { property: "og:title", content: "Contact — Best Restaurant in Gishushu, Kigali | Tania's Cuisine & Lounge" },
+      { property: "og:description", content: "Contact Kigali's best restaurant at M&M Plaza, Gishushu. Reserve a table, inquire about catering. WhatsApp +250 789 289 450." },
       { property: "og:url", content: "https://taniascuisine.rw/contact" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
-      { name: "twitter:title", content: "Reserve a Table — Tania's Cuisine & Lounge" },
-      { name: "twitter:description", content: "Book your table at M&M Plaza, Gishushu. WhatsApp confirmation within minutes." },
+      { name: "twitter:title", content: "Contact — Best Restaurant in Gishushu | Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Contact Kigali's best restaurant at M&M Plaza, Gishushu. Reserve a table. WhatsApp +250 789 289 450." },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/contact" }],
@@ -69,6 +70,10 @@ function ContactPage() {
 
   return (
     <SiteLayout>
+      <BreadcrumbSchema items={[
+        { name: "Home", item: "https://taniascuisine.rw" },
+        { name: "Contact", item: "https://taniascuisine.rw/contact" },
+      ]} />
       {/* HERO */}
       <section className="relative min-h-[50vh] flex items-end overflow-hidden">
         <img src={heroImg} alt="" className="absolute inset-0 w-full h-full object-cover" />

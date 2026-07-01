@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import lounge from "@/assets/area/area-17.jpeg";
 import buffet from "@/assets/area/area-04.jpeg";
 import loungeDrink from "@/assets/area/area-10.jpeg";
@@ -9,14 +10,13 @@ import { MapPin, Clock, Phone } from "lucide-react";
 export const Route = createFileRoute("/lounge")({
   head: () => ({
     meta: [
-      { title: "The Lounge — Tania's Cuisine & Lounge | Gishushu, Kigali" },
-      { name: "description", content: "Tania's atmospheric lounge at M&M Plaza, Gishushu, Kigali. Velvet booths, copper pendants, daily chef's buffet (12,000 RWF, 12:00–15:00). Open Mon–Sun 11:00–23:00. Reserve your table." },
-      { property: "og:title", content: "The Lounge — Tania's Cuisine & Lounge | Gishushu, Kigali" },
-      { property: "og:description", content: "Atmospheric lounge at M&M Plaza, Gishushu, Kigali. Daily buffet, velvet booths, copper light. Reserve your table." },
+      { title: "The Lounge — Tania's Cuisine & Lounge | Best Restaurant & Lounge in Gishushu, Kigali" },
+      { name: "description", content: "Kigali's best restaurant lounge at M&M Plaza, Gishushu. Velvet booths, copper pendants, daily chef's buffet (12,000 RWF). Open Mon–Sun. Reserve your table at Tania's — the top restaurant in Kigali." },
+      { property: "og:title", content: "The Lounge — Best Restaurant & Lounge in Gishushu, Kigali | Tania's" },
+      { property: "og:description", content: "Kigali's best restaurant lounge at M&M Plaza, Gishushu. Daily chef's buffet, velvet booths. Reserve your table." },
       { property: "og:url", content: "https://taniascuisine.rw/lounge" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
-      { name: "twitter:title", content: "The Lounge — Tania's Cuisine & Lounge" },
-      { name: "twitter:description", content: "Atmospheric Kigali dining lounge with daily buffet at M&M Plaza, Gishushu." },
+      { name: "twitter:title", content: "The Lounge — Best Restaurant in Gishushu | Tania's" },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/lounge" }],
@@ -27,6 +27,10 @@ export const Route = createFileRoute("/lounge")({
 function LoungePage() {
   return (
     <SiteLayout>
+      <BreadcrumbSchema items={[
+        { name: "Home", item: "https://taniascuisine.rw" },
+        { name: "Lounge", item: "https://taniascuisine.rw/lounge" },
+      ]} />
       <section className="relative h-[85vh] min-h-[600px] flex items-end overflow-hidden">
         <img src={lounge} alt="Tania's Lounge interior" className="absolute inset-0 w-full h-full object-cover image-mood-deep" />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />

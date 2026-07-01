@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import { CartProvider, useCart } from "@/components/site/CartContext";
 import { CartPanel } from "@/components/site/CartPanel";
+import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
 import { Clock, Star, ShoppingBag, Plus, X, ArrowRight } from "lucide-react";
@@ -11,10 +12,10 @@ import menuHero from "@/assets/area/area-08.jpeg";
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
-      { title: "Menu — Tania's Cuisine & Lounge | African Flavours in Kigali" },
-      { name: "description", content: "Browse the full menu at Tania's Cuisine & Lounge, Kigali. African grills, Swahili fish, peri-peri chicken, beef fillet steak, daily buffet (12,000 RWF), coffee bar, fresh juices and more. Prices in FRW." },
-      { property: "og:title", content: "Menu — Tania's Cuisine & Lounge | African Flavours in Kigali" },
-      { property: "og:description", content: "Browse the full menu: African grills, Swahili fish, peri-peri chicken, daily buffet, coffee bar and more. All prices in FRW." },
+      { title: "Menu — Tania's Cuisine & Lounge | Best Restaurant in Kigali | African Grill Menu" },
+      { name: "description", content: "Browse the full menu at Kigali's best restaurant, Tania's Cuisine & Lounge, Gishushu. African grills, Swahili fish, peri-peri chicken, beef fillet steak, daily buffet (12,000 RWF), coffee bar. Prices in FRW." },
+      { property: "og:title", content: "Menu — Best Restaurant in Kigali | Tania's African Grill Menu" },
+      { property: "og:description", content: "Browse our menu at Kigali's best restaurant: African grills, Swahili fish, daily buffet. M&M Plaza, Gishushu." },
       { property: "og:url", content: "https://taniascuisine.rw/menu" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
       { name: "twitter:title", content: "Menu — Tania's Cuisine & Lounge" },
@@ -37,6 +38,10 @@ function MenuPage() {
   return (
     <CartProvider>
       <SiteLayout>
+        <BreadcrumbSchema items={[
+          { name: "Home", item: "https://taniascuisine.rw" },
+          { name: "Menu", item: "https://taniascuisine.rw/menu" },
+        ]} />
         <section className="relative min-h-[60vh] flex items-end overflow-hidden">
           <img src={menuHero} alt="" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/10" />

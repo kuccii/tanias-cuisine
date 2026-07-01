@@ -12,15 +12,15 @@ import { ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
-      { name: "description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, curries, daily buffet, coffee bar. Reserve a table or book catering for up to 800 guests." },
-      { property: "og:title", content: "Tania's Cuisine & Lounge — Kigali's Finest Dining Since 2018" },
-      { property: "og:description", content: "Atmospheric dining, lounge and catering at M&M Plaza, Gishushu, Kigali. African grills, daily buffet, coffee bar. Reserve your table or book catering for up to 800 guests." },
+      { title: "Tania's Cuisine & Lounge — Best Restaurant in Kigali | African Dining & Lounge" },
+      { name: "description", content: "Best restaurant in Kigali at M&M Plaza, Gishushu. African grills, Swahili fish, daily chef's buffet (12,000 RWF), coffee bar. Reserve a table at Kigali's finest dining destination. Open daily." },
+      { property: "og:title", content: "Tania's Cuisine & Lounge — Best Restaurant in Kigali | African Dining & Lounge" },
+      { property: "og:description", content: "Best restaurant in Kigali at M&M Plaza, Gishushu. African grills, daily chef's buffet, coffee bar. Reserve your table." },
       { property: "og:url", content: "https://taniascuisine.rw" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Tania's Cuisine & Lounge — Kigali" },
-      { name: "twitter:description", content: "Atmospheric dining, lounge & catering in Kigali. African grills, daily buffet, coffee bar." },
+      { name: "twitter:title", content: "Tania's Cuisine & Lounge — Best Restaurant in Kigali" },
+      { name: "twitter:description", content: "Best restaurant in Kigali. African grills, daily buffet, coffee bar at M&M Plaza, Gishushu." },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw" }],
