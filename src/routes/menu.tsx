@@ -6,7 +6,7 @@ import { CartPanel } from "@/components/site/CartPanel";
 import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
-import { Clock, Star, ShoppingBag, Plus, X, ArrowRight } from "lucide-react";
+import { Clock, Star, ShoppingBag, Plus, X, ArrowRight, Utensils, Coffee, Wine, Fish, Beef, Drumstick, Leaf, Salad, Soup, Sandwich, IceCream, Droplet, Egg } from "lucide-react";
 import menuHero from "@/assets/area/area-08.jpeg";
 
 export const Route = createFileRoute("/menu")({
@@ -95,10 +95,32 @@ function FilterChip({ active, onClick, label }: { active: boolean; onClick: () =
           ? "border-primary text-primary bg-primary/10"
           : "border-border/40 text-foreground/55 hover:text-foreground hover:border-foreground/30"
       }`}
+      aria-pressed={active}
     >
       {label}
     </button>
   );
+}
+
+function getItemIcon(sectionId: string, groupName?: string): React.ComponentType<{ size?: number; className?: string }> {
+  const s = sectionId;
+  if (s === "snacks-starters") return Utensils;
+  if (s === "soups-salads") {
+    if (groupName === "Soups") return Soup;
+    if (groupName === "Salads") return Salad;
+    return Leaf;
+  }
+  if (s === "beef-pork") {
+    if (groupName === "Beef") return Beef;
+    return Sandwich;
+  }
+  if (s === "goat-specialties") return ChefHat;
+  if (s === "chicken") return Drumstick;
+  if (s === "fish") return Fish;
+  if (s === "extras-sides") return Leaf;
+  if (s === "coffee-tea") return Coffee;
+  if (s === "smoothies-juices") return Droplet;
+  return Utensils;
 }
 
 function Section({ section, index }: { section: MenuSection; index: number }) {
@@ -175,6 +197,7 @@ function ItemCard({
   compact?: boolean;
 }) {
   const image = resolveItemImage(item.name, sectionId, groupName);
+  const ItemIcon = getItemIcon(sectionId, groupName);
   const { addItem } = useCart();
   const [lightbox, setLightbox] = useState(false);
 
@@ -182,18 +205,26 @@ function ItemCard({
     <article className="group bg-card border border-border/30 hover:border-primary/40 transition-all overflow-hidden flex flex-col relative max-sm:flex-row max-sm:bg-transparent max-sm:border-0 max-sm:gap-3 max-sm:hover:border-0">
       <div className="relative aspect-[4/3] overflow-hidden max-sm:w-20 max-sm:h-20 max-sm:rounded-lg max-sm:shrink-0">
         <button onClick={() => setLightbox(true)} className="hidden max-sm:block absolute inset-0 w-full h-full z-10 cursor-pointer" aria-label={`View ${item.name}`} />
-        <img
-          src={image}
-          alt={item.name}
-          loading="lazy"
-          width={1024}
-          height={1024}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105 max-sm:w-[160px] max-sm:h-[160px]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent pointer-events-none" />
+        {image ? (
+          <>
+            <img
+              src={image}
+              alt={item.name}
+              loading="lazy"
+              width={1024}
+              height={1024}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105 max-sm:w-[160px] max-sm:h-[160px]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent pointer-events-none" />
+          </>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+            <ItemIcon size={48} className="text-muted-foreground/60" />
+          </div>
+        )}
       </div>
 
-      {lightbox && (
+      {image && lightbox && (
         <div className="fixed inset-0 z-[100] bg-background/95 flex items-center justify-center p-4 md:p-8" onClick={() => setLightbox(false)}>
           <button onClick={() => setLightbox(false)} className="absolute top-6 right-6 text-foreground/70 hover:text-primary z-10" aria-label="Close">
             <X size={28} />

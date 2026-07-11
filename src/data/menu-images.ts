@@ -100,31 +100,20 @@ const explicit: Record<string, string> = {
   "snacks-starters::Snacks Platter": snacksPlatter,
   "snacks-starters::BBQ Platter": bbqPlatter,
   "snacks-starters::Plate of Samosas": samosas,
-  "snacks-starters::Cheese Platter": cheesePlatter,
   "snacks-starters::Cheese & Sausages": cheeseSausages,
   "snacks-starters::Chicken Nuggets": chickenNuggets,
   "snacks-starters::Chicken Lollipops": chickenLollipops,
   "snacks-starters::Fish Fingers": fishFingers,
 
   // Soups & Salads
-  "soups-salads::Vegetable Soup": vegSoup,
-  "soups-salads::Mushroom Soup": mushroomSoup,
-  "soups-salads::Cream Tomato Soup": tomatoSoup,
-  "soups-salads::Ginger Carrot Soup": carrotSoup,
   "soups-salads::Kachumbari": kachumbari,
-  "soups-salads::Garden Salad": gardenSalad,
-  "soups-salads::Chicken Salad": chickenSalad,
-  "soups-salads::Chef Salad": chefSalad,
 
   // Beef & Pork
   "beef-pork::Twatundi Beef": beefTwatundi,
   "beef-pork::Beef Brochettes": beefBrochette,
   "beef-pork::Sizzling Twatundi Beef": sizzlingBeef,
   "beef-pork::Beef Stew": beefStew,
-  "beef-pork::Beef Fillet Steak": beefFillet,
-  
-  "beef-pork::Fresh Sausage Brochette": freshSausageBrochette,
-  "beef-pork::Saucisse Pili Brochette": saucissePiliBrochette,
+"beef-pork::Beef Fillet Steak": beefFillet,
   "beef-pork::Pork Chops": porkChops,
   
 
@@ -135,19 +124,15 @@ const explicit: Record<string, string> = {
   "goat-specialties::Ragoût de Chèvre": goatStew,
   "goat-specialties::Chèvre Grillé": goatGrilled,
   "goat-specialties::Cabri": cabri,
-  "goat-specialties::Poulet Gombo": pouletGombo,
-  "goat-specialties::Poulet Maffé": pouletMaffe,
 
   // Chicken
   "chicken::Twatundi Chicken": chickentwatundi,
   "chicken::Chicken Brochette": chickenBrochette,
   "chicken::1/4 Grilled Chicken": grilledChicken,
-  "chicken::1/2 Grilled Chicken": grilledChicken,
-  "chicken::Whole Grilled Chicken": wholeChicken,
+"chicken::1/2 Grilled Chicken": grilledChicken,
   "chicken::Chicken Yassa": chickenYassa,
   "chicken::Chicken with Peanut Sauce": pouletMaffe,
   "chicken::Chicken Stroganoff": chickenStew,
-  
   "chicken::Peri Peri 1/4 Chicken": periPeriChicken,
   "chicken::Chicken Stew": chickenStew,
 
@@ -175,8 +160,6 @@ const explicit: Record<string, string> = {
   "extras-sides::Kwanga": kwanga,
   "extras-sides::Plantain": plantain,
   "extras-sides::Chips": chips,
-  
-  "extras-sides::Grilled Bananas": grilledBananas,
   "extras-sides::Boiled Potatoes": boiledPotatoes,
   "extras-sides::Garlic Potatoes": garlicPotatoes,
   "extras-sides::Sombe (2kg)": sombe,
@@ -235,7 +218,7 @@ const explicit: Record<string, string> = {
   "smoothies-juices::2 Scoops": iceCream2,
 };
 
-export function resolveItemImage(name: string, sectionId: string, _groupName?: string): string {
+export function resolveItemImage(name: string, sectionId: string, _groupName?: string): string | null {
   const key = `${sectionId}::${name}`;
-  return explicit[key] ?? cappuccino;
+  return explicit[key] ?? null;
 }
