@@ -122,15 +122,15 @@ const explicit: Record<string, string> = {
   "beef-pork::Sizzling Twatundi Beef": sizzlingBeef,
   "beef-pork::Beef Stew": beefStew,
   "beef-pork::Beef Fillet Steak": beefFillet,
-  "beef-pork::Twatundi Pork": beefTwatundi,
+  
   "beef-pork::Fresh Sausage Brochette": freshSausageBrochette,
   "beef-pork::Saucisse Pili Brochette": saucissePiliBrochette,
   "beef-pork::Pork Chops": porkChops,
-  "beef-pork::Pork Ribs": porkRibs,
+  
 
   // Goat Specialties
-  "goat-specialties::Twatundi Goat": beefTwatundi,
-  "goat-specialties::Sizzling Twatundi Goat": sizzlingBeef,
+  
+  
   "goat-specialties::Chèvre de Mr Seguin": goatStew,
   "goat-specialties::Ragoût de Chèvre": goatStew,
   "goat-specialties::Chèvre Grillé": goatGrilled,
@@ -147,7 +147,7 @@ const explicit: Record<string, string> = {
   "chicken::Chicken Yassa": chickenYassa,
   "chicken::Chicken with Peanut Sauce": pouletMaffe,
   "chicken::Chicken Stroganoff": chickenStew,
-  "chicken::Poulet Mayo": chickenYassa,
+  
   "chicken::Peri Peri 1/4 Chicken": periPeriChicken,
   "chicken::Chicken Stew": chickenStew,
 
@@ -175,7 +175,7 @@ const explicit: Record<string, string> = {
   "extras-sides::Kwanga": kwanga,
   "extras-sides::Plantain": plantain,
   "extras-sides::Chips": chips,
-  "extras-sides::Fried Bananas": plantain,
+  
   "extras-sides::Grilled Bananas": grilledBananas,
   "extras-sides::Boiled Potatoes": boiledPotatoes,
   "extras-sides::Garlic Potatoes": garlicPotatoes,
