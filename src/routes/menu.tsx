@@ -114,7 +114,7 @@ function getItemIcon(sectionId: string, groupName?: string): React.ComponentType
     if (groupName === "Beef") return Beef;
     return Sandwich;
   }
-  if (s === "goat-specialties") return ChefHat;
+  if (s === "goat-specialties") return Utensils;
   if (s === "chicken") return Drumstick;
   if (s === "fish") return Fish;
   if (s === "extras-sides") return Leaf;
