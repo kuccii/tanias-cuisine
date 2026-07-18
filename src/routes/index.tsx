@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { menuSections } from "@/data/menu";
-import beefTwatundi from "@/assets/menu/beef-twatundi.jpg";
-import wholeTilapia from "@/assets/menu/whole-tilapia.jpg";
-import sombeImg from "@/assets/menu/sombe.jpg";
+import beefTwatundi from "@/assets/menu/beef-twatundi.webp";
+import wholeTilapia from "@/assets/menu/whole-tilapia.webp";
+import sombeImg from "@/assets/menu/sombe.webp";
 import heroVideo from "@/assets/herovideo.mp4";
-import loungeImg from "@/assets/area/area-01.jpeg";
-import cateringImg from "@/assets/area/area-14.jpeg";
+import loungeImg from "@/assets/area/area-01.webp";
+import cateringImg from "@/assets/area/area-14.webp";
 import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({

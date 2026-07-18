@@ -10,8 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import heroImg from "@/assets/area/area-07.jpeg";
-import interiorImg from "@/assets/area/area-08.jpeg";
+import heroImg from "@/assets/area/area-07.webp";
+import interiorImg from "@/assets/area/area-08.webp";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({

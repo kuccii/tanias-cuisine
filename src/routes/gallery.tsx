@@ -7,14 +7,14 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Tania's Cuisine & Lounge | Best Restaurant in Gishushu, Kigali" },
-      { name: "description", content: "Browse the photo gallery of Kigali's best restaurant at M&M Plaza, Gishushu. Lounge, atmosphere, dishes, and everyday moments at Tania's Cuisine & Lounge." },
-      { property: "og:title", content: "Gallery — Best Restaurant in Gishushu, Kigali | Tania's Cuisine & Lounge" },
-      { property: "og:description", content: "Browse the gallery of Kigali's best restaurant — lounge, atmosphere, dishes at M&M Plaza, Gishushu." },
+      { title: "Gallery — Tania's Cuisine & Lounge | Restaurant Photos & Ambiance in Gishushu, Kigali" },
+      { name: "description", content: "Photo gallery of Tania's Cuisine & Lounge at M&M Plaza, Gishushu, Kigali. Lounge interior, dining atmosphere, dishes, and everyday moments at our restaurant." },
+      { property: "og:title", content: "Gallery — Restaurant Photos & Ambiance | Tania's Cuisine & Lounge Kigali" },
+      { property: "og:description", content: "Browse photos of our lounge, dining atmosphere, and dishes at M&M Plaza, Gishushu, Kigali." },
       { property: "og:url", content: "https://taniascuisine.rw/gallery" },
       { property: "og:image", content: "https://taniascuisine.rw/og-image.jpg" },
-      { name: "twitter:title", content: "Gallery — Best Restaurant in Gishushu | Tania's Cuisine & Lounge" },
-      { name: "twitter:description", content: "Photo gallery of Kigali's best restaurant at M&M Plaza, Gishushu." },
+      { name: "twitter:title", content: "Gallery — Restaurant Photos | Tania's Cuisine & Lounge" },
+      { name: "twitter:description", content: "Photo gallery of our lounge, dishes, and ambiance at M&M Plaza, Gishushu." },
       { name: "twitter:image", content: "https://taniascuisine.rw/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/gallery" }],
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/gallery")({
 
 const galleryImages = Object.values(
   import.meta.glob<{ default: string }>(
-    "/src/assets/Gallery/*.{jpeg,jpg,png,PNG,JPEG,JPG}",
+    "/src/assets/Gallery/*.{webp,jpeg,jpg,png,PNG,JPEG,JPG}",
     { eager: true, query: "?url" }
   )
 ).map((m) => m.default);

@@ -1,10 +1,10 @@
-import grill from "@/assets/dish-grill.jpg";
-import curry from "@/assets/dish-curry.jpg";
-import wrap from "@/assets/dish-wrap.jpg";
-import platter from "@/assets/dish-platter.jpg";
-import drink from "@/assets/dish-drink.jpg";
-import skewers from "@/assets/dish-skewers.jpg";
-import buffet from "@/assets/buffet.jpg";
+import grill from "@/assets/dish-grill.webp";
+import curry from "@/assets/dish-curry.webp";
+import wrap from "@/assets/dish-wrap.webp";
+import platter from "@/assets/dish-platter.webp";
+import drink from "@/assets/dish-drink.webp";
+import skewers from "@/assets/dish-skewers.webp";
+import buffet from "@/assets/buffet.webp";
 
 export interface MenuItem {
   name: string;

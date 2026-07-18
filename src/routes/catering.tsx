@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
-import catering from "@/assets/area/area-14.jpeg";
-import gallery1 from "@/assets/area/area-02.jpeg";
-import gallery2 from "@/assets/area/area-09.jpeg";
-import gallery3 from "@/assets/area/area-15.jpeg";
+import catering from "@/assets/area/area-14.webp";
+import gallery1 from "@/assets/area/area-02.webp";
+import gallery2 from "@/assets/area/area-09.webp";
+import gallery3 from "@/assets/area/area-15.webp";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/catering")({

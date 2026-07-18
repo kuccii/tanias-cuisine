@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
-import lounge from "@/assets/area/area-01.jpeg";
-import catering from "@/assets/area/area-02.jpeg";
-import buffet from "@/assets/area/area-03.jpeg";
+import lounge from "@/assets/area/area-01.webp";
+import catering from "@/assets/area/area-02.webp";
+import buffet from "@/assets/area/area-03.webp";
 
 export const Route = createFileRoute("/about")({
   head: () => ({

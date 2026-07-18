@@ -7,7 +7,7 @@ import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
 import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
 import { Clock, Star, ShoppingBag, Plus, X, ArrowRight, Utensils, Coffee, Wine, Fish, Beef, Drumstick, Leaf, Salad, Soup, Sandwich, IceCream, Droplet, Egg } from "lucide-react";
-import menuHero from "@/assets/area/area-08.jpeg";
+import menuHero from "@/assets/area/area-08.webp";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({

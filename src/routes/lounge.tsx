@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
-import loungeInterior from "@/assets/area/area-01.jpeg";
-import buffet from "@/assets/buffet.jpg";
-import loungeDrink from "@/assets/lounge-drink.jpg";
-import loungeFood from "@/assets/lounge-food.jpg";
-import loungeAmbiance from "@/assets/area/area-13.jpeg";
+import loungeInterior from "@/assets/area/area-01.webp";
+import buffet from "@/assets/buffet.webp";
+import loungeDrink from "@/assets/lounge-drink.webp";
+import loungeFood from "@/assets/lounge-food.webp";
+import loungeAmbiance from "@/assets/area/area-13.webp";
 import { MapPin, Clock, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/lounge")({
