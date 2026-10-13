@@ -8,7 +8,12 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export default defineConfig({
-  nitro: { preset: "vercel" },
+  // serverEntry: false — root `server.js` is the standalone Hostinger runtime
+  // wrapper (it imports ./dist/server/index.mjs at run time). Without this,
+  // Nitro auto-detects `./server` from the project root and tries to BUILD it,
+  // which fails (and would be wrong even if it succeeded). The SSR entry stays
+  // src/server.ts. Do not remove unless server.js is renamed/moved.
+  nitro: { preset: "vercel", serverEntry: false },
   tanstackStart: {
     server: { entry: "server" },
   },

@@ -72,7 +72,7 @@ async function generateVideoScripts(
           },
           {
             headers: {
-              "Authorization": `Bearer ${process.env.NVIDIA_API_KEY || "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"}`,
+              "Authorization": `Bearer ${process.env.NVIDIA_API_KEY ?? ""}`,
               "Content-Type": "application/json"
             }
           }
@@ -118,7 +118,7 @@ async function generateVoiceovers(
           },
           {
             headers: {
-              "Authorization": `Bearer ${process.env.NVIDIA_API_KEY || "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"}`,
+              "Authorization": `Bearer ${process.env.NVIDIA_API_KEY ?? ""}`,
               "Content-Type": "application/json"
             }
           }

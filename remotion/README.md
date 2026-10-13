@@ -113,7 +113,7 @@ console.log("Video URL:", videoUrl);
 Set the following environment variables:
 
 ```bash
-NVIDIA_API_KEY=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
+NVIDIA_API_KEY=nvapi-YOUR_KEY_HERE
 ```
 
 ## Requirements

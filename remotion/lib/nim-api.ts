@@ -1,11 +1,21 @@
-const NIM_API_KEY = "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";
 const NIM_BASE_URL = "https://integrate.api.nvidia.com/v1";
+
+// Never hardcode API keys — read from the environment at call time.
+function requireApiKey(): string {
+  const key = process.env.NVIDIA_API_KEY;
+  if (!key) {
+    throw new Error(
+      "NVIDIA_API_KEY environment variable is not set. Export it before running (see remotion/README.md).",
+    );
+  }
+  return key;
+}
 
 export async function callNIM<T>(endpoint: string, body: Record<string, unknown>): Promise<T> {
   const res = await fetch(`${NIM_BASE_URL}${endpoint}`, {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${NIM_API_KEY}`,
+      Authorization: `Bearer ${requireApiKey()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
@@ -18,17 +28,26 @@ export async function callNIM<T>(endpoint: string, body: Record<string, unknown>
   return res.json();
 }
 
-export async function generateScript(prompt: string, model = "meta/llama-3.1-70b-instruct"): Promise<string> {
-  const result = await callNIM<{ choices: Array<{ message: { content: string } }> }>("/chat/completions", {
-    model,
-    messages: [{ role: "user", content: prompt }],
-    max_tokens: 500,
-    temperature: 0.7,
-  });
+export async function generateScript(
+  prompt: string,
+  model = "meta/llama-3.1-70b-instruct",
+): Promise<string> {
+  const result = await callNIM<{ choices: Array<{ message: { content: string } }> }>(
+    "/chat/completions",
+    {
+      model,
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 500,
+      temperature: 0.7,
+    },
+  );
   return result.choices[0].message.content;
 }
 
-export async function generateEmbedding(text: string, model = "nvidia/nv-embedqa-e5-v5"): Promise<number[]> {
+export async function generateEmbedding(
+  text: string,
+  model = "nvidia/nv-embedqa-e5-v5",
+): Promise<number[]> {
   const result = await callNIM<{ data: Array<{ embedding: number[] }> }>("/embeddings", {
     model,
     input: text,
@@ -36,7 +55,10 @@ export async function generateEmbedding(text: string, model = "nvidia/nv-embedqa
   return result.data[0].embedding;
 }
 
-export async function generateTTS(text: string, model = "nvidia/tts-hifigan"): Promise<ArrayBuffer> {
+export async function generateTTS(
+  text: string,
+  model = "nvidia/tts-hifigan",
+): Promise<ArrayBuffer> {
   const result = await callNIM<{ audio: string }>("/audio/speech", {
     model,
     input: text,
