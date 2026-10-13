@@ -13,7 +13,13 @@ export default defineConfig({
   // Nitro auto-detects `./server` from the project root and tries to BUILD it,
   // which fails (and would be wrong even if it succeeded). The SSR entry stays
   // src/server.ts. Do not remove unless server.js is renamed/moved.
-  nitro: { preset: "vercel", serverEntry: false },
+  nitro: {
+    // Default: Vercel (Build Output API v3 → .vercel/output/).
+    // Hostinger Node.js: set NITRO_PRESET=node-server to emit standard Nitro
+    // output in .output/ (server/index.mjs + public/).
+    preset: process.env.NITRO_PRESET || "vercel",
+    serverEntry: false,
+  },
   tanstackStart: {
     server: { entry: "server" },
   },

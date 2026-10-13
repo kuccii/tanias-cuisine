@@ -2,16 +2,17 @@ import { createServer } from "node:http";
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import { Readable } from "node:stream";
-import { dirname, extname, join, normalize, resolve, sep } from "node:path";
+import { dirname, extname, join, normalize, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const distDir = resolve(__dirname, "dist");
-const clientDir = join(distDir, "client");
-const serverEntry = join(distDir, "server", "index.mjs");
+
+// Both nitro presets ("vercel" for Vercel, "node-server" for Hostinger) emit
+// the same layout: dist/server/index.mjs (SSR handler) + dist/client (static).
+const serverEntry = join(__dirname, "dist", "server", "index.mjs");
+const root = join(__dirname, "dist", "client");
 const port = Number(process.env.PORT) || 3000;
 
-const root = clientDir;
 let handler;
 try {
   const mod = await import(pathToFileURL(serverEntry).href);
