@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && node scripts/prepare-vercel-output.cjs",
+    "start": "srvx serve --entry dist/server/index.mjs --dir . --static dist/client --prod",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
