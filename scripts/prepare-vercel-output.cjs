@@ -16,7 +16,21 @@ function copyRecursive(src, dest) {
 
 const outDir = '.vercel/output';
 fs.mkdirSync(outDir, { recursive: true });
-fs.copyFileSync('dist/config.json', path.join(outDir, 'config.json'));
+
+if (fs.existsSync('dist/config.json')) {
+  fs.copyFileSync('dist/config.json', path.join(outDir, 'config.json'));
+} else {
+  fs.writeFileSync(path.join(outDir, 'config.json'), JSON.stringify({
+    version: 3,
+    framework: { name: 'nitro', version: '3.0.260429-beta' },
+    overrides: {},
+    routes: [
+      { headers: { 'cache-control': 'public, max-age=31536000, immutable' }, src: '/assets/(.*)' },
+      { handle: 'filesystem' },
+      { src: '/(.*)', dest: '/__server' },
+    ],
+  }, null, 2));
+}
 copyRecursive('dist/client', path.join(outDir, 'static'));
 copyRecursive('dist/server', path.join(outDir, 'functions/__server.func'));
 console.log('Vercel output prepared at .vercel/output/');

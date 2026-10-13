@@ -35,6 +35,7 @@ const WHATSAPP_NUMBER = "250789289450";
 const PHONE_DISPLAY = "+250 789 289 450";
 
 const SUBJECTS = ["General inquiry", "Reservation", "Catering inquiry", "Event booking", "Private dining", "Feedback", "Other"];
+const THURSDAY_NOTE = "We accept advance reservations Mon–Wed & Fri–Sun. For Thursday visits, you're welcome to walk in — no reservation needed.";
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -208,6 +209,12 @@ function ContactPage() {
                     placeholder="Select subject"
                   />
                 </Field>
+
+                {form.subject === "Reservation" && (
+                  <p className="text-[11px] text-foreground/60 leading-relaxed bg-primary/5 border border-primary/20 p-3">
+                    {THURSDAY_NOTE}
+                  </p>
+                )}
 
                 <Field label="Message" required>
                   <textarea

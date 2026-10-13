@@ -68,7 +68,7 @@ export function generateResponse(input: string): string {
   }
 
   if (q.includes("reserve") || q.includes("book") || q.includes("table") || q.includes("reservation")) {
-    return `To book a table, visit our **Reservation page** at /contact. Choose your date, time, and party size — we'll confirm by WhatsApp within minutes.\n\nOr simply WhatsApp us at **+250 789 289 450** and we'll help you right away!`;
+    return `To book a table, visit our **Reservation page** at /contact. Choose your date, time, and party size — we'll confirm by WhatsApp within minutes.\n\n**Note:** We accept advance reservations Mon–Wed & Fri–Sun. For Thursday visits, you're welcome to walk in — no reservation needed.\n\nOr simply WhatsApp us at **+250 789 289 450** and we'll help you right away!`;
   }
 
   if (q.includes("cater") || q.includes("event") || q.includes("party") || q.includes("wedding") || q.includes("corporate") || q.includes("gala") || q.includes("buffet")) {
