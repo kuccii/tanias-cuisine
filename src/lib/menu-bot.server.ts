@@ -1,10 +1,78 @@
-import { menuSections, restaurantInfo } from "@/data/menu";
+import { menuSections, restaurantInfo, type MenuSection } from "@/data/menu";
+import { createClient } from "@supabase/supabase-js";
 
 interface MenuItem {
   name: string;
   price: string;
   description?: string;
   note?: string;
+}
+
+// Supabase configuration - read from env
+const SUPABASE_URL = process.env.SUPABASE_URL || "https://n8n.qivook.com/supabase/";
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || "";
+
+// Type definition matching database schema for fallback
+interface MenuSectionDB {
+  id: string;
+  slug: string;
+  category: string;
+  title: string;
+  subtitle: string;
+  image: string | null;
+  items: any[] | null;
+  groups: any[] | null;
+  special_box: any | null;
+  compact: boolean;
+}
+
+/**
+ * Get menu sections from Supabase with fallback to bundled data.
+ */
+async function getMenuSections(): Promise<MenuSection[]> {
+  // If Supabase is not configured, return bundled data
+  if (!SUPABASE_ANON_KEY) {
+    return menuSections;
+  }
+
+  try {
+    const supabase = createClient(
+      SUPABASE_URL.replace(/\/+$/, ""),
+      SUPABASE_ANON_KEY,
+      {
+        auth: { persistSession: false },
+      } as any
+    );
+
+    const { data: sections, error } = await supabase
+      .from("menu_sections" as const)
+      .select("*")
+      .order("id");
+
+    if (error) {
+      console.error("[menu-bot] Supabase error:", error.message);
+      return menuSections;
+    }
+
+    // Transform to match MenuSection[] type (remove id field, keep existing structure)
+    const result: MenuSection[] = sections.map((s) => ({
+      id: s.slug,
+      category: s.category,
+      title: s.title,
+      subtitle: s.subtitle,
+      image: s.image || "",
+      items: s.items,
+      groups: s.groups,
+      special_box: s.special_box,
+      compact: s.compact,
+    }));
+
+    return result;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("[menu-bot] Failed to fetch from Supabase:", message);
+    return menuSections;
+  }
 }
 
 function findItem(name: string): { section: string; item: MenuItem } | null {

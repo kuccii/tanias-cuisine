@@ -4,8 +4,9 @@ import { SiteLayout } from "@/components/site/Layout";
 import { CartProvider, useCart } from "@/components/site/CartContext";
 import { CartPanel } from "@/components/site/CartPanel";
 import { BreadcrumbSchema } from "@/components/site/BreadcrumbSchema";
-import { menuSections, restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
+import { restaurantInfo, type MenuItem, type MenuSection } from "@/data/menu";
 import { resolveItemImage } from "@/data/menu-images";
+import { getPublicMenu } from "@/lib/menu-cms.server";
 import { Clock, Star, ShoppingBag, Plus, X, ArrowRight, Utensils, Coffee, Wine, Fish, Beef, Drumstick, Leaf, Salad, Soup, Sandwich, IceCream, Droplet, Egg } from "lucide-react";
 import menuHero from "@/assets/area/area-08.webp";
 
@@ -25,14 +26,19 @@ export const Route = createFileRoute("/menu")({
     links: [{ rel: "canonical", href: "https://taniascuisine.rw/menu" }],
   }),
   component: MenuPage,
+  loader: async () => {
+    // Use the server function to fetch menu data from Supabase with fallback
+    return getPublicMenu({});
+  },
 });
 
 function MenuPage() {
+  const menuSections = Route.useLoaderData();
   const [active, setActive] = useState<string>("all");
 
   const visible = useMemo(
     () => (active === "all" ? menuSections : menuSections.filter((s) => s.id === active)),
-    [active],
+    [active, menuSections],
   );
 
   return (

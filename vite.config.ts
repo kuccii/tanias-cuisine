@@ -18,7 +18,8 @@ export default defineConfig({
     // Hostinger Node.js: set NITRO_PRESET=node-server to emit standard Nitro
     // output in .output/ (server/index.mjs + public/).
     preset: process.env.NITRO_PRESET || "vercel",
-    serverEntry: false,
+    // Configure entry points - server.ts is at src/server.ts
+    // server.js is a standalone wrapper that only loads ./dist/server/index.mjs at runtime
   },
   tanstackStart: {
     server: { entry: "server" },
