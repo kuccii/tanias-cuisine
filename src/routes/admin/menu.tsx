@@ -151,27 +151,30 @@ function MenuAdminPage() {
     if (!selectedSection || !editingSlug) return;
 
     setIsSaving(true);
-    toast.promise(
-      updateMenuSection({
-        data: {
-          slug: editingSlug,
-          updates: getFormValues(),
-        },
-      }),
-      {
-        loading: "Saving changes...",
-        success: () => {
-          // Refresh sections from server
-          getPublicMenu({}).then((freshSections) => {
-            setSections(freshSections);
-            toast("Changes saved", { description: "Menu updated successfully" });
-          });
-          return "Changes saved";
-        },
-        error: (err) => `Failed to save: ${err.message}`,
-      }
-    );
-    setIsSaving(false);
+    try {
+      await toast.promise(
+        updateMenuSection({
+          data: {
+            slug: editingSlug,
+            updates: getFormValues(),
+          },
+        }),
+        {
+          loading: "Saving changes...",
+          success: () => {
+            // Refresh sections from server
+            getPublicMenu({}).then((freshSections) => {
+              setSections(freshSections);
+              toast("Changes saved", { description: "Menu updated successfully" });
+            });
+            return "Changes saved";
+          },
+          error: (err) => `Failed to save: ${err.message}`,
+        }
+      );
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const getFormValues = (): Partial<MenuSection> => {

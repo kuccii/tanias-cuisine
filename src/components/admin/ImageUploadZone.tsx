@@ -182,16 +182,17 @@ export function ImageUploadZone({
               </div>
             ) : (
               // Upload prompt
-              <div className="flex flex-col items-center gap-3 text-center">
+              <div className="flex flex-col items-center gap-3 text-center max-w-full">
                 <Upload className="h-10 w-10 text-muted-foreground/50" />
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground break-words">
                   {canUpload
                     ? label || "Drag & drop an image here"
-                    : "Save section first to enable image upload"
-                  }
+                    : "Save section first to enable image upload"}
+                </p>
+                <p className="text-xs text-muted-foreground/60 break-words">
                   or click to select
                 </p>
-                <p className="text-xs text-muted-foreground/60">
+                <p className="text-xs text-muted-foreground/60 break-words">
                   Max 50MB · PNG, JPG, WebP
                 </p>
               </div>
