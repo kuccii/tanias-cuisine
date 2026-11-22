@@ -172,7 +172,7 @@ function MenuAdminPage() {
 
   const getFormValues = (): Partial<MenuSection> => {
     return {
-      id: (editingSlug === selectedSection.id ? undefined : editingSlug) || undefined,
+      id: (editingSlug === (selectedSection?.id) ? undefined : editingSlug) || undefined,
       slug: editingSlug,
       category: formState.category,
       title: formState.title,
@@ -282,7 +282,27 @@ function MenuAdminPage() {
 
         {/* Main Editor with Live Preview */}
         <div className="grid gap-4 lg:grid-cols-1 lg:[height:calc(100vh-60px)]">
-          <div className="rounded-xl border border-border bg-card shadow-sm">
+          <div className="rounded-xl border border-border bg-card shadow-sm flex flex-col">
+            {/* Save Button */}
+            <div className="border-t border-border p-4">
+              <Button
+                onClick={handleSave}
+                disabled={!selectedSection || isSaving}
+                className="w-full sm:w-auto"
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Save Changes
+                  </>
+                )}
+              </Button>
+            </div>
             <Tabs defaultValue="general" className="flex-1 flex flex-col">
               <div className="overflow-x-auto border-b border-border bg-muted/40">
                 <TabsList className="flex space-x-1 p-1">
@@ -711,27 +731,6 @@ function MenuAdminPage() {
                     )}
                   </div>
                 </TabsContent>
-              </div>
-
-              {/* Save Button */}
-              <div className="border-t border-border p-4">
-                <Button
-                  onClick={handleSave}
-                  disabled={isSaving}
-                  className="w-full sm:w-auto"
-                >
-                  {isSaving ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Saving...
-                    </>
-                  ) : (
-                    <>
-                      <Save className="h-4 w-4 mr-2" />
-                      Save Changes
-                    </>
-                  )}
-                </Button>
               </div>
             </Tabs>
           </div>
