@@ -24,8 +24,8 @@ function buildMenuContext() {
         );
     }
     if (s.special_box) {
-      lines.push(`  [★ ${s.special_box.title}]`);
-      for (const it of s.special_box.items)
+      lines.push(`  [★ ${s.special_box.title ?? "Special"}]`);
+      for (const it of s.special_box.items ?? [])
         lines.push(`  - ${it.name} (${it.price})${it.note ? ` [${it.note}]` : ""}`);
     }
   }

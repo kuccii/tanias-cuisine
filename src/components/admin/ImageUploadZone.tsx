@@ -14,7 +14,7 @@ import {
 interface ImageUploadZoneProps {
   value?: string;
   onChange: (url: string) => void;
-  slug: string;
+  slug?: string;
   context: "header" | "item";
   itemName?: string;
   className?: string;
@@ -33,8 +33,15 @@ export function ImageUploadZone({
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
+  // Don't upload if no slug is provided (section not yet created/saved)
+  const canUpload = !!slug;
+
   const handleFileSelect = useCallback(
     async (file: File) => {
+      if (!canUpload) {
+        toast.warning("Please save the section first to enable image upload");
+        return;
+      }
       if (!file.type.startsWith("image/")) {
         toast.error("Please select an image file");
         return;
@@ -138,7 +145,9 @@ export function ImageUploadZone({
             className={`relative border-2 border-dashed rounded-lg p-6 transition-colors ${
               currentImage
                 ? "border-border/50 bg-muted/30"
-                : "border-border hover:border-primary/50 hover:bg-primary/5"
+                : !canUpload
+                  ? "border-border/30 bg-muted/20 cursor-not-allowed"
+                  : "border-border hover:border-primary/50 hover:bg-primary/5"
             }`}
           >
             <input
@@ -146,7 +155,7 @@ export function ImageUploadZone({
               accept="image/*"
               onChange={handleInputChange}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              disabled={isUploading}
+              disabled={isUploading || !canUpload}
             />
 
             {currentImage ? (
@@ -176,7 +185,11 @@ export function ImageUploadZone({
               <div className="flex flex-col items-center gap-3 text-center">
                 <Upload className="h-10 w-10 text-muted-foreground/50" />
                 <p className="text-sm text-muted-foreground">
-                  {label || "Drag & drop an image here"} or click to select
+                  {canUpload
+                    ? label || "Drag & drop an image here"
+                    : "Save section first to enable image upload"
+                  }
+                  or click to select
                 </p>
                 <p className="text-xs text-muted-foreground/60">
                   Max 50MB · PNG, JPG, WebP

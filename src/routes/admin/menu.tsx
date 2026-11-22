@@ -52,9 +52,9 @@ function MenuAdminPage() {
   const allSections = Route.useLoaderData() as MenuSection[];
 
   // Initialize editingSlug from loader data - use stable initial value
-  const initialSlug = allSections.length > 0 ? allSections[0].id : null;
+  const initialSlug = allSections.length > 0 ? allSections[0].id : undefined;
 
-  const [editingSlug, setEditingSlug] = useState<string | null>(initialSlug);
+  const [editingSlug, setEditingSlug] = useState<string | undefined>(initialSlug);
   const [isSaving, setIsSaving] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -68,7 +68,7 @@ function MenuAdminPage() {
     return sections.find((s) => s.id === editingSlug || s.category === editingSlug) || null;
   }, [sections, editingSlug]);
 
-  const handleSelectSection = (slug: string) => {
+  const handleSelectSection = (slug: string | undefined) => {
     setEditingSlug(slug);
   };
 
@@ -76,14 +76,15 @@ function MenuAdminPage() {
     setSections(newSections);
   };
 
-  const handleDelete = async (slug: string) => {
+  const handleDelete = async (slug: string | undefined) => {
+    if (!slug) return;
     try {
       await deleteMenuSection({ data: { slug } });
       setSections((prev) => prev.filter((s) => s.id !== slug && s.category !== slug));
       if (editingSlug === slug) {
         const nextSection = sections.find((s) => s.id !== slug);
         if (nextSection) setEditingSlug(nextSection.id);
-        else setEditingSlug(null);
+        else setEditingSlug(undefined);
       }
       toast.success("Section deleted");
     } catch (error) {
@@ -152,8 +153,10 @@ function MenuAdminPage() {
     setIsSaving(true);
     toast.promise(
       updateMenuSection({
-        slug: editingSlug,
-        updates: getFormValues(),
+        data: {
+          slug: editingSlug,
+          updates: getFormValues(),
+        },
       }),
       {
         loading: "Saving changes...",
@@ -163,6 +166,7 @@ function MenuAdminPage() {
             setSections(freshSections);
             toast("Changes saved", { description: "Menu updated successfully" });
           });
+          return "Changes saved";
         },
         error: (err) => `Failed to save: ${err.message}`,
       }
@@ -497,11 +501,37 @@ function MenuAdminPage() {
                           </CardContent>
                         </Card>
                       ))}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const newItems = [...(formState.items || [])];
+                          newItems.push({ name: "", price: "" });
+                          handleInputChange("items", newItems);
+                        }}
+                        className="text-xs"
+                      >
+                        <Plus className="h-3 w-3 mr-1" />
+                        Add Item
+                      </Button>
                     </div>
                   ) : (
-                    <p className="text-sm text-muted-foreground/60 italic">
-                      No items in this section. Add items or use groups.
-                    </p>
+                    <div className="space-y-4">
+                      <p className="text-sm text-muted-foreground/60 italic">
+                        No items in this section.
+                      </p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          handleInputChange("items", [{ name: "", price: "" }]);
+                        }}
+                        className="text-xs"
+                      >
+                        <Plus className="h-3 w-3 mr-1" />
+                        Add Item
+                      </Button>
+                    </div>
                   )}
                 </TabsContent>
 

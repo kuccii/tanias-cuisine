@@ -86,8 +86,8 @@ function findItem(name: string): { section: string; item: MenuItem } | null {
       }
     }
     if (s.special_box) {
-      for (const item of s.special_box.items) {
-        if (item.name.toLowerCase().includes(name)) return { section: s.special_box.title, item };
+      for (const item of s.special_box.items ?? []) {
+        if (item.name.toLowerCase().includes(name)) return { section: s.special_box.title ?? "Special", item };
       }
     }
   }

@@ -20,12 +20,13 @@ export interface MenuGroup {
 }
 
 export interface SpecialBox {
-  title: string;
-  items: MenuItem[];
+  title?: string;
+  items?: MenuItem[];
 }
 
 export interface MenuSection {
   id: string;
+  slug?: string;
   category: string;
   title: string;
   subtitle: string;

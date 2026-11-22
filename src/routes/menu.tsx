@@ -162,7 +162,7 @@ function Section({ section, index }: { section: MenuSection; index: number }) {
               <Star size={11} className="fill-primary" /> {section.special_box.title}
             </span>
             <div className="mt-4 md:mt-0">
-              <ItemGrid items={section.special_box.items} sectionId={section.id} />
+              <ItemGrid items={section.special_box.items ?? []} sectionId={section.id} />
             </div>
           </div>
         )}

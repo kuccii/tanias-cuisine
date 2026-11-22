@@ -114,10 +114,10 @@ function SectionItem({ section, isActive, onSelect, onDelete, sensors }: Section
 
 interface SectionListProps {
   sections: MenuSection[];
-  activeSlug: string | null;
-  onSelect: (slug: string) => void;
+  activeSlug: string | undefined;
+  onSelect: (slug: string | undefined) => void;
   onReorder: (sections: MenuSection[]) => void;
-  onDelete: (slug: string) => void;
+  onDelete: (slug: string | undefined) => void;
   onCreate: () => void;
   isCollapsed: boolean;
   onToggleCollapse: () => void;

@@ -158,7 +158,7 @@ export function EditorTabs({
                 <Input
                   id="id"
                   value={section.id || ""}
-                  onChange={(e) => handleInputChange("id", e.target.value.toLowerCase().replace(/\s+/g, "-"))
+                  onChange={(e) => handleInputChange("id", e.target.value.toLowerCase().replace(/\s+/g, "-"))}
                   placeholder="section-id"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
@@ -196,8 +196,8 @@ export function EditorTabs({
               <ItemsList
                 items={section.items ?? []}
                 sectionId={section.id}
-                onUpdate={handleItemUpdate}
-                onDelete={handleItemDelete}
+                onUpdate={(index, updates) => handleItemUpdate(undefined, index, updates)}
+                onDelete={(itemName) => handleItemDelete(undefined, itemName)}
                 onReorder={onReorderItems ? (items) => onReorderItems(items) : undefined}
               />
             )}
