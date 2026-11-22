@@ -266,12 +266,22 @@ export const getMenuSlugs = createServerFn({ method: "GET" })
   });
 
 /**
- * Zod schema for image upload input
+ * Zod schema for menu item image upload input
  */
-const imageUploadSchema = z.object({
+const itemImageUploadSchema = z.object({
   base64: z.string(),
   slug: z.string(),
   itemName: z.string(),
+  filename: z.string().optional(),
+  mimeType: z.string().optional(),
+});
+
+/**
+ * Zod schema for section header image upload input
+ */
+const sectionHeaderImageSchema = z.object({
+  base64: z.string(),
+  sectionSlug: z.string(),
   filename: z.string().optional(),
   mimeType: z.string().optional(),
 });
@@ -281,7 +291,7 @@ const imageUploadSchema = z.object({
  * Accepts base64-encoded image data and returns the public URL.
  */
 export const uploadMenuItemImageBase64 = createServerFn({ method: "POST" })
-  .inputValidator(imageUploadSchema)
+  .inputValidator(itemImageUploadSchema)
   .handler(async ({ data }) => {
     const supabase = await createServiceClient();
     const { base64, slug, itemName, filename, mimeType } = data;
@@ -308,6 +318,41 @@ export const uploadMenuItemImageBase64 = createServerFn({ method: "POST" })
     }
 
     // Get public URL
+    const { data: publicUrl } = supabase.storage
+      .from("menu-uploads")
+      .getPublicUrl(storageFilename);
+
+    return { publicUrl: publicUrl.publicUrl };
+  });
+
+/**
+ * Upload a section header image to Supabase storage.
+ * Accepts base64-encoded image data and returns the public URL.
+ * Storage path: menu/{sectionSlug}/header.{ext}
+ */
+export const uploadSectionHeaderImage = createServerFn({ method: "POST" })
+  .inputValidator(sectionHeaderImageSchema)
+  .handler(async ({ data }) => {
+    const supabase = await createServiceClient();
+    const { base64, sectionSlug, filename, mimeType } = data;
+
+    const safeSlug = sectionSlug.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
+    const ext = filename?.split(".").pop() || "webp";
+    const storageFilename = `menu/${safeSlug}/header.${ext}`;
+
+    // Decode base64 to buffer
+    const binaryString = Buffer.from(base64, "base64").toString("binary");
+    const buffer = Buffer.from(binaryString, "binary");
+
+    const { error } = await supabase.storage
+      .from("menu-uploads")
+      .upload(storageFilename, buffer, {
+        contentType: mimeType || "image/webp",
+        upsert: true,
+      });
+
+    if (error) throw new Error(`Upload failed: ${error.message}`);
+
     const { data: publicUrl } = supabase.storage
       .from("menu-uploads")
       .getPublicUrl(storageFilename);
