@@ -134,7 +134,8 @@ export function SectionList({
   onToggleCollapse,
 }: SectionListProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortedSections, setSortedSections] = useState(sections);
+  // Use lazy initialization to prevent hydration mismatch in SSR
+  const [sortedSections, setSortedSections] = useState(() => sections);
 
   // Keep sorted sections in sync with props
   useEffect(() => {

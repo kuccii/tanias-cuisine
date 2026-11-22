@@ -51,14 +51,18 @@ function MenuAdminPage() {
   const navigate = useNavigate();
   const allSections = Route.useLoaderData() as MenuSection[];
 
-  const [editingSlug, setEditingSlug] = useState<string | null>(null);
+  // Initialize editingSlug from loader data - use stable initial value
+  const initialSlug = allSections.length > 0 ? allSections[0].id : null;
+
+  const [editingSlug, setEditingSlug] = useState<string | null>(initialSlug);
   const [isSaving, setIsSaving] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  // Convert to mutable arrays for reorder
-  const [sections, setSections] = useState<MenuSection[]>(allSections);
+  // Convert to mutable arrays for reorder - initialize from allSections
+  // Use lazy initialization to prevent hydration mismatch in SSR
+  const [sections, setSections] = useState<MenuSection[]>(() => allSections);
 
-  // Find selected section
+  // Find selected section - use sections (mutable) not allSections for consistency
   const selectedSection = useMemo(() => {
     if (!editingSlug) return null;
     return sections.find((s) => s.id === editingSlug || s.category === editingSlug) || null;
@@ -181,17 +185,33 @@ function MenuAdminPage() {
     };
   };
 
-  // Form state
-  const [formState, setFormState] = useState<Omit<MenuSection, "id"> & { items?: MenuItem[]; groups?: MenuGroup[]; special_box?: SpecialBox }>({
-    slug: editingSlug,
-    category: selectedSection.category,
-    title: selectedSection.title,
-    subtitle: selectedSection.subtitle,
-    image: selectedSection.image || "",
-    compact: selectedSection.compact || false,
-    items: selectedSection.items || [],
-    groups: selectedSection.groups ? JSON.parse(JSON.stringify(selectedSection.groups)) : [],
-    special_box: selectedSection.special_box ? JSON.parse(JSON.stringify(selectedSection.special_box)) : undefined,
+  // Form state - use lazy initialization with safe defaults to prevent hydration mismatch
+  const [formState, setFormState] = useState<Omit<MenuSection, "id"> & { items?: MenuItem[]; groups?: MenuGroup[]; special_box?: SpecialBox }>(() => {
+    // Safe defaults for SSR hydration
+    if (!selectedSection) {
+      return {
+        slug: editingSlug || "",
+        category: "",
+        title: "",
+        subtitle: "",
+        image: "",
+        compact: false,
+        items: [],
+        groups: [],
+        special_box: undefined,
+      };
+    }
+    return {
+      slug: editingSlug,
+      category: selectedSection.category,
+      title: selectedSection.title,
+      subtitle: selectedSection.subtitle,
+      image: selectedSection.image || "",
+      compact: selectedSection.compact || false,
+      items: selectedSection.items || [],
+      groups: selectedSection.groups ? JSON.parse(JSON.stringify(selectedSection.groups)) : [],
+      special_box: selectedSection.special_box ? JSON.parse(JSON.stringify(selectedSection.special_box)) : undefined,
+    };
   });
 
   // Sync form state with selected section changes
