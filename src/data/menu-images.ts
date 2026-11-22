@@ -162,6 +162,8 @@ const explicit: Record<string, string> = {
   "extras-sides::Kwanga": kwanga,
   "extras-sides::Plantain": plantain,
   "extras-sides::Chips": chips,
+  "extras-sides::Fried Bananas": plantain,
+  "extras-sides::Grilled Bananas": grilledBananas,
   "extras-sides::Boiled Potatoes": boiledPotatoes,
   "extras-sides::Garlic Potatoes": garlicPotatoes,
   "extras-sides::Sombe (2kg)": sombe,
