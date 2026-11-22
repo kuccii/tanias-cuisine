@@ -11,6 +11,7 @@ export interface MenuItem {
   price: string;
   description?: string;
   note?: string;
+  image?: string;
 }
 
 export interface MenuGroup {

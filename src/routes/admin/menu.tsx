@@ -1,43 +1,39 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useState, useEffect, useMemo } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, Save, RefreshCw, Upload, Trash2, Plus, Loader2 } from "lucide-react";
-import { getPublicMenu, upsertMenuSection, uploadMenuItemImageBase64, type MenuItem } from "@/lib/menu-cms.server";
-import type { MenuSection } from "@/data/menu";
-
-// Form schema for section data
-const sectionFormSchema = z.object({
-  slug: z.string().min(1, "Slug is required"),
-  category: z.string(),
-  title: z.string().min(1, "Title is required"),
-  subtitle: z.string(),
-  image: z.string().optional(),
-  compact: z.boolean().optional(),
-  items: z.any().optional(),
-  groups: z.any().optional(),
-  special_box: z.any().optional(),
-});
-
-type SectionFormValues = z.infer<typeof sectionFormSchema>;
-
-// Initial empty section
-const emptySection: SectionFormValues = {
-  slug: "",
-  category: "",
-  title: "",
-  subtitle: "",
-  image: "",
-  compact: false,
-  items: [],
-  groups: [],
-};
+import {
+  ChevronLeft,
+  Save,
+  RefreshCw,
+  Upload,
+  Trash2,
+  Plus,
+  Loader2,
+  Users,
+  Grid3x3,
+  Image as ImageIcon,
+} from "lucide-react";
+import { toast } from "sonner";
+import {
+  getPublicMenu,
+  upsertMenuSection,
+  updateMenuSection,
+  deleteMenuSection,
+  uploadMenuItemImageBase64,
+  uploadSectionHeaderImage,
+  type MenuItem,
+} from "@/lib/menu-cms.server";
+import type { MenuSection, MenuGroup, SpecialBox } from "@/data/menu";
+import { SectionList } from "@/components/admin/SectionList";
+import { LivePreview } from "@/components/admin/LivePreview";
+import { ImageUploadZone } from "@/components/admin/ImageUploadZone";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin/menu")({
   head: () => ({
@@ -53,155 +49,184 @@ export const Route = createFileRoute("/admin/menu")({
 
 function MenuAdminPage() {
   const navigate = useNavigate();
-  // Get sections from loader (server-side data)
   const allSections = Route.useLoaderData() as MenuSection[];
+
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [uploadingImage, setUploadingImage] = useState(false);
-  
-  const form = useForm<SectionFormValues>({
-    defaultValues: emptySection,
-  });
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  // Convert to mutable arrays for reorder
+  const [sections, setSections] = useState<MenuSection[]>(allSections);
+
+  // Find selected section
+  const selectedSection = useMemo(() => {
+    if (!editingSlug) return null;
+    return sections.find((s) => s.id === editingSlug || s.category === editingSlug) || null;
+  }, [sections, editingSlug]);
 
   const handleSelectSection = (slug: string) => {
-    const section = allSections.find(s => s.id === slug || s.category === slug);
-    if (!section) return;
-    
     setEditingSlug(slug);
-    form.reset({
-      slug: section.id || slug,
-      category: section.category,
-      title: section.title,
-      subtitle: section.subtitle,
-      image: section.image || "",
-      compact: section.compact || false,
-      items: section.items || [],
-      groups: section.groups || [],
-      special_box: section.special_box || undefined,
-    });
   };
 
-  // Reload data after save by navigating to same route (triggers loader)
-  const reloadMenu = () => {
-    navigate({ to: "/admin/menu" });
+  const handleReorder = (newSections: MenuSection[]) => {
+    setSections(newSections);
   };
+
+  const handleDelete = async (slug: string) => {
+    try {
+      await deleteMenuSection({ data: { slug } });
+      setSections((prev) => prev.filter((s) => s.id !== slug && s.category !== slug));
+      if (editingSlug === slug) {
+        const nextSection = sections.find((s) => s.id !== slug);
+        if (nextSection) setEditingSlug(nextSection.id);
+        else setEditingSlug(null);
+      }
+      toast.success("Section deleted");
+    } catch (error) {
+      toast.error("Failed to delete section: " + (error as Error).message);
+    }
+  };
+
+  const handleCreate = () => {
+    const newSlug = `new-section-${Date.now()}`;
+    setEditingSlug(newSlug);
+  };
+
+  const handleToggleCollapse = () => {
+    setSidebarCollapsed((prev) => !prev);
+  };
+
+  if (!selectedSection) {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b border-border p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/" })}>
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Back to Menu
+              </Button>
+              <h1 className="font-display text-xl">Menu CMS Admin</h1>
+            </div>
+            <Badge variant="outline">No authentication required</Badge>
+          </div>
+        </header>
+
+        <main className="mx-auto max-w-6xl p-4 lg:p-6">
+          <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+            {/* Sidebar */}
+            <SectionList
+              sections={sections}
+              activeSlug={editingSlug}
+              onSelect={handleSelectSection}
+              onReorder={handleReorder}
+              onDelete={handleDelete}
+              onCreate={handleCreate}
+              isCollapsed={sidebarCollapsed}
+              onToggleCollapse={handleToggleCollapse}
+            />
+            {/* Empty State */}
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center p-8 text-center">
+                <p className="text-muted-foreground mb-4">Select a section to edit</p>
+                <Button onClick={handleCreate}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create New Section
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   const handleSave = async () => {
-    if (!form.getValues("slug")) {
-      form.setError("slug", { message: "Slug is required" });
-      return;
-    }
+    if (!selectedSection || !editingSlug) return;
 
     setIsSaving(true);
-    try {
-      const values = form.getValues();
-      await upsertMenuSection({
-        data: {
-          slug: values.slug,
-          category: values.category,
-          title: values.title,
-          subtitle: values.subtitle,
-          image: values.image,
-          items: values.items,
-          groups: values.groups,
-          special_box: values.special_box,
-          compact: values.compact,
-        },
-      });
-      // Refresh sections list (navigate to trigger loader)
-      reloadMenu();
-      alert("Section saved successfully!");
-    } catch (error) {
-      console.error("Save failed:", error);
-      alert("Failed to save: " + (error as Error).message);
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, slug: string, itemName: string) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploadingImage(true);
-
-    try {
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const base64 = event.target?.result;
-        if (typeof base64 === "string") {
-          const base64Data = base64.replace(/^data:image\/[a-z]+;base64,/, "");
-          await uploadMenuItemImageBase64({
-            data: { base64: base64Data, slug, itemName, filename: file.name, mimeType: file.type },
+    toast.promise(
+      updateMenuSection({
+        slug: editingSlug,
+        updates: getFormValues(),
+      }),
+      {
+        loading: "Saving changes...",
+        success: () => {
+          // Refresh sections from server
+          getPublicMenu({}).then((freshSections) => {
+            setSections(freshSections);
+            toast("Changes saved", { description: "Menu updated successfully" });
           });
-          alert("Image uploaded successfully");
-        }
-        setUploadingImage(false);
-      };
-      reader.readAsDataURL(file);
-    } catch (error) {
-      console.error("Upload failed:", error);
-      alert("Upload failed: " + (error as Error).message);
-      setUploadingImage(false);
+        },
+        error: (err) => `Failed to save: ${err.message}`,
+      }
+    );
+    setIsSaving(false);
+  };
+
+  const getFormValues = (): Partial<MenuSection> => {
+    return {
+      id: (editingSlug === selectedSection.id ? undefined : editingSlug) || undefined,
+      slug: editingSlug,
+      category: formState.category,
+      title: formState.title,
+      subtitle: formState.subtitle,
+      image: formState.image,
+      compact: formState.compact,
+      items: formState.items,
+      groups: formState.groups,
+      special_box: formState.special_box,
+    };
+  };
+
+  // Form state
+  const [formState, setFormState] = useState<Omit<MenuSection, "id"> & { items?: MenuItem[]; groups?: MenuGroup[]; special_box?: SpecialBox }>({
+    slug: editingSlug,
+    category: selectedSection.category,
+    title: selectedSection.title,
+    subtitle: selectedSection.subtitle,
+    image: selectedSection.image || "",
+    compact: selectedSection.compact || false,
+    items: selectedSection.items || [],
+    groups: selectedSection.groups ? JSON.parse(JSON.stringify(selectedSection.groups)) : [],
+    special_box: selectedSection.special_box ? JSON.parse(JSON.stringify(selectedSection.special_box)) : undefined,
+  });
+
+  // Sync form state with selected section changes
+  useEffect(() => {
+    if (selectedSection) {
+      setFormState({
+        slug: editingSlug,
+        category: selectedSection.category,
+        title: selectedSection.title,
+        subtitle: selectedSection.subtitle,
+        image: selectedSection.image || "",
+        compact: selectedSection.compact || false,
+        items: JSON.parse(JSON.stringify(selectedSection.items || [])),
+        groups: selectedSection.groups ? JSON.parse(JSON.stringify(selectedSection.groups)) : [],
+        special_box: selectedSection.special_box ? JSON.parse(JSON.stringify(selectedSection.special_box)) : undefined,
+      });
     }
+  }, [selectedSection]);
+
+  const handleInputChange = (field: keyof typeof formState, value: any) => {
+    setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
-  const addItem = () => {
-    const items = form.watch("items") || [];
-    form.setValue("items", [...items, { name: "", price: "", description: "", note: "" }]);
+  const handleNestedChange = (path: string[], value: any) => {
+    setFormState((prev: any) => {
+      const newState = { ...prev };
+      let current: any = newState;
+      for (let i = 0; i < path.length - 1; i++) {
+        current[path[i]] = { ...current[path[i]] };
+        current = current[path[i]];
+      }
+      current[path[path.length - 1]] = value;
+      return newState;
+    });
   };
-
-  const updateItem = (index: number, field: string, value: string) => {
-    const items = form.watch("items") || [];
-    const updated = [...items];
-    updated[index] = { ...updated[index], [field]: value };
-    form.setValue("items", updated);
-  };
-
-  const removeItem = (index: number) => {
-    const items = form.watch("items") || [];
-    items.splice(index, 1);
-    form.setValue("items", items);
-  };
-
-  const addGroup = () => {
-    const groups = form.watch("groups") || [];
-    form.setValue("groups", [...groups, { name: "", items: [] }]);
-  };
-
-  const updateGroup = (groupIndex: number, field: string, value: any) => {
-    const groups = form.watch("groups") || [];
-    const updated = [...groups];
-    updated[groupIndex] = { ...updated[groupIndex], [field]: value };
-    form.setValue("groups", updated);
-  };
-
-  const removeGroup = (groupIndex: number) => {
-    const groups = form.watch("groups") || [];
-    groups.splice(groupIndex, 1);
-    form.setValue("groups", groups);
-  };
-
-  const addGroupItem = (groupIndex: number) => {
-    const groups = form.watch("groups") || [];
-    const group = groups[groupIndex];
-    group.items = [...group.items, { name: "", price: "" }];
-    form.setValue("groups", groups);
-  };
-
-  const updateGroupItem = (groupIndex: number, itemIndex: number, field: string, value: string) => {
-    const groups = form.watch("groups") || [];
-    groups[groupIndex].items[itemIndex] = { ...groups[groupIndex].items[itemIndex], [field]: value };
-    form.setValue("groups", groups);
-  };
-
-  const removeGroupItem = (groupIndex: number, itemIndex: number) => {
-    const groups = form.watch("groups") || [];
-    groups[groupIndex].items.splice(itemIndex, 1);
-    form.setValue("groups", groups);
-  };
-
-  const selectedSection = editingSlug ? allSections.find(s => s.id === editingSlug || s.category === editingSlug) : null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -222,357 +247,478 @@ function MenuAdminPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl p-4 lg:p-6">
-        <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-          {/* Section List */}
-          <div className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Sections ({allSections.length})</CardTitle>
-              </CardHeader>
-              <CardContent>
-                  <div className="space-y-2 max-h-96 overflow-y-auto">
-                    {allSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => handleSelectSection(section.id)}
-                        className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
-                          editingSlug === section.id
-                            ? "bg-primary/10 text-primary font-medium"
-                            : "hover:bg-secondary hover:text-foreground"
-                        }`}
-                      >
-                        {section.title}
-                        <span className="block text-xs text-foreground/60">{section.category}</span>
-                      </button>
-                    ))}
-                    <button
-                      onClick={() => {
-                        const newSlug = `new-section-${Date.now()}`;
-                        handleSelectSection(newSlug);
-                      }}
-                      className="w-full text-left px-3 py-2 rounded-md text-sm transition-colors hover:bg-secondary flex items-center gap-2"
-                    >
-                      <Plus className="h-4 w-4" />
-                      New Section
-                    </button>
-                  </div>
-              </CardContent>
-            </Card>
+      <main className="mx-auto max-w-6xl h-[calc(100vh-60px)] grid gap-4 lg:grid-cols-[300px_1fr]">
+        {/* Sidebar */}
+        <SectionList
+          sections={sections}
+          activeSlug={editingSlug}
+          onSelect={handleSelectSection}
+          onReorder={handleReorder}
+          onDelete={handleDelete}
+          onCreate={handleCreate}
+          isCollapsed={sidebarCollapsed}
+          onToggleCollapse={handleToggleCollapse}
+        />
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => form.reset(emptySection)}
-                  className="w-full justify-start"
-                >
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Clear Form
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={reloadMenu}
-                  className="w-full justify-start"
-                >
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Reload from Database
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+        {/* Main Editor with Live Preview */}
+        <div className="grid gap-4 lg:grid-cols-1 lg:[height:calc(100vh-60px)]">
+          <div className="rounded-xl border border-border bg-card shadow-sm">
+            <Tabs defaultValue="general" className="flex-1 flex flex-col">
+              <div className="overflow-x-auto border-b border-border bg-muted/40">
+                <TabsList className="flex space-x-1 p-1">
+                  <TabsTrigger value="general" className="text-xs">
+                    General
+                  </TabsTrigger>
+                  <TabsTrigger value="items" className="text-xs">
+                    Items
+                  </TabsTrigger>
+                  <TabsTrigger value="groups" className="text-xs">
+                    Groups
+                  </TabsTrigger>
+                  <TabsTrigger value="special" className="text-xs">
+                    Special
+                  </TabsTrigger>
+                  <TabsTrigger value="images" className="text-xs">
+                    Images
+                  </TabsTrigger>
+                </TabsList>
+              </div>
 
-          {/* Edit Form */}
-          <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>
-                  {editingSlug ? `Editing: ${selectedSection?.title || editingSlug}` : "New Section"}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid gap-4">
-                  {/* Required Fields */}
-                  <div className="grid grid-cols-2 gap-4">
+              <div className="flex-1 overflow-y-auto p-4">
+                {/* General Tab */}
+                <TabsContent value="general" className="space-y-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <Label htmlFor="slug">Slug</Label>
+                      <Label htmlFor="slug" className="text-xs uppercase tracking-wider">
+                        Slug
+                      </Label>
                       <Input
                         id="slug"
-                        {...form.register("slug")}
-                        value={form.watch("slug")}
-                        onChange={(e) => form.setValue("slug", e.target.value)}
-                        placeholder="e.g., appetizers"
+                        value={formState.slug}
+                        onChange={(e) => handleInputChange("slug", e.target.value.toLowerCase().replace(/\s+/g, "-"))}
+                        placeholder="section-slug"
+                        className="font-mono text-sm"
                       />
-                      {form.formState.errors.slug && (
-                        <p className="text-sm text-destructive">{form.formState.errors.slug.message}</p>
-                      )}
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Used in URLs. Must be unique.
+                      </p>
                     </div>
+
                     <div>
-                      <Label htmlFor="category">Category</Label>
+                      <Label htmlFor="category" className="text-xs uppercase tracking-wider">
+                        Category
+                      </Label>
                       <Input
                         id="category"
-                        {...form.register("category")}
-                        value={form.watch("category")}
-                        onChange={(e) => form.setValue("category", e.target.value)}
-                        placeholder="e.g., Start Your Meal"
+                        value={formState.category}
+                        onChange={(e) => handleInputChange("category", e.target.value)}
+                        placeholder="e.g., Starters, Mains"
                       />
                     </div>
-                  </div>
 
-                  <div>
-                    <Label htmlFor="title">Title</Label>
-                    <Input
-                      id="title"
-                      {...form.register("title")}
-                      value={form.watch("title")}
-                      onChange={(e) => form.setValue("title", e.target.value)}
-                      placeholder="e.g., Snacks & Starters"
-                    />
-                    {form.formState.errors.title && (
-                      <p className="text-sm text-destructive">{form.formState.errors.title.message}</p>
-                    )}
-                  </div>
+                    <div className="md:col-span-2">
+                      <Label htmlFor="title" className="text-xs uppercase tracking-wider">
+                        Title
+                      </Label>
+                      <Input
+                        id="title"
+                        value={formState.title}
+                        onChange={(e) => handleInputChange("title", e.target.value)}
+                        placeholder="Section title"
+                      />
+                    </div>
 
-                  <div>
-                    <Label htmlFor="subtitle">Subtitle</Label>
-                    <Input
-                      id="subtitle"
-                      {...form.register("subtitle")}
-                      value={form.watch("subtitle")}
-                      onChange={(e) => form.setValue("subtitle", e.target.value)}
-                      placeholder="Brief description"
-                    />
-                  </div>
+                    <div className="md:col-span-2">
+                      <Label htmlFor="subtitle" className="text-xs uppercase tracking-wider">
+                        Subtitle
+                      </Label>
+                      <Input
+                        id="subtitle"
+                        value={formState.subtitle}
+                        onChange={(e) => handleInputChange("subtitle", e.target.value)}
+                        placeholder="Section subtitle"
+                      />
+                    </div>
 
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={form.watch("compact") ?? false}
-                      onChange={(e) => form.setValue("compact", e.target.checked)}
-                      className="rounded border-input"
-                    />
-                    <Label>Compact layout</Label>
-                  </div>
-
-                  {/* Image Upload */}
-                  <div>
-                    <Label>Header Image URL</Label>
-                    <Input
-                      id="image"
-                      {...form.register("image")}
-                      value={form.watch("image") || ""}
-                      onChange={(e) => form.setValue("image", e.target.value)}
-                      placeholder="/src/assets/dish-skewers.webp"
-                    />
-                    <p className="text-xs text-foreground/50 mt-1">
-                      Use public URLs or bundle asset paths
-                    </p>
-                    {form.watch("image") && (
-                      <div className="mt-2">
-                        <img src={form.watch("image")} alt="Header preview" className="h-24 object-cover rounded" />
+                    <div>
+                      <Label htmlFor="compact" className="text-xs uppercase tracking-wider">
+                        Compact
+                      </Label>
+                      <div className="flex items-center gap-2 mt-1">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={formState.compact || false}
+                            onChange={(e) => handleInputChange("compact", e.target.checked)}
+                            className="h-4 w-4 rounded border-input"
+                          />
+                          <span className="text-sm">Compact layout</span>
+                        </label>
                       </div>
-                    )}
-                  </div>
-                </div>
+                      <p className="text-xs text-muted-foreground mt-1">Smaller grid with more columns</p>
+                    </div>
 
-                <hr />
-
-                {/* Simple Items Section */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-display text-lg">Simple Items</h3>
-                    <Button variant="outline" size="sm" onClick={addItem}>
-                      <Plus className="h-4 w-4 mr-1" /> Add Item
-                    </Button>
+                    <div className="flex items-end gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleInputChange("image", "")}
+                        className="h-9"
+                      >
+                        Clear
+                      </Button>
+                    </div>
                   </div>
-                  <div className="space-y-3">
-                    {form.watch("items")?.map((item: MenuItem, index: number) => (
-                      <Card key={index}>
-                        <CardContent className="pt-4">
-                          <div className="grid gap-2">
-                            <div className="flex items-start gap-2">
-                              <Input
-                                value={item.name}
-                                onChange={(e) => updateItem(index, "name", e.target.value)}
-                                placeholder="Dish name"
-                                className="flex-1"
-                              />
-                              <Input
-                                value={item.price}
-                                onChange={(e) => updateItem(index, "price", e.target.value)}
-                                placeholder="Price"
-                                className="w-28"
-                              />
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => removeItem(index)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                            <Textarea
-                              value={item.description || ""}
-                              onChange={(e) => updateItem(index, "description", e.target.value)}
-                              placeholder="Description"
-                              rows={2}
-                            />
-                            <Input
-                              value={item.note || ""}
-                              onChange={(e) => updateItem(index, "note", e.target.value)}
-                              placeholder="Note (e.g., preparation time)"
-                            />
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                    {(!form.watch("items") || form.watch("items").length === 0) && (
-                      <p className="text-sm text-foreground/60 italic">No simple items. Add items above or use groups.</p>
-                    )}
-                  </div>
-                </div>
+                </TabsContent>
 
-                <hr />
-
-                {/* Groups Section */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-display text-lg">Sub-groups</h3>
-                    <Button variant="outline" size="sm" onClick={addGroup}>
-                      <Plus className="h-4 w-4 mr-1" /> Add Group
-                    </Button>
+                {/* Items Tab */}
+                <TabsContent value="items" className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-sm font-medium">
+                      Items ({formState.items?.length ?? 0})
+                    </h3>
                   </div>
-                  <div className="space-y-4">
-                    {form.watch("groups")?.map((group: any, groupIndex: number) => (
-                      <Card key={groupIndex}>
-                        <CardContent className="pt-4">
-                          <div className="space-y-3">
-                            <div className="flex items-center gap-2">
-                              <Input
-                                value={group.name}
-                                onChange={(e) => updateGroup(groupIndex, "name", e.target.value)}
-                                placeholder="Group name (e.g., Beef)"
-                                className="flex-1 font-medium"
-                              />
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => removeGroup(groupIndex)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                            <div className="space-y-2 pl-4">
-                              {group.items?.map((item: any, itemIndex: number) => (
-                                <div key={itemIndex} className="flex items-center gap-2">
+
+                  {formState.items && formState.items.length > 0 ? (
+                    <div className="space-y-3">
+                      {formState.items.map((item, idx) => (
+                        <Card key={idx}>
+                          <CardContent className="pt-4">
+                            <div className="grid gap-2 md:grid-cols-[1fr_auto]">
+                              <div className="space-y-3">
+                                <div className="flex items-start gap-2">
                                   <Input
                                     value={item.name}
-                                    onChange={(e) => updateGroupItem(groupIndex, itemIndex, "name", e.target.value)}
-                                    placeholder="Item name"
+                                    onChange={(e) => {
+                                      const newItems = [...(formState.items || [])];
+                                      newItems[idx] = { ...item, name: e.target.value };
+                                      handleInputChange("items", newItems);
+                                    }}
+                                    placeholder="Dish name"
                                     className="flex-1"
                                   />
                                   <Input
                                     value={item.price}
-                                    onChange={(e) => updateGroupItem(groupIndex, itemIndex, "price", e.target.value)}
-                                    placeholder="Price"
-                                    className="w-24"
+                                    onChange={(e) => {
+                                      const newItems = [...(formState.items || [])];
+                                      newItems[idx] = { ...item, price: e.target.value };
+                                      handleInputChange("items", newItems);
+                                    }}
+                                    placeholder="25,000 FRW"
+                                    className="w-32 font-mono"
                                   />
                                   <Button
                                     variant="ghost"
                                     size="icon"
-                                    onClick={() => removeGroupItem(groupIndex, itemIndex)}
+                                    onClick={() => {
+                                      const newItems = formState.items?.filter((_, i) => i !== idx);
+                                      handleInputChange("items", newItems);
+                                    }}
                                   >
                                     <Trash2 className="h-4 w-4" />
                                   </Button>
                                 </div>
+                                <Textarea
+                                  value={item.description || ""}
+                                  onChange={(e) => {
+                                    const newItems = [...(formState.items || [])];
+                                    newItems[idx] = { ...item, description: e.target.value };
+                                    handleInputChange("items", newItems);
+                                  }}
+                                  placeholder="Description"
+                                  rows={2}
+                                />
+                                <Input
+                                  value={item.note || ""}
+                                  onChange={(e) => {
+                                    const newItems = [...(formState.items || [])];
+                                    newItems[idx] = { ...item, note: e.target.value };
+                                    handleInputChange("items", newItems);
+                                  }}
+                                  placeholder="Note (e.g., preparation time)"
+                                />
+                              </div>
+                              <div className="flex flex-col items-end gap-2">
+                                <ImageUploadZone
+                                  value={item.image}
+                                  onChange={(url) => {
+                                    const newItems = [...(formState.items || [])];
+                                    newItems[idx] = { ...item, image: url };
+                                    handleInputChange("items", newItems);
+                                  }}
+                                  slug={formState.slug}
+                                  context="item"
+                                  itemName={item.name}
+                                  label="Upload image"
+                                  className="w-20 h-20"
+                                />
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground/60 italic">
+                      No items in this section. Add items or use groups.
+                    </p>
+                  )}
+                </TabsContent>
+
+                {/* Groups Tab */}
+                <TabsContent value="groups" className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-sm font-medium">
+                      Groups ({formState.groups?.length ?? 0})
+                    </h3>
+                  </div>
+
+                  {formState.groups && formState.groups.length > 0 ? (
+                    <div className="space-y-4">
+                      {formState.groups.map((group, groupIndex) => (
+                        <div key={groupIndex} className="border rounded-lg p-3">
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4 text-muted-foreground/50" />
+                              <Input
+                                value={group.name}
+                                onChange={(e) => {
+                                  const newGroups = [...(formState.groups || [])];
+                                  newGroups[groupIndex] = { ...group, name: e.target.value };
+                                  handleInputChange("groups", newGroups);
+                                }}
+                                placeholder="Group name (e.g., Beef)"
+                                className="font-medium"
+                              />
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => {
+                                  const newGroups = formState.groups?.filter((_, i) => i !== groupIndex);
+                                  handleInputChange("groups", newGroups);
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+
+                            <div className="pl-6 space-y-2">
+                              {group.items?.map((item, itemIndex) => (
+                                <div key={itemIndex} className="grid gap-2 md:grid-cols-3">
+                                  <Input
+                                    value={item.name}
+                                    onChange={(e) => {
+                                      const newGroups = [...(formState.groups || [])];
+                                      newGroups[groupIndex].items[itemIndex].name = e.target.value;
+                                      handleInputChange("groups", newGroups);
+                                    }}
+                                    placeholder="Item name"
+                                    className="md:col-span-2"
+                                  />
+                                  <Input
+                                    value={item.price}
+                                    onChange={(e) => {
+                                      const newGroups = [...(formState.groups || [])];
+                                      newGroups[groupIndex].items[itemIndex].price = e.target.value;
+                                      handleInputChange("groups", newGroups);
+                                    }}
+                                    placeholder="25,000 FRW"
+                                    className="font-mono"
+                                  />
+                                </div>
                               ))}
+                              {(!group.items || group.items.length === 0) && (
+                                <p className="text-xs text-muted-foreground/60">No items in this group</p>
+                              )}
                               <Button
                                 variant="outline"
                                 size="sm"
+                                onClick={() => {
+                                  const newGroups = [...(formState.groups || [])];
+                                  newGroups[groupIndex].items = [
+                                    ...(newGroups[groupIndex].items || []),
+                                    { name: "", price: "" },
+                                  ];
+                                  handleInputChange("groups", newGroups);
+                                }}
                                 className="text-xs"
-                                onClick={() => addGroupItem(groupIndex)}
                               >
-                                <Plus className="h-3 w-3 mr-1" /> Add Item
+                                <Plus className="h-3 w-3 mr-1" />
+                                Add Item
                               </Button>
                             </div>
                           </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                    {(!form.watch("groups") || form.watch("groups").length === 0) && (
-                      <p className="text-sm text-foreground/60 italic">No sub-groups. Add groups above or use simple items.</p>
-                    )}
-                  </div>
-                </div>
-
-                <hr />
-
-                {/* Special Box */}
-                <div>
-                  <h3 className="font-display text-lg mb-3">Chef's Special Box</h3>
-                  <p className="text-sm text-foreground/60 mb-4">
-                    Featured dishes highlighted in a special box on the menu page.
-                  </p>
-                  <div className="space-y-3">
-                    <Input
-                      value={form.watch("special_box")?.title || ""}
-                      onChange={(e) => {
-                        const sb = form.watch("special_box") || {};
-                        form.setValue("special_box", { ...sb, title: e.target.value });
-                      }}
-                      placeholder="Special title (e.g., Chef's Specials)"
-                    />
-                    <div className="space-y-2">
-                      {form.watch("special_box")?.items?.map((item: any, index: number) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <Input
-                            value={item.name}
-                            onChange={(e) => {
-                              const items = [...form.watch("special_box")!.items];
-                              items[index] = { ...item, name: e.target.value };
-                              form.setValue("special_box", { ...form.watch("special_box"), items });
-                            }}
-                            placeholder="Item name"
-                            className="flex-1"
-                          />
-                          <Input
-                            value={item.price}
-                            onChange={(e) => {
-                              const items = [...form.watch("special_box")!.items];
-                              items[index] = { ...item, price: e.target.value };
-                              form.setValue("special_box", { ...form.watch("special_box"), items });
-                            }}
-                            placeholder="Price"
-                            className="w-24"
-                          />
                         </div>
                       ))}
                     </div>
-                  </div>
-                </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground/60 italic">
+                      No groups defined. Items are displayed in a flat list.
+                    </p>
+                  )}
+                </TabsContent>
 
-                <div className="pt-4">
-                  <Button onClick={handleSave} disabled={isSaving} className="w-full">
-                    {isSaving ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Saving...
-                      </>
-                    ) : (
-                      <>
-                        <Save className="h-4 w-4 mr-2" />
-                        Save Changes
-                      </>
+                {/* Special Tab */}
+                <TabsContent value="special" className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-sm font-medium">Chef&apos;s Special Box</h3>
+                  </div>
+
+                  {formState.special_box ? (
+                    <div className="border rounded-lg p-3 space-y-3">
+                      <div>
+                        <Label>Special Title</Label>
+                        <Input
+                          value={formState.special_box.title}
+                          onChange={(e) =>
+                            handleInputChange("special_box", {
+                              ...formState.special_box!,
+                              title: e.target.value,
+                            })
+                          }
+                          placeholder="Chef's Specials"
+                        />
+                      </div>
+
+                      <div>
+                        <h4 className="text-xs font-medium mb-2">Special Items</h4>
+                        <div className="space-y-2">
+                          {formState.special_box.items?.map((item, idx) => (
+                            <div key={idx} className="grid gap-2 md:grid-cols-3">
+                              <Input
+                                value={item.name}
+                                onChange={(e) => {
+                                  const items = [...(formState.special_box!.items || [])];
+                                  items[idx] = { ...item, name: e.target.value };
+                                  handleInputChange("special_box", {
+                                    ...formState.special_box!,
+                                    items,
+                                  });
+                                }}
+                                placeholder="Item name"
+                                className="md:col-span-2"
+                              />
+                              <Input
+                                value={item.price}
+                                onChange={(e) => {
+                                  const items = [...(formState.special_box!.items || [])];
+                                  items[idx] = { ...item, price: e.target.value };
+                                  handleInputChange("special_box", {
+                                    ...formState.special_box!,
+                                    items,
+                                  });
+                                }}
+                                placeholder="25,000 FRW"
+                                className="font-mono"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const items = [...(formState.special_box?.items || [])];
+                            items.push({ name: "", price: "" });
+                            handleInputChange("special_box", {
+                              ...formState.special_box!,
+                              items,
+                            });
+                          }}
+                          className="text-xs mt-2"
+                        >
+                          <Plus className="h-3 w-3 mr-1" />
+                          Add Item
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        handleInputChange("special_box", {
+                          title: "Chef's Special",
+                          items: [{ name: "", price: "" }],
+                        })
+                      }
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Special Box
+                    </Button>
+                  )}
+                </TabsContent>
+
+                {/* Images Tab */}
+                <TabsContent value="images" className="space-y-4">
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-xs uppercase tracking-wider">
+                        Section Header Image
+                      </Label>
+                      <p className="text-xs text-muted-foreground mb-2">
+                        Drag & drop or click to upload an image for this section header
+                      </p>
+
+                      <ImageUploadZone
+                        value={formState.image}
+                        onChange={(url) => handleInputChange("image", url)}
+                        slug={formState.slug}
+                        context="header"
+                        label="Upload header image"
+                      />
+                    </div>
+
+                    {formState.items?.some((item) => item.image) && (
+                      <div>
+                        <h3 className="font-display text-sm font-medium mb-2">
+                          Item Images
+                        </h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                          {formState.items
+                            .filter((item) => item.image)
+                            .map((item, idx) => (
+                              <div key={idx} className="relative aspect-square rounded-md overflow-hidden border border-border">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            ))
+                          }
+                        </div>
+                      </div>
                     )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
+                </TabsContent>
+              </div>
+
+              {/* Save Button */}
+              <div className="border-t border-border p-4">
+                <Button
+                  onClick={handleSave}
+                  disabled={isSaving}
+                  className="w-full sm:w-auto"
+                >
+                  {isSaving ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="h-4 w-4 mr-2" />
+                      Save Changes
+                    </>
+                  )}
+                </Button>
+              </div>
+            </Tabs>
+          </div>
+
+          {/* Live Preview Panel */}
+          <div className="hidden xl:block">
+            <LivePreview section={selectedSection} sectionIndex={sections.findIndex((s) => s.id === editingSlug || s.category === editingSlug) + 1} />
           </div>
         </div>
       </main>
