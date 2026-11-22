@@ -136,7 +136,7 @@ const explicit: Record<string, string> = {
   "chicken::Chicken Stroganoff": chickenStew,
   "chicken::Peri Peri 1/4 Chicken": periPeriChicken,
   "chicken::Chicken Stew": chickenStew,
-  "chicken::Pou desosse": pouDesosse,
+  "chicken::Poulet desossee": pouDesosse,
 
   // Fish
   "fish::Fish Brochette": fishBrochette,

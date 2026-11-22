@@ -173,7 +173,7 @@ export const menuSections: MenuSection[] = [
       { name: "Poulet Mayo", price: "20,000 FRW", description: "Grilled chicken topped with house-made mayonnaise and fresh herbs" },
       { name: "Peri Peri 1/4 Chicken", price: "18,000 FRW", description: "Quarter chicken basted in fiery peri-peri sauce" },
       { name: "Chicken Stew", price: "18,000 FRW", description: "Hearty chicken simmered in a rich tomato and onion gravy" },
-      { name: "Pou desosse", price: "22,000 FRW", description: "Traditional chicken head stew with rich spices" },
+      { name: "Poulet desossee", price: "22,000 FRW", description: "Traditional chicken head stew with rich spices" },
     ],
   },
   {
