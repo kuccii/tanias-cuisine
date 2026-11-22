@@ -56,7 +56,7 @@ import chickenFriedRice from "@/assets/menu/chicken-fried-rice.webp";
 import kwanga from "@/assets/menu/kwanga.webp";
 import plantain from "@/assets/menu/plantain.webp";
 import chips from "@/assets/menu/chips.webp";
-import grilledBananas from "@/assets/menu/grilled-bananas.webp";
+import grilledBananas from "@/assets/menu/grilled-bananas.jpg";
 import boiledPotatoes from "@/assets/menu/boiled-potatoes.webp";
 import garlicPotatoes from "@/assets/menu/garlic-potatoes.webp";
 import ugali from "@/assets/menu/ugali.webp";
@@ -93,6 +93,7 @@ import tropicalShake from "@/assets/menu/tropical-shake.webp";
 import espressoShake from "@/assets/menu/espresso-shake.webp";
 import iceCream1 from "@/assets/menu/ice-cream-1.webp";
 import iceCream2 from "@/assets/menu/ice-cream-2.webp";
+import pouDesosse from "@/assets/menu/pou-desosse.webp";
 
 // Map keyed by `${sectionId}::${itemName}` for unambiguous resolution.
 const explicit: Record<string, string> = {
@@ -135,6 +136,7 @@ const explicit: Record<string, string> = {
   "chicken::Chicken Stroganoff": chickenStew,
   "chicken::Peri Peri 1/4 Chicken": periPeriChicken,
   "chicken::Chicken Stew": chickenStew,
+  "chicken::Pou desosse": pouDesosse,
 
   // Fish
   "fish::Fish Brochette": fishBrochette,
